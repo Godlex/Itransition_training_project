@@ -1,11 +1,6 @@
 ﻿using Blog.Data.Repositories;
 using Qoality_of_Life_changer.Model.Edentity;
 using Quality_of_Life_changer.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quality_of_Life_changer.Data.Repository
 {

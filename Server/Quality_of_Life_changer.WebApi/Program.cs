@@ -40,7 +40,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IAuthService>(
     new AuthService(builder.Configuration.GetValue<string>("JWTSecretKey"),
                    builder.Configuration.GetValue<int>("JWTLifespan") )
-);
+); 
 
 builder.AddCors(AllowSpecificOrigins);
 
