@@ -1,5 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
 import reducer from "./redux-modules/index-reducer";
 
-export let store = createStore(reducer, applyMiddleware(logger));
+const logger = createLogger();
+
+export default createStore(reducer, applyMiddleware(logger));
