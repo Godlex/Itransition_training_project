@@ -6,14 +6,18 @@ import { register } from "../../redux-modules/auth/actions";
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { login: "", password: "", confirmPassword:""};
+    this.state = { login: "", password: "", confirmPassword: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
     // Changing state
-    this.props.register(this.state.login, this.state.password,this.state.confirmPassword);
+    this.props.register(
+      this.state.login,
+      this.state.password,
+      this.state.confirmPassword
+    );
   }
 
   handleChange(event) {
@@ -54,7 +58,7 @@ class RegisterForm extends Component {
             name="confirmPassword"
             type="password"
             placeholder="Confirm password"
-            value={this.state.confiemPassword}
+            value={this.state.confirmPassword}
             onChange={this.handleChange}
           />
         </Form.Group>
@@ -71,4 +75,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default connect(null, register)(RegisterForm);
+export default connect(null, { register })(RegisterForm);
