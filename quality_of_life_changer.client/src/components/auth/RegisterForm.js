@@ -1,19 +1,19 @@
 import { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { login } from "../../redux-modules/auth/actions";
+import { register } from "../../redux-modules/auth/actions";
 
-class AuthForm extends Component {
+class RegisterForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { login: "", password: "" };
+    this.state = { login: "", password: "", confirmPassword:""};
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
     // Changing state
-    this.props.login(this.state.login, this.state.password);
+    this.props.register(this.state.login, this.state.password,this.state.confirmPassword);
   }
 
   handleChange(event) {
@@ -48,6 +48,17 @@ class AuthForm extends Component {
           />
         </Form.Group>
 
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Confirm password</Form.Label>
+          <Form.Control
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+            value={this.state.confiemPassword}
+            onChange={this.handleChange}
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
@@ -60,4 +71,4 @@ class AuthForm extends Component {
   }
 }
 
-export default connect(null, { login })(AuthForm);
+export default connect(null, register)(RegisterForm);
