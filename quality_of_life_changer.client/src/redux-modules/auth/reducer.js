@@ -13,20 +13,20 @@ export default function authReducer(state = initialAuthState, action) {
           name: action.username,
           password: action.password,
         },
-        register: initialAuthState.register
+        register: initialAuthState.register,
       };
     case authConstants.REGISTER_SECCESS:
       return {
         register: {
           name: action.username,
           password: action.password,
-          confirmPassword: action.confirmPassword
+          confirmPassword: action.confirmPassword,
         },
-        login: initialAuthState.login    
+        login: initialAuthState.login,
       };
     case authConstants.LOGIN_FAILURE:
       return { ...initialAuthState };
-      case authConstants.REGISTER_FAILURE:
+    case authConstants.REGISTER_FAILURE:
       return { ...initialAuthState };
     default:
       return state;
