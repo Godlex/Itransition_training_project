@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { login } from "../../redux-modules/auth/actions";
@@ -52,7 +52,7 @@ class AuthForm extends Component {
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
 
-        <Button variant="primary" type="submit" onClick={this.handleClick}>
+        <Button variant="primary" type="button"  onClick={this.handleClick}>
           Submit
         </Button>
       </Form>
@@ -60,4 +60,4 @@ class AuthForm extends Component {
   }
 }
 
-export default connect(null, { login })(AuthForm);
+export default connect(null, { login } )(AuthForm);

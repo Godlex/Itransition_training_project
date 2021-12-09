@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { register } from "../../redux-modules/auth/actions";
@@ -67,7 +67,7 @@ class RegisterForm extends Component {
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
 
-        <Button variant="primary" type="submit" onClick={this.handleClick}>
+        <Button variant="primary" type="button" onClick={this.handleClick}>
           Submit
         </Button>
       </Form>

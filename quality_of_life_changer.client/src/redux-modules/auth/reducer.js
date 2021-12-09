@@ -7,27 +7,27 @@ const initialAuthState = {
 
 export default function authReducer(state = initialAuthState, action) {
   switch (action.type) {
-    case authConstants.LOGIN_SUCCESS:
+    /*case authConstants.LOGIN_SUCCESS:
       return {
+        ...state,
         login: {
           name: action.username,
           password: action.password,
         },
-        register: initialAuthState.register,
-      };
-    case authConstants.REGISTER_SECCESS:
+      };*/
+    case authConstants.REGISTER_SUCCESS:
       return {
+        ...state,
         register: {
           name: action.username,
           password: action.password,
           confirmPassword: action.confirmPassword,
         },
-        login: initialAuthState.login,
       };
     case authConstants.LOGIN_FAILURE:
-      return { ...initialAuthState };
+      return { ...state };
     case authConstants.REGISTER_FAILURE:
-      return { ...initialAuthState };
+      return { ...state };
     default:
       return state;
   }

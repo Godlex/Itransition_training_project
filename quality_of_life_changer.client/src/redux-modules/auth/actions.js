@@ -5,9 +5,16 @@ export function login(username, password) {
 }
 export function register(username, password, confirmPassword) {
   return {
-    type: authConstants.REGISTER_SECCESS,
+    type: authConstants.REGISTER_SUCCESS,
     username,
     password,
     confirmPassword,
   };
 }
+/*export const setLoading = isLoading => {
+  return {
+    type: actionType.SET_LOADING,
+    isLoading
+  };
+};
+*/
