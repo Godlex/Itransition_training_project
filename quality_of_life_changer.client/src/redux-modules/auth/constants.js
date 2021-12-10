@@ -4,4 +4,6 @@ export const authConstants = {
 
   REGISTER_SUCCESS: "REGISTER_SUCCESS",
   REGISTER_FAILURE: "REGISTER_FAILURE",
+
+  BASE_URL: "http://localhost:7145/",
 };

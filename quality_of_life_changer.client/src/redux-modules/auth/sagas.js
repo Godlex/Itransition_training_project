@@ -1,27 +1,20 @@
 import { authConstants } from "./constants";
 import { takeEvery } from "redux-saga/effects";
 
-function fetchLoginStatus(login, password) {
-    console.log("aaa");
+function* fetchLoginStatus({ username, password }) {
   try {
-    console.log(login);
-/*
-    fetch(`https://localhost:7145/api/Auth/login`, {
+    const state = yield fetch(`${authConstants.BASE_URL}/api/Auth/login`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email:login,password: password }),
+      body: JSON.stringify({ email: username, password: password }),
     }).then((response) => response.json());
-*/
+    
   } catch (e) {}
 }
 
-function* loginSaga(login, password) {
-    console.log(login);
-  yield takeEvery(
-    authConstants.LOGIN_SUCCESS,
-    fetchLoginStatus(login, password)
-  );
+function* loginSaga() {
+  yield takeEvery(authConstants.LOGIN_SUCCESS, fetchLoginStatus);
 }
 
-export default loginSaga();
+export default loginSaga;
