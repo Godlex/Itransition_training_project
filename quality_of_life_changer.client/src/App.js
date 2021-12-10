@@ -1,15 +1,16 @@
-import React from 'react';
-import AuthForm  from './components/auth/AuthForm';
-import RegisterForm from './components/auth/RegisterForm';
+import React, { Component } from "react";
+import AuthForm from "./components/auth/AuthForm";
+import RegisterForm from "./components/auth/RegisterForm";
 
-
-const App = () => {
-  return (
-      <div>
-          <AuthForm/>
-          <RegisterForm/>
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <AuthForm/>
+        <RegisterForm/>
       </div>
-  )
+    );
+  }
 }
 
 export default App;

@@ -11,6 +11,14 @@ export function register(username, password, confirmPassword) {
     confirmPassword,
   };
 }
+export function setUser(id,name,email) {
+  return {
+    type: authConstants.SET_USER,
+    id,
+    name,
+    email
+  };
+}
 /*export const setLoading = isLoading => {
   return {
     type: actionType.SET_LOADING,

@@ -27,7 +27,7 @@ namespace Quality_of_Life_changer.WebApi.Services
         public string V1 { get; }
         public string V2 { get; }
 
-        public AuthData GetAuthData(string id)
+        public AuthData GetAuthData(string id,string name,string email)
         {
             var expirationTime = DateTime.UtcNow.AddSeconds(jwtLifespan);
 
@@ -35,7 +35,9 @@ namespace Quality_of_Life_changer.WebApi.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, id)
+                    new Claim(ClaimTypes.Name, name),
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.NameIdentifier, id)
                 }),
                 Expires = expirationTime,
                 // new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)

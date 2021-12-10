@@ -19,8 +19,9 @@ namespace Quality_of_Life_changer.WebApi.Controllers
             this.userRepository = userRepository;
         }
 
+        [Consumes("application/json")]
         [HttpPost("login")]
-        public ActionResult<AuthData> Post([FromBody] LoginViewModel model)
+        public ActionResult<AuthData> Post([FromBody] LoginViewModel model) //todo viewmodel to model
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -38,7 +39,7 @@ namespace Quality_of_Life_changer.WebApi.Controllers
                 return BadRequest(new { password = "invalid password" });
             }
 
-            return authService.GetAuthData(user.Id);
+            return authService.GetAuthData(user.Id,user.Username,user.Email);
         }
 
         [HttpPost("register")]
@@ -62,7 +63,7 @@ namespace Quality_of_Life_changer.WebApi.Controllers
             userRepository.Add(user);
             userRepository.Commit();
 
-            return authService.GetAuthData(id);
+            return authService.GetAuthData(id,user.Username,user.Email);//username+id
         }
 
     }

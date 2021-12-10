@@ -1,20 +1,21 @@
 import { authConstants } from "./constants";
 
 const initialAuthState = {
-  login: { name: null, password: null },
+  user: {name:null,email:null,id:null},
   register: { name: null, password: null, confirmPassword: null },
 };
 
 export default function authReducer(state = initialAuthState, action) {
   switch (action.type) {
-    /*case authConstants.LOGIN_SUCCESS:
+    case authConstants.SET_USER:
       return {
         ...state,
-        login: {
-          name: action.username,
-          password: action.password,
-        },
-      };*/
+        user:{
+          name: action.name,
+          email: action.email,
+          id: action.id
+        }
+      };
     case authConstants.REGISTER_SUCCESS:
       return {
         ...state,

@@ -7,7 +7,7 @@ namespace Quality_of_Life_changer.WebApi.Services
         {
             string HashPassword(string password);
             bool VerifyPassword(string actualPassword, string hashedPassword);
-            AuthData GetAuthData(string id);
+            AuthData GetAuthData(string id,string userName, string userEmail);
         }
     
 }
