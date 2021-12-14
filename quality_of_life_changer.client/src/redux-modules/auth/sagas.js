@@ -17,8 +17,6 @@ function* fetchLoginStatus({ username, password }) {
     localStorage.setItem("jwtToken", state.token);
 
     let tokenPlayload = JSON.parse(window.atob(state.token.split('.')[1]));
-
-    console.log({tokenPlayload});
   
     yield put(actions.setUser(tokenPlayload.nameid,tokenPlayload.unique_name,tokenPlayload.email))
 
