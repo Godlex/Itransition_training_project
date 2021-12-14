@@ -1,28 +1,22 @@
 import { authConstants } from "./constants";
 
-export function login(username, password) {
-  return { type: authConstants.LOGIN_SUCCESS, username, password };
+export function login(email, password) {
+  return { type: authConstants.LOGIN_SUCCESS, email, password };
 }
-export function register(username, password, confirmPassword) {
+export function register(username,email, password) {
   return {
     type: authConstants.REGISTER_SUCCESS,
     username,
+    email,
     password,
-    confirmPassword,
   };
 }
-export function setUser(id,name,email) {
+export function setUser(id, name, email) {
   return {
     type: authConstants.SET_USER,
     id,
     name,
-    email
+    email,
   };
 }
-/*export const setLoading = isLoading => {
-  return {
-    type: actionType.SET_LOADING,
-    isLoading
-  };
-};
-*/
+

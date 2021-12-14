@@ -6,14 +6,14 @@ import { login } from "../../redux-modules/auth/actions";
 class AuthForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { login: "", password: "" };
+    this.state = { email: "", password: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
     // Changing state
-    this.props.login(this.state.login, this.state.password);
+    this.props.login(this.state.email, this.state.password);
   }
 
   handleChange(event) {
@@ -27,9 +27,9 @@ class AuthForm extends Component {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
-            name="login"
+            name="email"
             placeholder="Enter email"
-            value={this.state.login}
+            value={this.state.email}
             onChange={this.handleChange}
           />
           <Form.Text className="text-muted">
@@ -52,7 +52,7 @@ class AuthForm extends Component {
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
 
-        <Button variant="primary" type="button"  onClick={this.handleClick}>
+        <Button variant="primary" type="button" onClick={this.handleClick}>
           Submit
         </Button>
       </Form>
@@ -60,4 +60,4 @@ class AuthForm extends Component {
   }
 }
 
-export default connect(null, { login } )(AuthForm);
+export default connect(null, { login })(AuthForm);

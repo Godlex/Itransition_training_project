@@ -6,7 +6,7 @@ import { register } from "../../redux-modules/auth/actions";
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { login: "", password: "", confirmPassword: "" };
+    this.state = { username: "", email: "",password: "", confirmPassword: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -14,7 +14,8 @@ class RegisterForm extends Component {
   handleClick() {
     // Changing state
     this.props.register(
-      this.state.login,
+      this.state.username,
+      this.state.email,
       this.state.password,
       this.state.confirmPassword
     );
@@ -29,11 +30,21 @@ class RegisterForm extends Component {
     return (
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            name="username"
+            placeholder="Enter name"
+            value={this.state.username}
+            onChange={this.handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
-            name="login"
+            name="email"
             placeholder="Enter email"
-            value={this.state.login}
+            value={this.state.email}
             onChange={this.handleChange}
           />
           <Form.Text className="text-muted">
