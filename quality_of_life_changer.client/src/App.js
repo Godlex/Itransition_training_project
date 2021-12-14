@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AuthForm from "./components/auth/AuthForm";
 import RegisterForm from "./components/auth/RegisterForm";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 class App extends Component {
@@ -10,7 +10,7 @@ class App extends Component {
       <div className="App">
         <h1>React Router</h1>
 
-        <Nav>
+        <Nav  variant="pills">
           <Nav.Item>
             <Nav.Link href="/login">AuthForm</Nav.Link>
           </Nav.Item>
