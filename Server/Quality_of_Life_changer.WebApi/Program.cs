@@ -9,21 +9,14 @@ using System.Text;
 
 using Serilog;
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .WriteTo.Seq("http://localhost:5341")
-    .CreateLogger();
-
-Log.Information("Starting up");
+Logger.Initial();
 
 try
 {
 
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) => lc
-        .WriteTo.Console()
-        .ReadFrom.Configuration(ctx.Configuration));
+    builder.Host.UseSerilog(Logger.Configure);
 
     // Add services to the container.
     /*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -46,7 +39,7 @@ try
                            ValidateIssuerSigningKey = true,
 
                            IssuerSigningKey = new SymmetricSecurityKey(
-                               Encoding.UTF8.GetBytes("JWTSecretKey")
+                               Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWTSecretKey"))
                            )
                        };
                    });
@@ -66,6 +59,8 @@ try
     builder.Services.AddSwaggerGen();
 
     var app = builder.Build();
+
+    app.UseSerilogRequestLogging();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())

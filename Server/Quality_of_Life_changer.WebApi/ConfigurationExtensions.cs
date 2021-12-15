@@ -1,4 +1,6 @@
-﻿namespace Quality_of_Life_changer.WebApi
+﻿using Serilog;
+
+namespace Quality_of_Life_changer.WebApi
 {
     public static class ConfigurationExtensions
     {
@@ -13,6 +15,8 @@
                                   });
             });
         }
+
+
 
     }
 }
