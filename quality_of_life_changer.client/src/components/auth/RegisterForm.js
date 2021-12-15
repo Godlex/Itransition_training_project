@@ -29,20 +29,22 @@ class RegisterForm extends Component {
   render() {
     return (
       <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" >
           <Form.Label>Name</Form.Label>
           <Form.Control
             name="username"
+            type="string"
             placeholder="Enter name"
             value={this.state.username}
             onChange={this.handleChange}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" >
           <Form.Label>Email address</Form.Label>
           <Form.Control
             name="email"
+           type="email"
             placeholder="Enter email"
             value={this.state.email}
             onChange={this.handleChange}
@@ -52,7 +54,7 @@ class RegisterForm extends Component {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" >
           <Form.Label>Password</Form.Label>
           <Form.Control
             name="password"
@@ -63,7 +65,7 @@ class RegisterForm extends Component {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>Confirm password</Form.Label>
           <Form.Control
             name="confirmPassword"
