@@ -33,17 +33,19 @@ function* fetchLoginStatus({ email, password }) {
   }
 }
 
-function* fetchRegisterStatus({ username, email, password }) {
+function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
     let state = [];
 
-    let instance = fetcher();
+    console.log({ username, email, password, confirmPassword });
 
-    yield instance
-      .post("/api/Auth/register", {
+    
+
+    yield fetcher.post("/api/Auth/register", {
         username: username,
         email: email,
         password: password,
+        confirmPassword: confirmPassword,
       })
       .then((response) => {
         state = response.data;

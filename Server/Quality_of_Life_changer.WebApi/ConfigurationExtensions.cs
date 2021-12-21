@@ -1,22 +1,16 @@
-﻿using Serilog;
+﻿namespace Quality_of_Life_changer.WebApi;
 
-namespace Quality_of_Life_changer.WebApi
+public static class ConfigurationExtensions
 {
-    public static class ConfigurationExtensions
+    public static void AddCors(this WebApplicationBuilder builder, string AllowSpecificOrigins)
     {
-        public static void AddCors(this WebApplicationBuilder builder,string AllowSpecificOrigins)
+        builder.Services.AddCors(options =>
         {
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(name: AllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-                                  });
-            });
-        }
-
-
-
+            options.AddPolicy(AllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                });
+        });
     }
 }
