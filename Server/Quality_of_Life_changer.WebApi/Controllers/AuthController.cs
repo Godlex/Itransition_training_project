@@ -1,70 +1,72 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Qoality_of_Life_changer.Model.Edentity;
-using Quality_of_Life_changer.Data.Repository;
-using Quality_of_Life_changer.WebApi.Services;
+using Quality_of_Life_changer.Contracts.Commands;
+using Quality_of_Life_changer.Contracts.Queries;
+using Quality_of_Life_changer.WebApi.Services.Abstraction;
+using Quality_of_Life_changer.WebApi.Validators;
 using Quality_of_Life_changer.WebApi.ViewModel;
 using Quality_of_Life_changer.WebApi.ViewModel.Auth;
 
-namespace Quality_of_Life_changer.WebApi.Controllers
+namespace Quality_of_Life_changer.WebApi.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AuthController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    private readonly IMediator _mediator;
+    private readonly IAuthService authService;
+
+    public AuthController(IAuthService authService, IMediator mediator)
     {
-        IAuthService authService;
-        IUserRepository userRepository;
-        public AuthController(IAuthService authService, IUserRepository userRepository)
-        {
-            this.authService = authService;
-            this.userRepository = userRepository;
-        }
+        this.authService = authService;
+        _mediator = mediator;
+    }
 
-        [Consumes("application/json")]
-        [HttpPost("login")]
-        public ActionResult<AuthData> Post([FromBody] LoginViewModel model) //todo viewmodel to model
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+    [Consumes("application/json")]
+    [HttpPost("login")]
+    public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model) //todo viewmodel to model
+    {
+        var validator = new LoginModelValidator();
+        var result = await validator.ValidateAsync(model);
 
-            var user = userRepository.GetSingle(u => u.Email == model.Email);
+        if (!result.IsValid) return BadRequest(result.Errors);
 
-            if (user == null)
-            {
-                return BadRequest(new { email = "no user with this email" });
-            }
+        var user = await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
-            var passwordValid = authService.VerifyPassword(model.Password, user.Password);
+        if (user == null) return BadRequest(new {email = "no user with this email"});
 
-            if (!passwordValid)
-            {
-                return BadRequest(new { password = "invalid password" });
-            }
+        var passwordValid = authService.VerifyPassword(model.Password, user.Password);
 
-            return authService.GetAuthData(user.Id,user.Username,user.Email);
-        }
+        if (!passwordValid) return BadRequest(new {password = "invalid password"});
 
-        [HttpPost("register")]
-        public ActionResult<AuthData> Post([FromBody] RegisterViewModel model)
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+        return authService.GetAuthData(user.Id, user.Username, user.Email);
+    }
 
-            var emailUniq = userRepository.isEmailUniq(model.Email);
-            if (!emailUniq) return BadRequest(new { email = "user with this email already exists" });
-            var usernameUniq = userRepository.IsUsernameUniq(model.Username);
-            if (!usernameUniq) return BadRequest(new { username = "user with this name already exists" });
+    [HttpPost("register")]
+    public async Task<ActionResult<AuthData>> Post([FromBody] RegisterModel model)
+    {
+        var validator = new RegisterModelValidator();
+        var result = await validator.ValidateAsync(model);
 
-            var id = Guid.NewGuid().ToString();
-            var user = new User
-            {
-                Id = id,
-                Username = model.Username,
-                Email = model.Email,
-                Password = authService.HashPassword(model.Password)
-            };
-            userRepository.Add(user);
-            userRepository.Commit();
+        if (!result.IsValid) return BadRequest(result.Errors);
 
-            return authService.GetAuthData(id,user.Username,user.Email);//username+id
-        }
+        var command = new AddUser.Command(model.Username, model.Email, model.Password);
+        var user = await _mediator.Send(command);
 
+        return authService.GetAuthData(user.Id, user.UserName, user.Email);
+    }
+
+    [HttpGet]
+    // [Authorize]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        var response = await _mediator.Send(new GetAllUsers.Query());
+        return response == null ? NotFound() : Ok(response);
+    }
+
+    private UserModel MapUserToUserModel(QolcUser user)
+    {
+        return new UserModel {Email = user.Email, Id = user.Id, Username = user.UserName};
     }
 }

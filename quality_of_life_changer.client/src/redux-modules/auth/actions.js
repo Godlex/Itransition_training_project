@@ -4,12 +4,13 @@ export function login(email, password) {
   return { type: authConstants.LOGIN_SUCCESS, email, password };
 }
 
-export function register(username, email, password) {
+export function register(username, email, password, confirmPassword) {
   return {
     type: authConstants.REGISTER_SUCCESS,
     username,
     email,
     password,
+    confirmPassword
   };
 }
 
