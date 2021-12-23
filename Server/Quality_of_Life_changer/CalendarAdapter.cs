@@ -33,25 +33,37 @@ public class CalendarAdapter : ICalendarAdapter
     public IEnumerable<CalendarEvent> GetTodayEvents()
     {
         // Define parameters of request.
-        var request = _calendarService.Events.List("6c73fcbpqb4la5891j62c6l7ndk5na8s@import.calendar.google.com");
-        request.TimeMin = DateTime.Now.AddYears(-1);
-        request.ShowDeleted = false;
-        request.SingleEvents = true;
-        request.MaxResults = 10;
-        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+        var calendars = _calendarService.CalendarList.List().Execute();
+        foreach (var calendar in calendars.Items)
+        {
+            var request = _calendarService.Events.List(calendar.Id);
+            var time = DateTime.Now.AddHours(-255);
+            request.TimeMin = time;
+            request.TimeMax = time.AddHours(255);
+            request.ShowDeleted = false;
+            request.SingleEvents = true;
+            request.MaxResults = 255;
+            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
 
-        // List events.
-        var events = request.Execute();
-        if (events.Items != null && events.Items.Count > 0)
-            foreach (var eventItem in events.Items)
-            {
-                var when = eventItem.Start.DateTime.ToString();
-                if (string.IsNullOrEmpty(when)) when = eventItem.Start.Date;
+            // List events.
+            var events = request.Execute();
 
-                Console.WriteLine("{0} ({1})", eventItem.Summary, when);
-            }
-        else
-            Console.WriteLine("No upcoming events found.");
+            if (events.Items != null && events.Items.Count > 0)
+                foreach (var eventItem in events.Items)
+                {
+                    var startTime = eventItem.Start.DateTime.ToString();
+                    var endTime = eventItem.End.DateTime.ToString();
+                    var timeZone = eventItem.Start.TimeZone;
+                    var time0 = DateTime.Parse(eventItem.Start.DateTimeRaw);
+
+
+                    if (string.IsNullOrEmpty(startTime)) startTime = eventItem.Start.Date;
+
+                    Console.WriteLine("{0} ({1})-({2})", eventItem.Summary, startTime, time0.ToString());
+                }
+            else
+                Console.WriteLine("No upcoming events found.");
+        }
 
         return null;
     }
