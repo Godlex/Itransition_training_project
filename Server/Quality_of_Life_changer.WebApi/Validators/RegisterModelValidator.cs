@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Quality_of_Life_changer.WebApi.ViewModel.Auth;
+using Qoality_of_Life_changer.Model.Auth;
 
 namespace Quality_of_Life_changer.WebApi.Validators;
 

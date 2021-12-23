@@ -1,12 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Qoality_of_Life_changer.Model.Edentity;
+using Qoality_of_Life_changer.Model.Auth;
 using Quality_of_Life_changer.Contracts.Commands;
+using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
-using Quality_of_Life_changer.WebApi.Services.Abstraction;
+using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.WebApi.Validators;
-using Quality_of_Life_changer.WebApi.ViewModel;
-using Quality_of_Life_changer.WebApi.ViewModel.Auth;
 
 namespace Quality_of_Life_changer.WebApi.Controllers;
 
@@ -27,18 +26,19 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model) //todo viewmodel to model
     {
-        var validator = new LoginModelValidator();
+        var validator = new LoginModelValidator(); //todo validator to DI
+
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) return BadRequest(result.Errors);
+        if (!result.IsValid) return StatusCode(422, result.Errors);
 
         var user = await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
-        if (user == null) return BadRequest(new {email = "no user with this email"});
+        if (user == null) return BadRequest(new {email = "no user with this email"}); //todo
 
         var passwordValid = authService.VerifyPassword(model.Password, user.Password);
 
-        if (!passwordValid) return BadRequest(new {password = "invalid password"});
+        if (!passwordValid) return BadRequest(new {password = "invalid password"}); //todo
 
         return authService.GetAuthData(user.Id, user.Username, user.Email);
     }

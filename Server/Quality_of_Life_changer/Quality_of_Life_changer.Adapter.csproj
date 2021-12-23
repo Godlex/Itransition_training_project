@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.55.0.2500" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Quality_of_Life_changer.Contracts\Quality_of_Life_changer.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

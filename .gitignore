@@ -452,3 +452,7 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+Server/Quality_of_Life_changer.WebApi/client_secret_161068240625-3p7ve7cudofll3emc996ni6s5m2qk27s.apps.googleusercontent.com.json
+
+Server/Quality_of_Life_changer.WebApi/credentials.json
