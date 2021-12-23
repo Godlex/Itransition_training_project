@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Qoality_of_Life_changer.Model.Edentity;
-using Quality_of_Life_changer.DAL;
+using Quality_of_Life_changer.Data;
 
 namespace Quality_of_Life_changer.Contracts.Queries;
 
@@ -25,7 +24,7 @@ public class GetUserByEmail
             var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == request.Email,
                 cancellationToken);
             if (user == null)
-                return null;
+                throw new Exception(); //todo custom exception
             return new Response(user.Id, user.UserName, user.Email, user.Password);
         }
     }

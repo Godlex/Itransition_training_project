@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Qoality_of_Life_changer.Model\Qoality_of_Life_changer.Model.csproj" />
+    <ProjectReference Include="..\Qoality_of_Life_changer.Model\Quality_of_Life_changer.Model.csproj" />
   </ItemGroup>
 
 </Project>

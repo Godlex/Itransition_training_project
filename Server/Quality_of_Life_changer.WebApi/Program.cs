@@ -3,12 +3,14 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using Quality_of_Life_changer.Adapter;
 using Quality_of_Life_changer.Contracts.Commands;
+using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
-using Quality_of_Life_changer.DAL;
+using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Services;
-using Quality_of_Life_changer.WebApi.Services.Abstraction;
 using Serilog;
 
 Logger.Initial();
@@ -18,10 +20,6 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Host.UseSerilog(Logger.Configure);
-
-    // Add services to the container.
-    /*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));*/
 
     builder.Services.AddDbContext<QolcDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -43,6 +41,14 @@ try
                     Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWTSecretKey"))
                 )
             };
+        }).AddCookie().AddGoogle(options =>
+        {
+            var fileName = Directory.GetFiles(@".", "client_secret*").First();
+            var jsonString = File.ReadAllText(fileName);
+            var obJObject = JObject.Parse(jsonString).GetValue("web");
+
+            options.ClientId = obJObject?["client_id"]?.ToString() ?? string.Empty;
+            options.ClientSecret = obJObject?["client_secret"]?.ToString() ?? string.Empty;
         });
 
     builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly);
@@ -51,6 +57,9 @@ try
         new AuthService(builder.Configuration.GetValue<string>("JWTSecretKey"),
             builder.Configuration.GetValue<int>("JWTLifespan"))
     );
+
+    ICalendarAdapter calendar = new CalendarAdapter();
+    calendar.GetTodayEvents();
 
     builder.AddCors(AllowSpecificOrigins);
 

@@ -1,7 +1,6 @@
 ﻿using System.Web.Helpers;
 using MediatR;
-using Qoality_of_Life_changer.Model.Edentity;
-using Quality_of_Life_changer.DAL;
+using Quality_of_Life_changer.Data;
 
 namespace Quality_of_Life_changer.Contracts.Commands;
 

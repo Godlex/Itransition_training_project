@@ -1,4 +1,4 @@
-﻿namespace Qoality_of_Life_changer.Model.Edentity;
+﻿namespace Quality_of_Life_changer.Data;
 
 public class QolcUser
 {
