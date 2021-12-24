@@ -59,6 +59,7 @@ try
     );
 
     ICalendarAdapter calendar = new CalendarAdapter();
+
     calendar.GetTodayEvents();
 
     builder.AddCors(AllowSpecificOrigins);

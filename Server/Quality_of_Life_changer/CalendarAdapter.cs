@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
+using Google.Apis.Gmail.v1;
 using Google.Apis.Services;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Model.Entities;
@@ -12,20 +13,33 @@ public class CalendarAdapter : ICalendarAdapter
 
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/calendar-dotnet-quickstart.json
-    private static readonly string[] Scopes = {CalendarService.Scope.CalendarReadonly};
+    private static readonly string[] CalendarScopes = {CalendarService.Scope.Calendar};
+    private static readonly string[] GmailScopes = {GmailService.Scope.GmailReadonly};
     private readonly CalendarService _calendarService;
+    private readonly GmailService _gmailService;
 
     public CalendarAdapter()
     {
         //UserCredential credential;
-        var credential =
+        var calendarCredential =
             GoogleCredential.FromStream(new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-                .CreateScoped(Scopes);
+                .CreateScoped(CalendarScopes)
+                .CreateWithUser("qolc-215@quality-of-life-changer.iam.gserviceaccount.com");
 
         // Create Google Calendar API service.
         _calendarService = new CalendarService(new BaseClientService.Initializer
         {
-            HttpClientInitializer = credential,
+            HttpClientInitializer = calendarCredential,
+            ApplicationName = ApplicationName
+        });
+
+        var gmailCredential =
+            GoogleCredential.FromStream(new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+                .CreateScoped(GmailScopes).CreateWithUser("qolc-215@quality-of-life-changer.iam.gserviceaccount.com");
+
+        _gmailService = new GmailService(new BaseClientService.Initializer
+        {
+            HttpClientInitializer = gmailCredential,
             ApplicationName = ApplicationName
         });
     }
@@ -33,13 +47,19 @@ public class CalendarAdapter : ICalendarAdapter
     public IEnumerable<CalendarEvent> GetTodayEvents()
     {
         // Define parameters of request.
+        //var cal = new CalendarListEntry {Id = "6c73fcbpqb4la5891j62c6l7ndk5na8s@import.calendar.google.com"};
+        //  var calendars1 = _calendarService.CalendarList.Insert(cal).Execute();
+
+        //  var listRequest = _gmailService.Users.Messages.List("qualityoflifechanger42");
+        //  var response1 = listRequest.Execute();
+
         var calendars = _calendarService.CalendarList.List().Execute();
         foreach (var calendar in calendars.Items)
         {
             var request = _calendarService.Events.List(calendar.Id);
-            var time = DateTime.Now.AddHours(-255);
+            var time = DateTime.Now.AddYears(-1);
             request.TimeMin = time;
-            request.TimeMax = time.AddHours(255);
+            request.TimeMax = time.AddYears(1);
             request.ShowDeleted = false;
             request.SingleEvents = true;
             request.MaxResults = 255;
