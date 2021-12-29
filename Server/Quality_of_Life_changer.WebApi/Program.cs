@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
-using Quality_of_Life_changer.Adapter;
 using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
@@ -26,7 +25,6 @@ try
 
     var AllowSpecificOrigins = "_allowSpecificOrigins";
 
-
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -45,11 +43,13 @@ try
         {
             var fileName = Directory.GetFiles(@".", "client_secret*").First();
             var jsonString = File.ReadAllText(fileName);
-            var obJObject = JObject.Parse(jsonString).GetValue("web");
+            var obJObject = JObject.Parse(jsonString).GetValue("installed");
 
             options.ClientId = obJObject?["client_id"]?.ToString() ?? string.Empty;
             options.ClientSecret = obJObject?["client_secret"]?.ToString() ?? string.Empty;
         });
+
+    builder.WebHost.UseUrls("http://localhost:5145");
 
     builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly);
 
@@ -57,10 +57,6 @@ try
         new AuthService(builder.Configuration.GetValue<string>("JWTSecretKey"),
             builder.Configuration.GetValue<int>("JWTLifespan"))
     );
-
-    ICalendarAdapter calendar = new CalendarAdapter();
-
-    calendar.GetTodayEvents();
 
     builder.AddCors(AllowSpecificOrigins);
 

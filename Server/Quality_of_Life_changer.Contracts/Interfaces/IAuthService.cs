@@ -6,5 +6,4 @@ public interface IAuthService
 {
     bool VerifyPassword(string actualPassword, string hashedPassword);
     AuthData GetAuthData(string id, string userName, string userEmail);
-    IEnumerable<UserModel> GetAllUsers();
 }

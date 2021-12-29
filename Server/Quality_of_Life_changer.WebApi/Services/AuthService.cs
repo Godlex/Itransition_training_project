@@ -63,9 +63,4 @@ public class AuthService : IAuthService
             Id = id
         };
     }
-
-    public IEnumerable<UserModel> GetAllUsers()
-    {
-        throw new NotImplementedException();
-    }
 }

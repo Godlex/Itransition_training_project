@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Qoality_of_Life_changer.Model.Auth;
+using Quality_of_Life_changer.Adapter;
 using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
-using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.WebApi.Validators;
 
 namespace Quality_of_Life_changer.WebApi.Controllers;
@@ -65,8 +65,12 @@ public class AuthController : ControllerBase
         return response == null ? NotFound() : Ok(response);
     }
 
-    private UserModel MapUserToUserModel(QolcUser user)
+    [Route("TodayEvents")]
+    [HttpGet]
+    public async Task<IActionResult> TodayEvents()
     {
-        return new UserModel {Email = user.Email, Id = user.Id, Username = user.UserName};
+        var calendarAdapter = new CalendarAdapter();
+        var response = await calendarAdapter.GetTodayEvents();
+        return Ok();
     }
 }
