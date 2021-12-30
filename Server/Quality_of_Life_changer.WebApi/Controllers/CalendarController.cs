@@ -16,7 +16,7 @@ public class CalendarController : ControllerBase
         _mediator = mediator;
     }
 
-    [Route("GetTodayEvents")]
+    [Route("events/today")]
     [HttpGet]
     public async Task<IActionResult> GetTodayEvents()
     {

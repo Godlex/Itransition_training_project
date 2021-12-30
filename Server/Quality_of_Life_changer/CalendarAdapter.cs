@@ -24,7 +24,7 @@ public class CalendarAdapter : ICalendarAdapter
 
         SetupSecrets(fileName);
 
-        SetupCalendar();
+        SetupCalendar().Wait();
     }
 
     public async Task<IEnumerable<CalendarEvent>> GetTodayEvents()
@@ -35,16 +35,33 @@ public class CalendarAdapter : ICalendarAdapter
 
         foreach (var calendar in calendars.Items)
         {
-            var request = CreateRequest(calendar);
+            var eventsRequest = CreateRequest(calendar);
 
-            SetRequestOptions(request);
+            var events = await eventsRequest.ExecuteAsync();
 
-            var events = await GetEvents(request);
-
-            await AddEventsFromRequestTo(todayEvents, events);
+            AddEventsFromRequestTo(todayEvents, events);
         }
 
         return todayEvents;
+    }
+
+    private EventsResource.ListRequest CreateRequest(CalendarListEntry calendar)
+    {
+        var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
+        var maxEvents = 255;
+        var minStartTime = DateTime.Now.AddDays(-30);
+        var maxStartTime = DateTime.Now.AddDays(30);
+
+
+        var eventsRequest = _calendarService.Events.List(calendar.Id);
+
+        eventsRequest.TimeMin = minStartTime;
+        eventsRequest.TimeMax = maxStartTime;
+        eventsRequest.ShowDeleted = false;
+        eventsRequest.SingleEvents = true;
+        eventsRequest.MaxResults = maxEvents;
+        eventsRequest.OrderBy = sortByStartTime;
+        return eventsRequest;
     }
 
     private void SetupSecrets(string fileName)
@@ -87,44 +104,15 @@ public class CalendarAdapter : ICalendarAdapter
         });
     }
 
-    private EventsResource.ListRequest CreateRequest(CalendarListEntry calendar)
+    private static void AddEventsFromRequestTo(List<CalendarEvent> todayEvents, Events events)
     {
-        return _calendarService.Events.List(calendar.Id);
-    }
-
-    private async Task<Events> GetEvents(EventsResource.ListRequest request)
-    {
-        return await request.ExecuteAsync();
-    }
-
-    private static Task AddEventsFromRequestTo(List<CalendarEvent> todayEvents, Events events)
-    {
-        if (events.Items != null && events.Items.Count > 0)
-            foreach (var eventItem in events.Items)
-                if (eventItem.Start.DateTime != null && eventItem.End.DateTime != null)
+        if (events.Items is {Count: > 0})
+            todayEvents.AddRange(events.Items
+                .Where(x => x.Start.DateTime.HasValue && x.End.DateTime.HasValue)
+                .Select(x => new CalendarEvent
                 {
-                    var startTime = (DateTime) eventItem.Start.DateTime;
-                    var endTime = (DateTime) eventItem.End.DateTime;
-
-                    todayEvents.Add(new CalendarEvent
-                        {StartDateTime = startTime, EndDateTime = endTime, Id = new Guid().ToString()});
-                }
-
-        return Task.CompletedTask;
-    }
-
-    private static void SetRequestOptions(EventsResource.ListRequest request)
-    {
-        var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
-        var maxEvents = 255;
-        var minStartTime = DateTime.Now;
-        var maxStartTime = DateTime.Now.AddDays(1);
-
-        request.TimeMin = minStartTime;
-        request.TimeMax = maxStartTime;
-        request.ShowDeleted = false;
-        request.SingleEvents = true;
-        request.MaxResults = maxEvents;
-        request.OrderBy = sortByStartTime;
+                    StartDateTime = (DateTime) x.Start.DateTime, EndDateTime = (DateTime) x.End.DateTime,
+                    Id = Guid.NewGuid().ToString()
+                }));
     }
 }
