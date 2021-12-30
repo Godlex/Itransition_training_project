@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using Quality_of_Life_changer.Adapter;
 using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
@@ -43,13 +44,15 @@ try
         {
             var fileName = Directory.GetFiles(@".", "client_secret*").First();
             var jsonString = File.ReadAllText(fileName);
-            var obJObject = JObject.Parse(jsonString).GetValue("installed");
+            var installedApplicationCreds = JObject.Parse(jsonString).GetValue("installed");
 
-            options.ClientId = obJObject?["client_id"]?.ToString() ?? string.Empty;
-            options.ClientSecret = obJObject?["client_secret"]?.ToString() ?? string.Empty;
+            options.ClientId = installedApplicationCreds?["client_id"]?.ToString() ?? string.Empty;
+            options.ClientSecret = installedApplicationCreds?["client_secret"]?.ToString() ?? string.Empty;
         });
 
     builder.WebHost.UseUrls("http://localhost:5145");
+
+    builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
 
     builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly);
 

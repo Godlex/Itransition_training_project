@@ -6,9 +6,5 @@ public class CalendarEvent
 
     public DateTime StartDateTime { get; set; }
 
-    public DateTime EndDataTime { get; set; }
-    //end.DateTime
-    //end.TimeZone
-    //originalStartTime.dateTime
-    //originalStartTime.timeZone
+    public DateTime EndDateTime { get; set; }
 }

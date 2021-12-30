@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Model.Entities;
@@ -11,71 +12,119 @@ public class CalendarAdapter : ICalendarAdapter
 {
     private static readonly string ApplicationName = "Quality of Life changer";
 
-    // If modifying these scopes, delete your previously saved credentials
-    // at ~/.credentials/calendar-dotnet-quickstart.json
     private static readonly string[] CalendarScopes = {CalendarService.Scope.Calendar};
 
-    //private static readonly string[] GmailScopes = {GmailService.Scope.GmailReadonly};
     private CalendarService _calendarService;
-    // private GmailService _gmailService;
+
+    private ClientSecrets _secrets;
+
+    public CalendarAdapter()
+    {
+        var fileName = GetFileName();
+
+        SetupSecrets(fileName);
+
+        SetupCalendar();
+    }
 
     public async Task<IEnumerable<CalendarEvent>> GetTodayEvents()
     {
         var todayEvents = new List<CalendarEvent>();
 
-        UserCredential credential;
+        var calendars = await GetCalendarList();
 
-        var fileName = Directory.GetFiles(@".", "client_secret*").First();
-
-        await using (var stream =
-                     new FileStream(
-                         fileName,
-                         FileMode.Open, FileAccess.Read))
+        foreach (var calendar in calendars.Items)
         {
-            var secret = Load(stream).Secrets;
-            credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                secret,
-                CalendarScopes,
-                "user", CancellationToken.None);
+            var request = CreateRequest(calendar);
+
+            SetRequestOptions(request);
+
+            var events = await GetEvents(request);
+
+            await AddEventsFromRequestTo(todayEvents, events);
         }
 
+        return todayEvents;
+    }
 
-        // Create the service.
+    private void SetupSecrets(string fileName)
+    {
+        using var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+        _secrets = Load(stream).Secrets;
+    }
 
+    private static string GetFileName()
+    {
+        return Directory.GetFiles(@".", "client_secret*").First();
+    }
+
+    private async Task SetupCalendar()
+    {
+        var credential = await CreateCredential();
+
+        CreateCalendarService(credential);
+    }
+
+    private async Task<UserCredential> CreateCredential()
+    {
+        return await GoogleWebAuthorizationBroker.AuthorizeAsync(
+            _secrets,
+            CalendarScopes,
+            "user", CancellationToken.None);
+    }
+
+    private async Task<CalendarList> GetCalendarList()
+    {
+        return await _calendarService.CalendarList.List().ExecuteAsync();
+    }
+
+    private void CreateCalendarService(UserCredential credential)
+    {
         _calendarService = new CalendarService(new BaseClientService.Initializer
         {
             HttpClientInitializer = credential,
             ApplicationName = ApplicationName
         });
+    }
 
-        var calendars = await _calendarService.CalendarList.List().ExecuteAsync();
-        foreach (var calendar in calendars.Items)
-        {
-            var request = _calendarService.Events.List(calendar.Id);
+    private EventsResource.ListRequest CreateRequest(CalendarListEntry calendar)
+    {
+        return _calendarService.Events.List(calendar.Id);
+    }
 
-            var time = DateTime.Now;
-            request.TimeMin = time;
-            request.TimeMax = time.AddDays(1);
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
-            request.MaxResults = 255;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+    private async Task<Events> GetEvents(EventsResource.ListRequest request)
+    {
+        return await request.ExecuteAsync();
+    }
 
-            // List events.
-            var events = await request.ExecuteAsync();
+    private static Task AddEventsFromRequestTo(List<CalendarEvent> todayEvents, Events events)
+    {
+        if (events.Items != null && events.Items.Count > 0)
+            foreach (var eventItem in events.Items)
+                if (eventItem.Start.DateTime != null && eventItem.End.DateTime != null)
+                {
+                    var startTime = (DateTime) eventItem.Start.DateTime;
+                    var endTime = (DateTime) eventItem.End.DateTime;
 
-            if (events.Items != null && events.Items.Count > 0)
-                foreach (var eventItem in events.Items)
-                    if (eventItem.Start.DateTime != null && eventItem.End.DateTime != null)
-                    {
-                        var startTime = (DateTime) eventItem.Start.DateTime;
-                        var endTime = (DateTime) eventItem.End.DateTime;
+                    todayEvents.Add(new CalendarEvent
+                        {StartDateTime = startTime, EndDateTime = endTime, Id = new Guid().ToString()});
+                }
 
-                        todayEvents.Add(new CalendarEvent
-                            {StartDateTime = startTime, EndDataTime = endTime, Id = new Guid().ToString()});
-                    }
-        }
+        return Task.CompletedTask;
+    }
 
-        return todayEvents;
+    private static void SetRequestOptions(EventsResource.ListRequest request)
+    {
+        var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
+        var maxEvents = 255;
+        var minStartTime = DateTime.Now;
+        var maxStartTime = DateTime.Now.AddDays(1);
+
+        request.TimeMin = minStartTime;
+        request.TimeMax = maxStartTime;
+        request.ShowDeleted = false;
+        request.SingleEvents = true;
+        request.MaxResults = maxEvents;
+        request.OrderBy = sortByStartTime;
     }
 }

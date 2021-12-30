@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Qoality_of_Life_changer.Model.Auth;
-using Quality_of_Life_changer.Adapter;
 using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
@@ -13,12 +12,12 @@ namespace Quality_of_Life_changer.WebApi.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
+    private readonly IAuthService _authService;
     private readonly IMediator _mediator;
-    private readonly IAuthService authService;
 
     public AuthController(IAuthService authService, IMediator mediator)
     {
-        this.authService = authService;
+        _authService = authService;
         _mediator = mediator;
     }
 
@@ -36,11 +35,11 @@ public class AuthController : ControllerBase
 
         if (user == null) return BadRequest(new {email = "no user with this email"}); //todo
 
-        var passwordValid = authService.VerifyPassword(model.Password, user.Password);
+        var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
 
         if (!passwordValid) return BadRequest(new {password = "invalid password"}); //todo
 
-        return authService.GetAuthData(user.Id, user.Username, user.Email);
+        return _authService.GetAuthData(user.Id, user.Username, user.Email);
     }
 
     [HttpPost("register")]
@@ -54,7 +53,7 @@ public class AuthController : ControllerBase
         var command = new AddUser.Command(model.Username, model.Email, model.Password);
         var user = await _mediator.Send(command);
 
-        return authService.GetAuthData(user.Id, user.UserName, user.Email);
+        return _authService.GetAuthData(user.Id, user.UserName, user.Email);
     }
 
     [HttpGet]
@@ -63,14 +62,5 @@ public class AuthController : ControllerBase
     {
         var response = await _mediator.Send(new GetAllUsers.Query());
         return response == null ? NotFound() : Ok(response);
-    }
-
-    [Route("TodayEvents")]
-    [HttpGet]
-    public async Task<IActionResult> TodayEvents()
-    {
-        var calendarAdapter = new CalendarAdapter();
-        var response = await calendarAdapter.GetTodayEvents();
-        return Ok();
     }
 }
