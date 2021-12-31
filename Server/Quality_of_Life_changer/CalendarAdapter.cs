@@ -49,8 +49,8 @@ public class CalendarAdapter : ICalendarAdapter
     {
         var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
         var maxEvents = 255;
-        var minStartTime = DateTime.Now.AddDays(-30);
-        var maxStartTime = DateTime.Now.AddDays(30);
+        var minStartTime = DateTime.Now;
+        var maxStartTime = DateTime.Now.AddDays(1);
 
 
         var eventsRequest = _calendarService.Events.List(calendar.Id);
