@@ -5,6 +5,8 @@ import LogoutForm from "./components/auth/LogoutForm";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import AuthMenu from "./components/auth/AuthMenu";
+import TodayEventsForm from "./components/events/TodayEventsForm";
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -17,6 +19,7 @@ class App extends Component {
             <Route path="/login" element={<AuthForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/logout" element={<LogoutForm />} />
+            <Route path="/events-today" element={<TodayEventsForm />} />
           </Routes>
         </div>
       </div>
