@@ -1,12 +1,37 @@
-import React from "react";
+import React, { Component } from "react";
 import EventsCardsGrid from "./EventsCardsGrid";
+import moment from "moment";
 
-function TodayEventsForm() {
-  let fetchresult = [];
-  return (
-    <div style={{ marginTop: "1%", marginLeft: "5%", marginRight: "5%" }}>
-      <EventsCardsGrid events={[{name:"EventName",owner:"Owner",startTime:"13-00",endTime:"13-30"},{name:"EventName",owner:"Owner",startTime:"13-00",endTime:"13-30"}]} />
-    </div>
-  );
+
+export default class App extends Component {
+  render() {
+    return (
+      <div style={{ marginTop: "1%", marginLeft: "5%", marginRight: "5%" }}>
+        <EventsCardsGrid
+          events={[
+            {
+              name: "EventName1",
+              owner: "Owner1",
+              startTime: moment("2022-01-03T10:30:00+03:00").format(
+                " hh:mm Z a ddd MMM"
+              ),
+              endTime: moment("2022-01-03T11:00:00+03:00").format(
+                " hh:mm Z a ddd MMM"
+              ),
+            },
+            {
+              name: "EventName2",
+              owner: "Owner2",
+              startTime: moment("2022-02-04T10:30:00+03:00").format(
+                " hh:mm Z a ddd MMM"
+              ),
+              endTime: moment("2022-02-04T11:00:00+03:00").format(
+                " hh:mm Z a ddd MMM"
+              ),
+            },
+          ]}
+        />
+      </div>
+    );
+  }
 }
-export default TodayEventsForm;
