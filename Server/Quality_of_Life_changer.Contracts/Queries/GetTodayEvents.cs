@@ -21,8 +21,8 @@ public class GetTodayEvents
 
         public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
         {
-            var Events = await _calendarAdapter.GetTodayEvents();
-            return new Response(Events.ToList());
+            var events = await _calendarAdapter.GetTodayEvents();
+            return new Response(events.ToList());
         }
     }
 
