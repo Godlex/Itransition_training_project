@@ -9,8 +9,12 @@ class EventCard extends Component {
         <Card.Header>{this.props.name}</Card.Header>
         <Card.Footer>{this.props.owner}</Card.Footer>
         <Card.Body>
-          <Card.Title>Start Time - {this.props.startTime}</Card.Title>
-          <Card.Title>End Time - {this.props.endTime}</Card.Title>
+          <Card.Title>
+            Start Time - {this.props.startTime.format(" hh:mm a DD-MMM-YY")}
+          </Card.Title>
+          <Card.Title>
+            End Time - {this.props.endTime.format(" hh:mm a DD-MMM-YY")}
+          </Card.Title>
         </Card.Body>
       </Card>
     );
