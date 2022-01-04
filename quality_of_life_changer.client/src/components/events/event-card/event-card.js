@@ -1,12 +1,12 @@
 import { Component } from "react";
 import { Card } from "react-bootstrap";
-import { eventConstants } from "./events-constants";
+import { eventConstants } from "../events-constants";
 import "./event-card.css";
 
 class EventCard extends Component {
   render() {
     return (
-      <Card className="customCard">
+      <Card className="customCard" >
         <Card.Header>{this.props.name}</Card.Header>
         <Card.Footer>{this.props.owner}</Card.Footer>
         <Card.Body>
