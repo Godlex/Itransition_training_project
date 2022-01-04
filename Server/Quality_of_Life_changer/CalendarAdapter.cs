@@ -35,7 +35,7 @@ public class CalendarAdapter : ICalendarAdapter
 
         foreach (var calendar in calendars.Items)
         {
-            var eventsRequest = CreateRequest(calendar);
+            var eventsRequest = CreateEventsRequest(calendar);
 
             var events = await eventsRequest.ExecuteAsync();
 
@@ -45,7 +45,7 @@ public class CalendarAdapter : ICalendarAdapter
         return todayEvents;
     }
 
-    private EventsResource.ListRequest CreateRequest(CalendarListEntry calendar)
+    private EventsResource.ListRequest CreateEventsRequest(CalendarListEntry calendar)
     {
         var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
         var maxEvents = 255;
@@ -106,14 +106,12 @@ public class CalendarAdapter : ICalendarAdapter
 
     private IEnumerable<CalendarEvent> MapEventsToCalendarEvents(Events events)
     {
-        if (events.Items is {Count: > 0})
-            return events.Items
-                .Where(x => x.Start.DateTime.HasValue && x.End.DateTime.HasValue)
-                .Select(x => new CalendarEvent
-                {
-                    StartDateTime = (DateTime) x.Start.DateTime, EndDateTime = (DateTime) x.End.DateTime,
-                    Id = x.Id, Name = x.Summary, Owner = x.Creator.DisplayName
-                });
-        return new List<CalendarEvent>();
+        return events.Items
+            .Where(x => x.Start.DateTime.HasValue && x.End.DateTime.HasValue)
+            .Select(x => new CalendarEvent
+            {
+                StartDateTime = (DateTime) x.Start.DateTime, EndDateTime = (DateTime) x.End.DateTime,
+                Id = x.Id, Name = x.Summary, Owner = x.Creator.DisplayName
+            });
     }
 }
