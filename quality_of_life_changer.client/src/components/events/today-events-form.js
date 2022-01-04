@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import EventsCardsGrid from "./EventsCardsGrid";
+import EventsCardsGrid from "./events-cards-grid";
 import moment from "moment";
 
 

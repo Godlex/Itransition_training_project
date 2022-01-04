@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Card } from "react-bootstrap";
-import eventsConstants from "./events-constants";
-import "./eventCard.css";
+import { eventConstants } from "./events-constants";
+import "./event-card.css";
 
 class EventCard extends Component {
   render() {
@@ -12,10 +12,10 @@ class EventCard extends Component {
         <Card.Body>
           <Card.Title>
             Start Time -{" "}
-            {this.props.startTime.format(eventsConstants.DATE_FORMAT)}
+            {this.props.startTime.format(eventConstants.DATE_FORMAT)}
           </Card.Title>
           <Card.Title>
-            End Time - {this.props.endTime.format(eventsConstants.DATE_FORMAT)}
+            End Time - {this.props.endTime.format(eventConstants.DATE_FORMAT)}
           </Card.Title>
         </Card.Body>
       </Card>

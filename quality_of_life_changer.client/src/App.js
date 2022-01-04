@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import AuthForm from "./components/auth/AuthForm";
-import RegisterForm from "./components/auth/RegisterForm";
-import LogoutForm from "./components/auth/LogoutForm";
+import AuthForm from "./components/auth/auth-form";
+import RegisterForm from "./components/auth/register-form";
+import LogoutForm from "./components/auth/logout-form";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
-import AuthMenu from "./components/auth/AuthMenu";
-import TodayEventsForm from "./components/events/TodayEventsForm";
+import AuthMenu from "./components/auth/auth-menu";
+import TodayEventsForm from "./components/events/today-events-form";
 import "./App.css";
 
 class App extends Component {
