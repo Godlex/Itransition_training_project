@@ -5,8 +5,9 @@ import "./event-card.css";
 
 class EventCard extends Component {
   render() {
+     console.log(this.props);
     return (
-      <Card className="customCard" >
+      <Card className="custom-card">
         <Card.Header>{this.props.name}</Card.Header>
         <Card.Footer>{this.props.owner}</Card.Footer>
         <Card.Body>
