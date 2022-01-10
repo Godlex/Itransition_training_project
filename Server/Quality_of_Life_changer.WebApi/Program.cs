@@ -9,6 +9,7 @@ using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
+using Quality_of_Life_changer.Implication.Handlers;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Services;
 using Serilog;
@@ -54,7 +55,8 @@ try
 
     builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
 
-    builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly);
+    builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly,
+        typeof(GetAllUsersHandler).Assembly);
 
     builder.Services.AddSingleton<IAuthService>(
         new AuthService(builder.Configuration.GetValue<string>("JWTSecretKey"),
