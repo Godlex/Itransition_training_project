@@ -36,8 +36,4 @@
     <ProjectReference Include="..\Quality_of_Life_changer\Quality_of_Life_changer.Adapter.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
-
 </Project>

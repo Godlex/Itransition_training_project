@@ -10,7 +10,7 @@ namespace Quality_of_Life_changer.Adapter;
 
 public class CalendarAdapter : ICalendarAdapter
 {
-    private static readonly string ApplicationName = "Quality of Life changer";
+    private const string ApplicationName = "Quality of Life changer";
 
     private static readonly string[] CalendarScopes = {CalendarService.Scope.Calendar};
 
@@ -49,7 +49,7 @@ public class CalendarAdapter : ICalendarAdapter
     {
         var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
         var maxEvents = 255;
-        var minStartTime = DateTime.Now.AddDays(-7);
+        var minStartTime = DateTime.Now;
         var maxStartTime = DateTime.Now.AddDays(1);
 
 

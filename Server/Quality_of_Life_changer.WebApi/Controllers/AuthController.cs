@@ -23,21 +23,19 @@ public class AuthController : ControllerBase
 
     [Consumes("application/json")]
     [HttpPost("login")]
-    public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model) //todo viewmodel to model
+    public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model)
     {
         var validator = new LoginModelValidator(); //todo validator to DI
 
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) return StatusCode(422, result.Errors);
+        if (!result.IsValid) throw new Exception("invalid data");
 
         var user = await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
-        if (user == null) return BadRequest(new {email = "no user with this email"}); //todo
-
         var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
 
-        if (!passwordValid) return BadRequest(new {password = "invalid password"}); //todo
+        if (!passwordValid) throw new Exception("invalid password");
 
         return _authService.GetAuthData(user.Id, user.Username, user.Email);
     }
@@ -48,7 +46,7 @@ public class AuthController : ControllerBase
         var validator = new RegisterModelValidator();
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) return BadRequest(result.Errors);
+        if (!result.IsValid) throw new Exception("invalid data");
 
         var command = new AddUser.Command(model.Username, model.Email, model.Password);
         var user = await _mediator.Send(command);
@@ -56,7 +54,7 @@ public class AuthController : ControllerBase
         return _authService.GetAuthData(user.Id, user.UserName, user.Email);
     }
 
-    [HttpGet]
+    [HttpGet("users/all")]
     // [Authorize]
     public async Task<IActionResult> GetAllUsers()
     {

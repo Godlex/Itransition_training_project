@@ -82,6 +82,7 @@ try
     }
 
     app.UseCors(AllowSpecificOrigins);
+    app.ConfigureCustomExceptionMiddleware();
 
     app.UseHttpsRedirection();
 

@@ -1,4 +1,6 @@
-﻿namespace Quality_of_Life_changer.WebApi;
+﻿using Quality_of_Life_changer.WebApi.CustomExceptionMiddleware;
+
+namespace Quality_of_Life_changer.WebApi;
 
 public static class ConfigurationExtensions
 {
@@ -12,5 +14,10 @@ public static class ConfigurationExtensions
                     builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                 });
         });
+    }
+
+    public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<ExceptionMiddleware>();
     }
 }

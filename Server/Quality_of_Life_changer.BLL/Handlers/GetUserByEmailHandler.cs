@@ -20,7 +20,7 @@ public class Handler : IRequestHandler<GetUserByEmail.Query, GetUserByEmail.Resp
         var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == request.Email,
             cancellationToken);
         if (user == null)
-            throw new Exception(); //todo custom exception
+            throw new Exception("no user with this email"); //todo custom exception
         return new GetUserByEmail.Response(user.Id, user.UserName, user.Email, user.Password);
     }
 }
