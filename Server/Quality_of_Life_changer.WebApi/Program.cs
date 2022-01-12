@@ -9,6 +9,7 @@ using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.Implication.Handlers;
+using Quality_of_Life_changer.Implication.Handlers.QueriesHandlers;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Services;
 using Serilog;
@@ -45,10 +46,10 @@ try
         {
             var fileName = Directory.GetFiles(@".", "client_secret*").First();
             var jsonString = File.ReadAllText(fileName);
-            var installedApplicationCreds = JObject.Parse(jsonString).GetValue("installed");
+            var installedApplicationCredits = JObject.Parse(jsonString).GetValue("installed");
 
-            options.ClientId = installedApplicationCreds?["client_id"]?.ToString() ?? string.Empty;
-            options.ClientSecret = installedApplicationCreds?["client_secret"]?.ToString() ?? string.Empty;
+            options.ClientId = installedApplicationCredits?["client_id"]?.ToString() ?? string.Empty;
+            options.ClientSecret = installedApplicationCredits?["client_secret"]?.ToString() ?? string.Empty;
         });
 
     builder.WebHost.UseUrls("http://localhost:5145");
