@@ -1,7 +1,7 @@
-﻿using MediatR;
-using Quality_of_Life_changer.Data;
+﻿namespace Quality_of_Life_changer.Contracts.Queries;
 
-namespace Quality_of_Life_changer.Contracts.Queries;
+using Data;
+using MediatR;
 
 public class GetAllUsers
 {

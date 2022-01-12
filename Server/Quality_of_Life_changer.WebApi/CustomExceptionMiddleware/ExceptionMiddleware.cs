@@ -1,8 +1,8 @@
-﻿using System.Net;
-using Quality_of_Life_changer.WebApi.ViewModel;
-using Serilog;
+﻿namespace Quality_of_Life_changer.WebApi.CustomExceptionMiddleware;
 
-namespace Quality_of_Life_changer.WebApi.CustomExceptionMiddleware;
+using Model;
+using Serilog;
+using System.Net;
 
 public class ExceptionMiddleware
 {

@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿namespace Quality_of_Life_changer.Contracts.Queries;
 
-namespace Quality_of_Life_changer.Contracts.Queries;
+using MediatR;
 
 public class GetUserByEmail
 {

@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
+﻿namespace Quality_of_Life_changer.Model;
 
-namespace Quality_of_Life_changer.WebApi.ViewModel;
+using System.Text.Json;
 
 public class ErrorDetails
 {

@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Quality_of_Life_changer.Contracts.Interfaces;
-using Quality_of_Life_changer.Contracts.Queries;
+﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
-namespace Quality_of_Life_changer.WebApi.Controllers;
+using Contracts.Interfaces;
+using Contracts.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]

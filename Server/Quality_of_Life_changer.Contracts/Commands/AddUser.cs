@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿namespace Quality_of_Life_changer.Contracts.Commands;
 
-namespace Quality_of_Life_changer.Contracts.Commands;
+using MediatR;
 
 public class AddUser
 {

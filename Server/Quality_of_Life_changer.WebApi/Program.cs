@@ -1,4 +1,3 @@
-using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +12,7 @@ using Quality_of_Life_changer.Implication.Handlers;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Services;
 using Serilog;
+using System.Text;
 
 Logger.Initial();
 
@@ -66,7 +66,6 @@ try
     builder.AddCors(AllowSpecificOrigins);
 
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -75,6 +74,7 @@ try
     app.UseSerilogRequestLogging();
 
     // Configure the HTTP request pipeline.
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
@@ -82,7 +82,7 @@ try
     }
 
     app.UseCors(AllowSpecificOrigins);
-    app.ConfigureCustomExceptionMiddleware();
+    app.ConfigureExceptionMiddleware();
 
     app.UseHttpsRedirection();
 

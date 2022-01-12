@@ -1,12 +1,12 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Qoality_of_Life_changer.Model.Auth;
-using Quality_of_Life_changer.Contracts.Commands;
-using Quality_of_Life_changer.Contracts.Interfaces;
-using Quality_of_Life_changer.Contracts.Queries;
-using Quality_of_Life_changer.WebApi.Validators;
+﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
-namespace Quality_of_Life_changer.WebApi.Controllers;
+using Contracts.Commands;
+using Contracts.Interfaces;
+using Contracts.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Model.Auth;
+using Validators;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -29,13 +29,19 @@ public class AuthController : ControllerBase
 
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) throw new Exception("invalid data");
+        if (!result.IsValid)
+        {
+            throw new Exception("invalid input");
+        }
 
         var user = await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
         var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
 
-        if (!passwordValid) throw new Exception("invalid password");
+        if (!passwordValid)
+        {
+            throw new Exception("invalid password");
+        }
 
         return _authService.GetAuthData(user.Id, user.Username, user.Email);
     }
@@ -46,7 +52,12 @@ public class AuthController : ControllerBase
         var validator = new RegisterModelValidator();
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) throw new Exception("invalid data");
+        if (!result.IsValid)
+        {
+            throw new Exception("invalid input");
+        }
+
+        await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
         var command = new AddUser.Command(model.Username, model.Email, model.Password);
         var user = await _mediator.Send(command);
@@ -59,6 +70,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> GetAllUsers()
     {
         var response = await _mediator.Send(new GetAllUsers.Query());
-        return response == null ? NotFound() : Ok(response);
+        return Ok(response);
     }
 }

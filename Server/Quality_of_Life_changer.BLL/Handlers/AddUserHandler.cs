@@ -1,9 +1,9 @@
-﻿using System.Web.Helpers;
-using MediatR;
-using Quality_of_Life_changer.Contracts.Commands;
-using Quality_of_Life_changer.Data;
+﻿namespace Quality_of_Life_changer.Implication.Handlers;
 
-namespace Quality_of_Life_changer.Implication.Handlers;
+using Contracts.Commands;
+using Data;
+using MediatR;
+using System.Web.Helpers;
 
 public class AddUserHandler : IRequestHandler<AddUser.Command, AddUser.Response>
 {

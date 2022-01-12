@@ -1,12 +1,13 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using static Google.Apis.Auth.OAuth2.GoogleClientSecrets;
+
+namespace Quality_of_Life_changer.Adapter;
+
+using Contracts.Interfaces;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
-using Quality_of_Life_changer.Contracts.Interfaces;
-using Quality_of_Life_changer.Model.Entities;
-using static Google.Apis.Auth.OAuth2.GoogleClientSecrets;
-
-namespace Quality_of_Life_changer.Adapter;
+using Model.Entities;
 
 public class CalendarAdapter : ICalendarAdapter
 {
@@ -24,14 +25,14 @@ public class CalendarAdapter : ICalendarAdapter
 
         SetupSecrets(fileName);
 
-        SetupCalendar().Wait();
+        SetupCalendarAsync().Wait();
     }
 
     public async Task<IEnumerable<CalendarEvent>> GetTodayEvents()
     {
         var todayEvents = new List<CalendarEvent>();
 
-        var calendars = await GetCalendarList();
+        var calendars = await GetCalendarListAsync();
 
         foreach (var calendar in calendars.Items)
         {
@@ -47,8 +48,9 @@ public class CalendarAdapter : ICalendarAdapter
 
     private EventsResource.ListRequest CreateEventsRequest(CalendarListEntry calendar)
     {
-        var sortByStartTime = EventsResource.ListRequest.OrderByEnum.StartTime;
-        var maxEvents = 255;
+        var sortOrder = EventsResource.ListRequest.OrderByEnum.StartTime;
+        var maxNumberOfEvents = 255;
+
         var minStartTime = DateTime.Now;
         var maxStartTime = DateTime.Now.AddDays(1);
 
@@ -59,8 +61,9 @@ public class CalendarAdapter : ICalendarAdapter
         eventsRequest.TimeMax = maxStartTime;
         eventsRequest.ShowDeleted = false;
         eventsRequest.SingleEvents = true;
-        eventsRequest.MaxResults = maxEvents;
-        eventsRequest.OrderBy = sortByStartTime;
+        eventsRequest.MaxResults = maxNumberOfEvents;
+        eventsRequest.OrderBy = sortOrder;
+
         return eventsRequest;
     }
 
@@ -75,14 +78,14 @@ public class CalendarAdapter : ICalendarAdapter
         return Directory.GetFiles(@".", "client_secret*").First();
     }
 
-    private async Task SetupCalendar()
+    private async Task SetupCalendarAsync()
     {
-        var credential = await CreateCredential();
+        var credential = await CreateCredentialAsync();
 
         CreateCalendarService(credential);
     }
 
-    private async Task<UserCredential> CreateCredential()
+    private async Task<UserCredential> CreateCredentialAsync()
     {
         return await GoogleWebAuthorizationBroker.AuthorizeAsync(
             _secrets,
@@ -90,7 +93,7 @@ public class CalendarAdapter : ICalendarAdapter
             "user", CancellationToken.None);
     }
 
-    private async Task<CalendarList> GetCalendarList()
+    private async Task<CalendarList> GetCalendarListAsync()
     {
         return await _calendarService.CalendarList.List().ExecuteAsync();
     }

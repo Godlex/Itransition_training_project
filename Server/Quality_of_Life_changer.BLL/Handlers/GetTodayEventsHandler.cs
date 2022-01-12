@@ -1,8 +1,8 @@
-﻿using MediatR;
-using Quality_of_Life_changer.Contracts.Interfaces;
-using Quality_of_Life_changer.Contracts.Queries;
+﻿namespace Quality_of_Life_changer.Implication.Handlers;
 
-namespace Quality_of_Life_changer.Implication.Handlers;
+using Contracts.Interfaces;
+using Contracts.Queries;
+using MediatR;
 
 public class GetTodayEventsHandler : IRequestHandler<GetTodayEvents.Query, GetTodayEvents.Response>
 {

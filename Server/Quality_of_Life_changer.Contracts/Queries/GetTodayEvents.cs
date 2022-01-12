@@ -1,7 +1,7 @@
-﻿using MediatR;
-using Quality_of_Life_changer.Model.Entities;
+﻿namespace Quality_of_Life_changer.Contracts.Queries;
 
-namespace Quality_of_Life_changer.Contracts.Queries;
+using MediatR;
+using Model.Entities;
 
 public class GetTodayEvents
 {

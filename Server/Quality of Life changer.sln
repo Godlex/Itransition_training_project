@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.Contracts", "Quality_of_Life_changer.Contracts\Quality_of_Life_changer.Contracts.csproj", "{DC7CD5C3-ED36-4DB1-9568-FA1362DA107B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quality_of_Life_changer.Adapter", "Quality_of_Life_changer\Quality_of_Life_changer.Adapter.csproj", "{5D08DF5F-255E-4567-816A-3C90867811CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.Adapter", "Quality_of_Life_changer.Adapter\Quality_of_Life_changer.Adapter.csproj", "{7FE80696-49C6-4848-8A5C-4C1614E43988}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{DC7CD5C3-ED36-4DB1-9568-FA1362DA107B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC7CD5C3-ED36-4DB1-9568-FA1362DA107B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC7CD5C3-ED36-4DB1-9568-FA1362DA107B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D08DF5F-255E-4567-816A-3C90867811CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D08DF5F-255E-4567-816A-3C90867811CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D08DF5F-255E-4567-816A-3C90867811CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D08DF5F-255E-4567-816A-3C90867811CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE80696-49C6-4848-8A5C-4C1614E43988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE80696-49C6-4848-8A5C-4C1614E43988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE80696-49C6-4848-8A5C-4C1614E43988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE80696-49C6-4848-8A5C-4C1614E43988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

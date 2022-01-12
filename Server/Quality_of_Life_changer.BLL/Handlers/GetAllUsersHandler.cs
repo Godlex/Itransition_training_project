@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Quality_of_Life_changer.Contracts.Queries;
-using Quality_of_Life_changer.Data;
+﻿namespace Quality_of_Life_changer.Implication.Handlers;
 
-namespace Quality_of_Life_changer.Implication.Handlers;
+using Contracts.Queries;
+using Data;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 public class GetAllUsersHandler : IRequestHandler<GetAllUsers.Query, GetAllUsers.Response>
 {

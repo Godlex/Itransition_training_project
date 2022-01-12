@@ -1,6 +1,6 @@
-﻿using Quality_of_Life_changer.WebApi.CustomExceptionMiddleware;
+﻿namespace Quality_of_Life_changer.WebApi;
 
-namespace Quality_of_Life_changer.WebApi;
+using CustomExceptionMiddleware;
 
 public static class ConfigurationExtensions
 {
@@ -16,7 +16,7 @@ public static class ConfigurationExtensions
         });
     }
 
-    public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
+    public static void ConfigureExceptionMiddleware(this IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionMiddleware>();
     }

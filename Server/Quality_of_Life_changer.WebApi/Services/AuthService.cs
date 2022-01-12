@@ -1,12 +1,12 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿namespace Quality_of_Life_changer.WebApi.Services;
+
+using Contracts.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+using Model.Auth;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Web.Helpers;
-using Microsoft.IdentityModel.Tokens;
-using Qoality_of_Life_changer.Model.Auth;
-using Quality_of_Life_changer.Contracts.Interfaces;
-
-namespace Quality_of_Life_changer.WebApi.Services;
 
 public class AuthService : IAuthService
 

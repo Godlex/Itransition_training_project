@@ -1,6 +1,6 @@
-﻿using Serilog;
+﻿namespace Quality_of_Life_changer.WebApi;
 
-namespace Quality_of_Life_changer.WebApi;
+using Serilog;
 
 public class Logger
 {
