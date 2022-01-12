@@ -1,5 +1,7 @@
 ﻿namespace Quality_of_Life_changer.WebApi;
 
+using CustomExceptionMiddleware;
+
 public static class ConfigurationExtensions
 {
     public static void AddCors(this WebApplicationBuilder builder, string AllowSpecificOrigins)
@@ -12,5 +14,10 @@ public static class ConfigurationExtensions
                     builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                 });
         });
+    }
+
+    public static void ConfigureExceptionMiddleware(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<ExceptionMiddleware>();
     }
 }

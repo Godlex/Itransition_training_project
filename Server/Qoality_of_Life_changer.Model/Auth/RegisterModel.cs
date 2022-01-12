@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace Quality_of_Life_changer.Model.Auth;
 
-namespace Qoality_of_Life_changer.Model.Auth;
+using System.ComponentModel.DataAnnotations;
 
 public class RegisterModel
 {

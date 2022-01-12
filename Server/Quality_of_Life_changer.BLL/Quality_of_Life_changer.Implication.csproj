@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Quality_of_Life_changer.Contracts\Quality_of_Life_changer.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

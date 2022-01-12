@@ -1,46 +1,49 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Qoality_of_Life_changer.Model.Auth;
-using Quality_of_Life_changer.Contracts.Commands;
-using Quality_of_Life_changer.Contracts.Interfaces;
-using Quality_of_Life_changer.Contracts.Queries;
-using Quality_of_Life_changer.Data;
-using Quality_of_Life_changer.WebApi.Validators;
+﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
-namespace Quality_of_Life_changer.WebApi.Controllers;
+using Contracts.Commands;
+using Contracts.Interfaces;
+using Contracts.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Model.Auth;
+using Validators;
 
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
+    private readonly IAuthService _authService;
     private readonly IMediator _mediator;
-    private readonly IAuthService authService;
 
     public AuthController(IAuthService authService, IMediator mediator)
     {
-        this.authService = authService;
+        _authService = authService;
         _mediator = mediator;
     }
 
     [Consumes("application/json")]
     [HttpPost("login")]
-    public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model) //todo viewmodel to model
+    public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model)
     {
         var validator = new LoginModelValidator(); //todo validator to DI
 
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) return StatusCode(422, result.Errors);
+        if (!result.IsValid)
+        {
+            throw new Exception("invalid input");
+        }
 
         var user = await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
-        if (user == null) return BadRequest(new {email = "no user with this email"}); //todo
+        var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
 
-        var passwordValid = authService.VerifyPassword(model.Password, user.Password);
+        if (!passwordValid)
+        {
+            throw new Exception("invalid password");
+        }
 
-        if (!passwordValid) return BadRequest(new {password = "invalid password"}); //todo
-
-        return authService.GetAuthData(user.Id, user.Username, user.Email);
+        return _authService.GetAuthData(user.Id, user.Username, user.Email);
     }
 
     [HttpPost("register")]
@@ -49,24 +52,24 @@ public class AuthController : ControllerBase
         var validator = new RegisterModelValidator();
         var result = await validator.ValidateAsync(model);
 
-        if (!result.IsValid) return BadRequest(result.Errors);
+        if (!result.IsValid)
+        {
+            throw new Exception("invalid input");
+        }
+
+        await _mediator.Send(new GetUserByEmail.Query(model.Email));
 
         var command = new AddUser.Command(model.Username, model.Email, model.Password);
         var user = await _mediator.Send(command);
 
-        return authService.GetAuthData(user.Id, user.UserName, user.Email);
+        return _authService.GetAuthData(user.Id, user.UserName, user.Email);
     }
 
-    [HttpGet]
+    [HttpGet("users/all")]
     // [Authorize]
     public async Task<IActionResult> GetAllUsers()
     {
         var response = await _mediator.Send(new GetAllUsers.Query());
-        return response == null ? NotFound() : Ok(response);
-    }
-
-    private UserModel MapUserToUserModel(QolcUser user)
-    {
-        return new UserModel {Email = user.Email, Id = user.Id, Username = user.UserName};
+        return Ok(response);
     }
 }

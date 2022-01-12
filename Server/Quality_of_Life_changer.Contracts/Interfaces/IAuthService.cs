@@ -1,10 +1,9 @@
-﻿using Qoality_of_Life_changer.Model.Auth;
+﻿namespace Quality_of_Life_changer.Contracts.Interfaces;
 
-namespace Quality_of_Life_changer.Contracts.Interfaces;
+using Model.Auth;
 
 public interface IAuthService
 {
     bool VerifyPassword(string actualPassword, string hashedPassword);
     AuthData GetAuthData(string id, string userName, string userEmail);
-    IEnumerable<UserModel> GetAllUsers();
 }

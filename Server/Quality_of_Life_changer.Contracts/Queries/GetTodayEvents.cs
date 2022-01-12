@@ -1,11 +1,11 @@
 ﻿namespace Quality_of_Life_changer.Contracts.Queries;
 
-using Data;
 using MediatR;
+using Model.Entities;
 
-public class GetAllUsers
+public class GetTodayEvents
 {
     public record Query : IRequest<Response>;
 
-    public record Response(List<QolcUser> Users);
+    public record Response(IReadOnlyCollection<CalendarEvent> Events);
 }

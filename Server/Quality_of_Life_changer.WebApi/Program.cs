@@ -1,4 +1,3 @@
-using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +8,11 @@ using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
+using Quality_of_Life_changer.Implication.Handlers;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Services;
 using Serilog;
+using System.Text;
 
 Logger.Initial();
 
@@ -25,7 +26,6 @@ try
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     var AllowSpecificOrigins = "_allowSpecificOrigins";
-
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -45,26 +45,27 @@ try
         {
             var fileName = Directory.GetFiles(@".", "client_secret*").First();
             var jsonString = File.ReadAllText(fileName);
-            var obJObject = JObject.Parse(jsonString).GetValue("web");
+            var installedApplicationCreds = JObject.Parse(jsonString).GetValue("installed");
 
-            options.ClientId = obJObject?["client_id"]?.ToString() ?? string.Empty;
-            options.ClientSecret = obJObject?["client_secret"]?.ToString() ?? string.Empty;
+            options.ClientId = installedApplicationCreds?["client_id"]?.ToString() ?? string.Empty;
+            options.ClientSecret = installedApplicationCreds?["client_secret"]?.ToString() ?? string.Empty;
         });
 
-    builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly);
+    builder.WebHost.UseUrls("http://localhost:5145");
+
+    builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
+
+    builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly,
+        typeof(GetAllUsersHandler).Assembly);
 
     builder.Services.AddSingleton<IAuthService>(
         new AuthService(builder.Configuration.GetValue<string>("JWTSecretKey"),
             builder.Configuration.GetValue<int>("JWTLifespan"))
     );
 
-    ICalendarAdapter calendar = new CalendarAdapter();
-    calendar.GetTodayEvents();
-
     builder.AddCors(AllowSpecificOrigins);
 
     builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -73,6 +74,7 @@ try
     app.UseSerilogRequestLogging();
 
     // Configure the HTTP request pipeline.
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
@@ -80,6 +82,7 @@ try
     }
 
     app.UseCors(AllowSpecificOrigins);
+    app.ConfigureExceptionMiddleware();
 
     app.UseHttpsRedirection();
 

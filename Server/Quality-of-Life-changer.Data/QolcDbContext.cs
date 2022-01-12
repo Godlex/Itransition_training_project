@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace Quality_of_Life_changer.Data;
 
-namespace Quality_of_Life_changer.Data;
+using Microsoft.EntityFrameworkCore;
 
 public class QolcDbContext : DbContext
 {
-    public QolcDbContext(DbContextOptions<QolcDbContext> options) : base(options)
-    {
-    }
+    public QolcDbContext(DbContextOptions<QolcDbContext> options) : base(options) { }
 
     public DbSet<QolcUser> Users { get; set; }
 
