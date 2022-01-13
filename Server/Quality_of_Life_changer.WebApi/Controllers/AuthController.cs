@@ -13,7 +13,9 @@ using Validators;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly LoginModelValidator _loginValidator = new();
     private readonly IMediator _mediator;
+    private readonly RegisterModelValidator _registerValidator = new();
 
     public AuthController(IAuthService authService, IMediator mediator)
     {
@@ -25,9 +27,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthData>> Post([FromBody] LoginModel model)
     {
-        var validator = new LoginModelValidator(); //todo validator to DI
-
-        var result = await validator.ValidateAsync(model);
+        var result = await _loginValidator.ValidateAsync(model);
 
         if (!result.IsValid)
         {
@@ -49,9 +49,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<AuthData>> Post([FromBody] RegisterModel model)
     {
-        var validator = new RegisterModelValidator();
-
-        var result = await validator.ValidateAsync(model);
+        var result = await _registerValidator.ValidateAsync(model);
 
         if (!result.IsValid)
         {
