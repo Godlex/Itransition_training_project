@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Quality_of_Life_changer.Adapter;
+using Quality_of_Life_changer.Adapter.Services;
 using Quality_of_Life_changer.Contracts.Commands;
 using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.Implication.Handlers.QueriesHandlers;
 using Quality_of_Life_changer.WebApi;
-using Quality_of_Life_changer.WebApi.Services;
 using Serilog;
 using System.Text;
 
