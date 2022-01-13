@@ -1,3 +1,3 @@
 ﻿namespace Quality_of_Life_changer.Implication.Handlers;
 
-public abstract class BaseQueriesHandler { }
+public abstract class BaseQueryHandler { }

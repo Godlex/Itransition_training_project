@@ -5,7 +5,8 @@ using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-public class GetAllUsersHandler : BaseQueriesHandler, IRequestHandler<GetAllUsers.Query, GetAllUsers.Response>
+public class GetAllUsersHandler : BaseQueryHandler,
+    IRequestHandler<GetAllUsers.GetAllUsersQuery, GetAllUsers.GetAllUsersResponse>
 {
     private readonly QolcDbContext _context;
 
@@ -14,9 +15,10 @@ public class GetAllUsersHandler : BaseQueriesHandler, IRequestHandler<GetAllUser
         _context = context;
     }
 
-    public async Task<GetAllUsers.Response> Handle(GetAllUsers.Query request, CancellationToken cancellationToken)
+    public async Task<GetAllUsers.GetAllUsersResponse> Handle(GetAllUsers.GetAllUsersQuery request,
+        CancellationToken cancellationToken)
     {
         var mathProblem = _context.Set<QolcUser>().Select(x => x);
-        return new GetAllUsers.Response(await mathProblem.ToListAsync(cancellationToken));
+        return new GetAllUsers.GetAllUsersResponse(await mathProblem.ToListAsync(cancellationToken));
     }
 }

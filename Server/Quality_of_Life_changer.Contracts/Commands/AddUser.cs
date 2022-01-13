@@ -4,11 +4,11 @@ using MediatR;
 
 public class AddUser
 {
-    public record Command(
+    public record AddUserCommand(
         string UserName,
         string Email,
         string Password
-    ) : IRequest<Response>;
+    ) : IRequest<AddUserResponse>;
 
-    public record Response(string Id, string UserName, string Email);
+    public record AddUserResponse(string Id, string UserName, string Email);
 }

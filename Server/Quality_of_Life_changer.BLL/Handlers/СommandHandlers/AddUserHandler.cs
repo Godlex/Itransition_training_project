@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Helpers;
 
-public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.Command, AddUser.Response>
+public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.AddUserCommand, AddUser.AddUserResponse>
 {
     private readonly QolcDbContext _context;
 
@@ -15,7 +15,8 @@ public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.Comman
         _context = context;
     }
 
-    public async Task<AddUser.Response> Handle(AddUser.Command request, CancellationToken cancellationToken)
+    public async Task<AddUser.AddUserResponse> Handle(AddUser.AddUserCommand request,
+        CancellationToken cancellationToken)
     {
         //add user to db
 
@@ -35,7 +36,7 @@ public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.Comman
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new AddUser.Response(userId, request.Email, request.UserName);
+        return new AddUser.AddUserResponse(userId, request.Email, request.UserName);
     }
 
     private static string HashPassword(string password)
@@ -46,18 +47,18 @@ public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.Comman
     public async Task CheckingUserExistenceByEmail(string email)
     {
         var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == email);
-        if (user == null)
+        if (user != null)
         {
-            throw new Exception("no user with this email");
+            throw new Exception("user already exist this email");
         }
     }
 
     public async Task CheckingUserExistenceByName(string name)
     {
         var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.UserName == name);
-        if (user == null)
+        if (user != null)
         {
-            throw new Exception("no user with this name");
+            throw new Exception("user already exist this name");
         }
     }
 }

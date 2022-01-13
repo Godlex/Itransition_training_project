@@ -20,7 +20,7 @@ public class CalendarController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetTodayEvents()
     {
-        var response = await _mediator.Send(new GetTodayEvents.Query());
+        var response = await _mediator.Send(new GetTodayEvents.GetTodayEventsQuery());
         return response == null ? NotFound() : Ok(response);
     }
 }

@@ -5,7 +5,7 @@ using MediatR;
 
 public class GetAllUsers
 {
-    public record Query : IRequest<Response>;
+    public record GetAllUsersQuery : IRequest<GetAllUsersResponse>;
 
-    public record Response(List<QolcUser> Users);
+    public record GetAllUsersResponse(List<QolcUser> Users);
 }

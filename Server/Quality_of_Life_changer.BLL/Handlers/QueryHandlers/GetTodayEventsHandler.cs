@@ -4,7 +4,8 @@ using Contracts.Interfaces;
 using Contracts.Queries;
 using MediatR;
 
-public class GetTodayEventsHandler : BaseQueriesHandler, IRequestHandler<GetTodayEvents.Query, GetTodayEvents.Response>
+public class GetTodayEventsHandler : BaseQueryHandler,
+    IRequestHandler<GetTodayEvents.GetTodayEventsQuery, GetTodayEvents.GetTodayEventsResponse>
 {
     private readonly ICalendarAdapter _calendarAdapter;
 
@@ -13,10 +14,10 @@ public class GetTodayEventsHandler : BaseQueriesHandler, IRequestHandler<GetToda
         _calendarAdapter = calendarAdapter;
     }
 
-    public async Task<GetTodayEvents.Response> Handle(GetTodayEvents.Query request,
+    public async Task<GetTodayEvents.GetTodayEventsResponse> Handle(GetTodayEvents.GetTodayEventsQuery request,
         CancellationToken cancellationToken)
     {
         var events = await _calendarAdapter.GetTodayEvents();
-        return new GetTodayEvents.Response(events.ToList());
+        return new GetTodayEvents.GetTodayEventsResponse(events.ToList());
     }
 }
