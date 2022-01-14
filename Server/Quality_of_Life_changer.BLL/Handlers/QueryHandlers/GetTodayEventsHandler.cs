@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Implication.Handlers.QueriesHandlers;
+﻿namespace Quality_of_Life_changer.Implication.Handlers.QueryHandlers;
 
 using Contracts.Interfaces;
 using Contracts.Queries;

@@ -21,6 +21,6 @@ public class CalendarController : ControllerBase
     public async Task<IActionResult> GetTodayEvents()
     {
         var response = await _mediator.Send(new GetTodayEventsQuery());
-        return response == null ? NotFound() : Ok(response);
+        return Ok(response);
     }
 }

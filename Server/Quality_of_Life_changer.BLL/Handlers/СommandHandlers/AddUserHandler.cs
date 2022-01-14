@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Implication.Handlers.СommandsHandlers;
+﻿namespace Quality_of_Life_changer.Implication.Handlers.СommandHandlers;
 
 using Contracts.Commands;
 using Data;

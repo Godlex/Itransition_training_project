@@ -113,8 +113,11 @@ public class CalendarAdapter : ICalendarAdapter
             .Where(x => x.Start.DateTime.HasValue && x.End.DateTime.HasValue)
             .Select(x => new CalendarEvent
             {
-                StartDateTime = (DateTime) x.Start.DateTime, EndDateTime = (DateTime) x.End.DateTime,
-                Id = x.Id, Name = x.Summary, Owner = x.Creator.DisplayName
+                StartDateTime = (DateTime) x.Start.DateTime,
+                EndDateTime = (DateTime) x.End.DateTime,
+                Id = x.Id,
+                Name = x.Summary,
+                Owner = x.Creator.DisplayName
             });
     }
 }
