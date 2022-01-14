@@ -3,24 +3,27 @@
 using Contracts.Commands;
 using Contracts.Interfaces;
 using Contracts.Queries;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.Auth;
-using Validators;
 
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly LoginModelValidator _loginValidator = new();
+    private readonly IValidator<LoginModel> _loginValidator;
     private readonly IMediator _mediator;
-    private readonly RegisterModelValidator _registerValidator = new();
+    private readonly IValidator<RegisterModel> _registerValidator;
 
-    public AuthController(IAuthService authService, IMediator mediator)
+    public AuthController(IAuthService authService, IMediator mediator, IValidator<LoginModel> loginValidator,
+        IValidator<RegisterModel> registerValidator)
     {
         _authService = authService;
         _mediator = mediator;
+        _loginValidator = loginValidator;
+        _registerValidator = registerValidator;
     }
 
     [Consumes("application/json")]
