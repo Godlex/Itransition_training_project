@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
             throw new Exception("invalid input");
         }
 
-        var user = await _mediator.Send(new GetUserByEmail.GetUserByEmailQuery(model.Email));
+        var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
 
         var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
 
@@ -56,7 +56,7 @@ public class AuthController : ControllerBase
             throw new Exception("invalid input");
         }
 
-        var command = new AddUser.AddUserCommand(model.Username, model.Email, model.Password);
+        var command = new AddUserCommand(model.Username, model.Email, model.Password);
         var user = await _mediator.Send(command);
 
         return _authService.GetAuthData(user.Id, user.UserName, user.Email);
@@ -66,7 +66,7 @@ public class AuthController : ControllerBase
     // [Authorize]
     public async Task<IActionResult> GetAllUsers()
     {
-        var response = await _mediator.Send(new GetAllUsers.GetAllUsersQuery());
+        var response = await _mediator.Send(new GetAllUsersQuery());
         return Ok(response);
     }
 }

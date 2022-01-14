@@ -2,9 +2,6 @@
 
 using MediatR;
 
-public class GetUserByEmail
-{
-    public record GetUserByEmailQuery(string Email) : IRequest<GetUserByEmailResponse>;
+public record GetUserByEmailQuery(string Email) : IRequest<GetUserByEmailResponse>;
 
-    public record GetUserByEmailResponse(string Id, string Username, string Email, string Password);
-}
+public record GetUserByEmailResponse(string Id, string Username, string Email, string Password);

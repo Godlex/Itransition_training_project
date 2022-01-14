@@ -3,9 +3,6 @@
 using MediatR;
 using Model.Entities;
 
-public class GetTodayEvents
-{
-    public record GetTodayEventsQuery : IRequest<GetTodayEventsResponse>;
+public record GetTodayEventsQuery : IRequest<GetTodayEventsResponse>;
 
-    public record GetTodayEventsResponse(IReadOnlyCollection<CalendarEvent> Events);
-}
+public record GetTodayEventsResponse(IReadOnlyCollection<CalendarEvent> Events);

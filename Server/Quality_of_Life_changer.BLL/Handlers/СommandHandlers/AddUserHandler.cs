@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Helpers;
 
-public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.AddUserCommand, AddUser.AddUserResponse>
+public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUserCommand, AddUserResponse>
 {
     private readonly QolcDbContext _context;
 
@@ -15,7 +15,7 @@ public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.AddUse
         _context = context;
     }
 
-    public async Task<AddUser.AddUserResponse> Handle(AddUser.AddUserCommand request,
+    public async Task<AddUserResponse> Handle(AddUserCommand request,
         CancellationToken cancellationToken)
     {
         //add user to db
@@ -36,7 +36,7 @@ public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUser.AddUse
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new AddUser.AddUserResponse(userId, request.Email, request.UserName);
+        return new AddUserResponse(userId, request.Email, request.UserName);
     }
 
     private static string HashPassword(string password)

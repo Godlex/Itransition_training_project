@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 public class GetUserByEmailHandler : BaseQueryHandler,
-    IRequestHandler<GetUserByEmail.GetUserByEmailQuery, GetUserByEmail.GetUserByEmailResponse>
+    IRequestHandler<GetUserByEmailQuery, GetUserByEmailResponse>
 {
     private readonly QolcDbContext _context;
 
@@ -15,7 +15,7 @@ public class GetUserByEmailHandler : BaseQueryHandler,
         _context = context;
     }
 
-    public async Task<GetUserByEmail.GetUserByEmailResponse> Handle(GetUserByEmail.GetUserByEmailQuery request,
+    public async Task<GetUserByEmailResponse> Handle(GetUserByEmailQuery request,
         CancellationToken cancellationToken)
     {
         var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
@@ -25,6 +25,6 @@ public class GetUserByEmailHandler : BaseQueryHandler,
             throw new Exception("no user with this email");
         }
 
-        return new GetUserByEmail.GetUserByEmailResponse(user.Id, user.UserName, user.Email, user.Password);
+        return new GetUserByEmailResponse(user.Id, user.UserName, user.Email, user.Password);
     }
 }

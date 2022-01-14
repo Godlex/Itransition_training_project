@@ -57,7 +57,7 @@ try
 
     builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
-    builder.Services.AddMediatR(typeof(GetUserByEmail).Assembly, typeof(AddUser).Assembly,
+    builder.Services.AddMediatR(typeof(GetUserByEmailQuery).Assembly, typeof(AddUserCommand).Assembly,
         typeof(GetAllUsersHandler).Assembly);
 
     builder.Services.AddSingleton<IAuthService>(
