@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.WebApi", "Quality_of_Life_changer.WebApi\Quality_of_Life_changer.WebApi.csproj", "{D49AF775-E5A0-4063-882C-6E36F50A83B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.Implication", "Quality_of_Life_changer.BLL\Quality_of_Life_changer.Implication.csproj", "{7A06C9ED-0F6B-407C-83B2-E8722BEF7B63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.Implementation", "Quality_of_Life_changer.BLL\Quality_of_Life_changer.Implementation.csproj", "{7A06C9ED-0F6B-407C-83B2-E8722BEF7B63}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quality_of_Life_changer.Data", "Quality-of-Life-changer.Data\Quality_of_Life_changer.Data.csproj", "{942EFD8D-C971-4DF2-A0AB-2FC8CED18E12}"
 EndProject

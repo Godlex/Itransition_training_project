@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Implication.Handlers.СommandHandlers;
+﻿namespace Quality_of_Life_changer.Implementation.Handlers.CommandHandlers;
 
 using Contracts.Commands;
 using Data;
@@ -6,11 +6,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Helpers;
 
-public class AddUserHandler : BaseCommandHandler, IRequestHandler<AddUserCommand, AddUserResponse>
+public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUserCommand, AddUserResponse>
 {
     private readonly QolcDbContext _context;
 
-    public AddUserHandler(QolcDbContext context)
+    public AddUserCommandHandler(QolcDbContext context)
     {
         _context = context;
     }

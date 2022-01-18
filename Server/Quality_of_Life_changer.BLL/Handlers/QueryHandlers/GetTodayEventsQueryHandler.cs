@@ -1,15 +1,15 @@
-﻿namespace Quality_of_Life_changer.Implication.Handlers.QueryHandlers;
+﻿namespace Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
 
 using Contracts.Interfaces;
 using Contracts.Queries;
 using MediatR;
 
-public class GetTodayEventsHandler : BaseQueryHandler,
+public class GetTodayEventsQueryHandler : BaseQueryHandler,
     IRequestHandler<GetTodayEventsQuery, GetTodayEventsResponse>
 {
     private readonly ICalendarAdapter _calendarAdapter;
 
-    public GetTodayEventsHandler(ICalendarAdapter calendarAdapter)
+    public GetTodayEventsQueryHandler(ICalendarAdapter calendarAdapter)
     {
         _calendarAdapter = calendarAdapter;
     }

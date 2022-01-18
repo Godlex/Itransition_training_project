@@ -1,16 +1,16 @@
-﻿namespace Quality_of_Life_changer.Implication.Handlers.QueriesHandlers;
+﻿namespace Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
 
 using Contracts.Queries;
 using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-public class GetAllUsersHandler : BaseQueryHandler,
+public class GetAllUsersQueryHandler : BaseQueryHandler,
     IRequestHandler<GetAllUsersQuery, GetAllUsersResponse>
 {
     private readonly QolcDbContext _context;
 
-    public GetAllUsersHandler(QolcDbContext context)
+    public GetAllUsersQueryHandler(QolcDbContext context)
     {
         _context = context;
     }

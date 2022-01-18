@@ -1,16 +1,16 @@
-﻿namespace Quality_of_Life_changer.Implication.Handlers.QueriesHandlers;
+﻿namespace Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
 
 using Contracts.Queries;
 using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-public class GetUserByEmailHandler : BaseQueryHandler,
+public class GetUserByEmailQueryHandler : BaseQueryHandler,
     IRequestHandler<GetUserByEmailQuery, GetUserByEmailResponse>
 {
     private readonly QolcDbContext _context;
 
-    public GetUserByEmailHandler(QolcDbContext context)
+    public GetUserByEmailQueryHandler(QolcDbContext context)
     {
         _context = context;
     }
