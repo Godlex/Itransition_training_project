@@ -33,8 +33,8 @@
     <ProjectReference Include="..\Qoality_of_Life_changer.Model\Quality_of_Life_changer.Model.csproj" />
     <ProjectReference Include="..\Quality-of-Life-changer.Data\Quality_of_Life_changer.Data.csproj" />
     <ProjectReference Include="..\Quality_of_Life_changer.Adapter\Quality_of_Life_changer.Adapter.csproj" />
-    <ProjectReference Include="..\Quality_of_Life_changer.BLL\Quality_of_Life_changer.Implementation.csproj" />
     <ProjectReference Include="..\Quality_of_Life_changer.Contracts\Quality_of_Life_changer.Contracts.csproj" />
+    <ProjectReference Include="..\Quality_of_Life_changer.Implementation\Quality_of_Life_changer.Implementation.csproj" />
   </ItemGroup>
 
 </Project>
