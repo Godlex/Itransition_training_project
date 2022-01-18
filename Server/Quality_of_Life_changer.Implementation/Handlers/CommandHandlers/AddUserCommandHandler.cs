@@ -26,7 +26,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
 
         var userId = Guid.NewGuid().ToString();
 
-        _context.Set<QolcUser>().Add(new QolcUser
+        _context.Set<User>().Add(new User
         {
             Email = request.Email,
             Password = HashPassword(request.Password),
@@ -46,19 +46,19 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
 
     public async Task CheckingUserExistenceByEmail(string email)
     {
-        var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == email);
+        var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == email);
         if (user != null)
         {
-            throw new Exception("user already exist this email");
+            throw new Exception("user already exist with this email");
         }
     }
 
     public async Task CheckingUserExistenceByName(string name)
     {
-        var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.UserName == name);
+        var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.UserName == name);
         if (user != null)
         {
-            throw new Exception("user already exist this name");
+            throw new Exception("user already exist with this name");
         }
     }
 }

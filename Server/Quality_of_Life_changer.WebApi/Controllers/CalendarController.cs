@@ -1,6 +1,5 @@
 ﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
-using Contracts.Interfaces;
 using Contracts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +10,7 @@ public class CalendarController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public CalendarController(ICalendarAdapter calendarAdapter, IMediator mediator)
+    public CalendarController(IMediator mediator)
     {
         _mediator = mediator;
     }

@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Quality_of_Life_changer.Data;
 
 #nullable disable
 
 namespace Quality_of_Life_changer.Data.Migrations
 {
     [DbContext(typeof(QolcDbContext))]
-    [Migration("20211221125955_Initial")]
-    partial class Initial
+    [Migration("20220118151810_addCalendar")]
+    partial class addCalendar
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +23,7 @@ namespace Quality_of_Life_changer.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Qoality_of_Life_changer.Model.Edentity.QolcUser", b =>
+            modelBuilder.Entity("Quality_of_Life_changer.Data.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

@@ -4,7 +4,7 @@
 
 namespace Quality_of_Life_changer.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class addCalendar : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

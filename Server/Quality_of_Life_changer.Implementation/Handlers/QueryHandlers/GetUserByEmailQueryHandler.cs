@@ -18,7 +18,7 @@ public class GetUserByEmailQueryHandler : BaseQueryHandler,
     public async Task<GetUserByEmailResponse> Handle(GetUserByEmailQuery request,
         CancellationToken cancellationToken)
     {
-        var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
+        var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
 
         if (user == null)
         {

@@ -5,4 +5,4 @@ using MediatR;
 
 public record GetAllUsersQuery : IRequest<GetAllUsersResponse>;
 
-public record GetAllUsersResponse(List<QolcUser> Users);
+public record GetAllUsersResponse(List<User> Users);

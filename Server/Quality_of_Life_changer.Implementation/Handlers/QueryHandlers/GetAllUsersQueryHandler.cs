@@ -18,7 +18,7 @@ public class GetAllUsersQueryHandler : BaseQueryHandler,
     public async Task<GetAllUsersResponse> Handle(GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
-        var mathProblem = _context.Set<QolcUser>().Select(x => x);
+        var mathProblem = _context.Set<User>().Select(x => x);
         return new GetAllUsersResponse(await mathProblem.ToListAsync(cancellationToken));
     }
 }
