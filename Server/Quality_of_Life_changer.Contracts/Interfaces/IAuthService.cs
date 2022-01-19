@@ -1,6 +1,6 @@
 ﻿namespace Quality_of_Life_changer.Contracts.Interfaces;
 
-using Model.Auth;
+using Model.AuthModel;
 
 public interface IAuthService
 {

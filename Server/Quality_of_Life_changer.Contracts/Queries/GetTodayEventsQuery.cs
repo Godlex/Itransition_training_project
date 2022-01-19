@@ -1,7 +1,7 @@
 ﻿namespace Quality_of_Life_changer.Contracts.Queries;
 
 using MediatR;
-using Model;
+using Model.CalendarAdapterModel;
 
 public record GetTodayEventsQuery : IRequest<GetTodayEventsResponse>;
 

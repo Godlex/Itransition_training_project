@@ -5,7 +5,7 @@ using Contracts.Exceptions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Model;
+using Model.UserProfileModel;
 
 [Route("api/[controller]")]
 [ApiController]

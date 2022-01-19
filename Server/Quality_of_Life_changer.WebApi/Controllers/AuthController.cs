@@ -7,7 +7,7 @@ using Contracts.Queries;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Model.Auth;
+using Model.AuthModel;
 
 [Route("api/[controller]")]
 [ApiController]

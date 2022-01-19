@@ -1,6 +1,6 @@
 ﻿namespace Quality_of_Life_changer.Contracts.Interfaces;
 
-using Model;
+using Model.CalendarAdapterModel;
 
 public interface ICalendarAdapter
 {

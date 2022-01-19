@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Model;
+﻿namespace Quality_of_Life_changer.Model.UserProfileModel;
 
 using System.ComponentModel.DataAnnotations;
 
