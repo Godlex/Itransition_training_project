@@ -8,6 +8,8 @@ public class QolcDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
+    public DbSet<Calendar> Calendars { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<User>()
@@ -15,6 +17,12 @@ public class QolcDbContext : DbContext
             .IsUnique();
         builder.Entity<User>()
             .HasIndex(u => u.UserName)
+            .IsUnique();
+        builder.Entity<Calendar>()
+            .HasIndex(u => u.CalendarName)
+            .IsUnique();
+        builder.Entity<Calendar>()
+            .HasIndex(u => u.Url)
             .IsUnique();
     }
 }

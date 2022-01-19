@@ -24,16 +24,11 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
 
         if (request.CalendarName == null)
         {
-            var userName = GetUserName(request, cancellationToken).ToString()!;
-            var calendarCount = _context.Set<Calendar>().Select(x => x.OwnerId == request.OwnerId).Count();
-            if (calendarCount != 0)
-            {
-                calendarName = userName + "-" + calendarCount;
-            }
-            else
-            {
-                calendarName = userName;
-            }
+            var userName = await GetUserName(request, cancellationToken);
+
+            await ValidateCalendarExist(request, cancellationToken);
+
+            calendarName = userName;
         }
         else
         {
@@ -54,9 +49,22 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
         return new AddUserCalendarResponse(calendarId, calendarName, request.OwnerId, request.Url);
     }
 
-    private Task<User> GetUserName(AddUserCalendarCommand request, CancellationToken cancellationToken)
+    private Task ValidateCalendarExist(AddUserCalendarCommand request,
+        CancellationToken cancellationToken)
     {
-        return _context.Set<User>()
-            .FirstAsync(x => x.Id == request.OwnerId, cancellationToken);
+        var calendarCount = _context.Set<Calendar>().Select(x => x.OwnerId == request.OwnerId).Count();
+
+        if (calendarCount != 0)
+        {
+            throw new Exception("Enter a calendar's name");
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task<string> GetUserName(AddUserCalendarCommand request, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(_context.Set<User>()
+            .FirstAsync(x => x.Id == request.OwnerId, cancellationToken).Result.UserName.ToString());
     }
 }

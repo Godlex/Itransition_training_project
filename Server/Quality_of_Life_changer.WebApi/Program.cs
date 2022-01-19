@@ -11,6 +11,7 @@ using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
+using Quality_of_Life_changer.Model;
 using Quality_of_Life_changer.Model.Auth;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Validators;
@@ -58,6 +59,7 @@ try
 
     builder.Services.AddScoped<IValidator<LoginModel>, LoginModelValidator>();
     builder.Services.AddScoped<IValidator<RegisterModel>, RegisterModelValidator>();
+    builder.Services.AddScoped<IValidator<CalendarModel>, CalendarModelValidator>();
 
     builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
 
@@ -107,6 +109,7 @@ catch (Exception ex)
     var type = ex.GetType().Name;
     if (type.Equals("StopTheHostException", StringComparison.Ordinal))
     {
+        Log.Information(ex, "-program cs");
         throw;
     }
 

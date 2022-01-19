@@ -5,7 +5,6 @@ using Contracts.Interfaces;
 using Contracts.Queries;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.Auth;
 
@@ -67,7 +66,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("users/all")]
-    [Authorize]
+    // [Authorize]
     public async Task<IActionResult> GetAllUsers()
     {
         var response = await _mediator.Send(new GetAllUsersQuery());

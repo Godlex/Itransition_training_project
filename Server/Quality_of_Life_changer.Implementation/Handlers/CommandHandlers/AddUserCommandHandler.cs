@@ -1,6 +1,7 @@
 ﻿namespace Quality_of_Life_changer.Implementation.Handlers.CommandHandlers;
 
 using Contracts.Commands;
+using Contracts.Exceptions;
 using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +19,6 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
     public async Task<AddUserResponse> Handle(AddUserCommand request,
         CancellationToken cancellationToken)
     {
-        //add user to db
-
         await CheckingUserExistenceByEmail(request.Email);
 
         await CheckingUserExistenceByName(request.UserName);
@@ -49,7 +48,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == email);
         if (user != null)
         {
-            throw new Exception("user already exist with this email");
+            throw new InvalidInputException("user already exist with this email");
         }
     }
 
@@ -58,7 +57,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.UserName == name);
         if (user != null)
         {
-            throw new Exception("user already exist with this name");
+            throw new InvalidInputException("user already exist with this name");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Model.Entities;
+﻿namespace Quality_of_Life_changer.Model;
 
 public class CalendarEvent
 {
