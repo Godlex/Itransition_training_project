@@ -1,6 +1,7 @@
 ﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
 using Contracts.Commands;
+using Contracts.Exceptions;
 using Contracts.Interfaces;
 using Contracts.Queries;
 using FluentValidation;
@@ -34,7 +35,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new Exception("invalid input");
+            throw new InvalidInputException("invalid input");
         }
 
         var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
@@ -43,7 +44,7 @@ public class AuthController : ControllerBase
 
         if (!passwordValid)
         {
-            throw new Exception("invalid password");
+            throw new InvalidInputException("invalid password");
         }
 
         return _authService.GetAuthData(user.Id, user.Username, user.Email);
@@ -56,7 +57,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new Exception("invalid input");
+            throw new InvalidInputException("invalid input");
         }
 
         var command = new AddUserCommand(model.Username, model.Email, model.Password);

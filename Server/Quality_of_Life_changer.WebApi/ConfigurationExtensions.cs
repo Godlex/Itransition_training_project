@@ -1,6 +1,6 @@
 ﻿namespace Quality_of_Life_changer.WebApi;
 
-using CustomExceptionMiddleware;
+using Middlewaries;
 
 public static class ConfigurationExtensions
 {

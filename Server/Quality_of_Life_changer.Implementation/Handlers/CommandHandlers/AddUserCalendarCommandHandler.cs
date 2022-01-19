@@ -1,6 +1,7 @@
 ﻿namespace Quality_of_Life_changer.Implementation.Handlers.CommandHandlers;
 
 using Contracts.Commands;
+using Contracts.Exceptions;
 using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +57,7 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
 
         if (calendarCount != 0)
         {
-            throw new Exception("Enter a calendar's name");
+            throw new InvalidInputException("Enter a calendar's name");
         }
 
         return Task.CompletedTask;

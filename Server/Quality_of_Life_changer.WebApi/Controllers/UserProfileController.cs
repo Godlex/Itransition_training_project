@@ -1,6 +1,7 @@
 ﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
 using Contracts.Commands;
+using Contracts.Exceptions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ public class UserProfileController : ControllerBase
         var result = await _calendarModelValidator.ValidateAsync(model);
         if (!result.IsValid)
         {
-            throw new Exception("invalid input");
+            throw new InvalidInputException("invalid input");
         }
 
         var response = await _mediator.Send(new AddUserCalendarCommand(url, userId, name));

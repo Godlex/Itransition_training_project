@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.WebApi.CustomExceptionMiddleware;
+﻿namespace Quality_of_Life_changer.WebApi.Middlewaries;
 
 using Model;
 using Serilog;

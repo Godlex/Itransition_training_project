@@ -1,5 +1,6 @@
 ﻿namespace Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
 
+using Contracts.Exceptions;
 using Contracts.Queries;
 using Data;
 using MediatR;
@@ -22,7 +23,7 @@ public class GetUserByEmailQueryHandler : BaseQueryHandler,
 
         if (user == null)
         {
-            throw new Exception("no user with this email");
+            throw new InvalidInputException("no user with this email");
         }
 
         return new GetUserByEmailResponse(user.Id, user.UserName, user.Email, user.Password);
