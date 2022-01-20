@@ -9,6 +9,7 @@ export default function authReducer(state = initialAuthState, action) {
   console.log(action.type)
   switch (action.type) {
     case authConstants.SET_USER:
+      window.location.href = "/";
       return {
         ...state,
         user: {
