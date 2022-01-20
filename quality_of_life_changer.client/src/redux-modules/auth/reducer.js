@@ -1,7 +1,8 @@
 import { authConstants } from "./constants";
+import { constants } from "../../constants/constants";
 
 const initialAuthState = {
-  user: { name: null, email: null, id: null, isLoggedIn: false },
+  user: { name: null, email: null, id: null},
 };
 
 export default function authReducer(state = initialAuthState, action) {
@@ -14,17 +15,16 @@ export default function authReducer(state = initialAuthState, action) {
           name: action.name,
           email: action.email,
           id: action.id,
-          isLoggedIn: true,
         },
       };
     case authConstants.LOGOUT_SUCCESS:
+      localStorage.removeItem(constants.JWT_TOKEN);
       return {
         ...state,
         user: {
           name: null,
           email: null,
           id: null,
-          isLoggedIn: false,
         },
       };
     case authConstants.LOGIN_FAILURE:

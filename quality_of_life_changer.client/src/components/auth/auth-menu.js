@@ -1,10 +1,13 @@
 import { Component } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { connect } from "react-redux";
+import { constants } from "../../constants/constants";
 
 class AuthMenu extends Component {
   render() {
-    if (this.props.isLoggedIn) {
+    let token = localStorage.getItem(constants.JWT_TOKEN);
+    if (token != null) {
+      let tokenPlayload = JSON.parse(window.atob(token.split(".")[1]));
       return (
         <Navbar bg="primary" variant="dark">
           <Container>
@@ -16,9 +19,9 @@ class AuthMenu extends Component {
               <Nav className="me-auto">
                 <Nav.Link href="/logout">Logout</Nav.Link>
 
-                <Nav.Link href="/">microsoft</Nav.Link>
-
-                <Nav.Link  href="/">Hello! {this.props.userName}</Nav.Link>
+                <Nav.Link href="/profile">
+                  Hello! {tokenPlayload.unique_name}
+                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

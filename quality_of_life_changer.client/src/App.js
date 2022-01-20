@@ -6,7 +6,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import AuthMenu from "./components/auth/auth-menu";
 import TodayEventsForm from "./components/events/today-events-form";
-import "./App.css";
 
 class App extends Component {
   render() {
@@ -20,6 +19,7 @@ class App extends Component {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/logout" element={<LogoutForm />} />
             <Route path="/events-today" element={<TodayEventsForm />} />
+            <Route path="/profile" element={<TodayEventsForm />} />
           </Routes>
         </div>
       </div>

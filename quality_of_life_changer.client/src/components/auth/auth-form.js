@@ -52,10 +52,13 @@ class AuthForm extends Component {
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
 
-        <Button variant="primary" type="button" onClick={this.handleClick} >
+        <Button
+          variant="primary"
+          type="button"
+          onClick={this.handleClick}
+        >
           Submit
         </Button>
-        
       </Form>
     );
   }

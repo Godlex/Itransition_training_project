@@ -19,6 +19,7 @@ export function logout() {
 }
 
 export function setUser(id, name, email) {
+  window.location.href = "/";
   return {
     type: authConstants.SET_USER,
     id,
