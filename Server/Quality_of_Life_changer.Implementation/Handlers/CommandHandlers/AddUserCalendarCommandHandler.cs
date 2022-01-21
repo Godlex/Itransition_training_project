@@ -39,16 +39,16 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
 
     private async Task<string> GetCalendarName(AddUserCalendarCommand request, CancellationToken cancellationToken)
     {
-        if (request.CalendarName == null)
+        if (request.CalendarName != null)
         {
-            var userName = await GetUserName(request, cancellationToken);
-
-            await ValidateCalendarExist(request, cancellationToken);
-
-            return userName;
+            return request.CalendarName;
         }
 
-        return request.CalendarName;
+        var userName = await GetUserName(request, cancellationToken);
+
+        await ValidateCalendarExist(request, cancellationToken);
+
+        return userName;
     }
 
     private Task ValidateCalendarExist(AddUserCalendarCommand request,
