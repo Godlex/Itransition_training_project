@@ -1,13 +1,13 @@
 ﻿namespace Quality_of_Life_changer.WebApi.Controllers;
 
 using Contracts.Commands;
-using Contracts.Exceptions;
 using Contracts.Interfaces;
 using Contracts.Queries;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Model.AuthModel;
+using Model.Auth;
+using ValidationException = Contracts.Exceptions.ValidationException;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -35,7 +35,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new InvalidInputException("invalid input");
+            throw new ValidationException("invalid input");
         }
 
         var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
@@ -44,7 +44,7 @@ public class AuthController : ControllerBase
 
         if (!passwordValid)
         {
-            throw new InvalidInputException("invalid password");
+            throw new ValidationException("invalid password");
         }
 
         return _authService.GetAuthData(user.Id, user.Username, user.Email);
@@ -57,13 +57,12 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new InvalidInputException("invalid input");
+            throw new ValidationException("invalid input");
         }
 
-        var command = new AddUserCommand(model.Username, model.Email, model.Password);
-        var user = await _mediator.Send(command);
+        var userId = await _mediator.Send(new AddUserCommand(model.Username, model.Email, model.Password));
 
-        return _authService.GetAuthData(user.Id, user.UserName, user.Email);
+        return _authService.GetAuthData(userId, model.Username, model.Email);
     }
 
     [HttpGet("users/all")]

@@ -5,9 +5,10 @@ using Contracts.Exceptions;
 using Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Web.Helpers;
 
-public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUserCommand, AddUserResponse>
+public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUserCommand, string>
 {
     private readonly QolcDbContext _context;
 
@@ -16,7 +17,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         _context = context;
     }
 
-    public async Task<AddUserResponse> Handle(AddUserCommand request,
+    public async Task<string> Handle(AddUserCommand request,
         CancellationToken cancellationToken)
     {
         await CheckingUserExistenceByEmail(request.Email);
@@ -30,12 +31,13 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
             Email = request.Email,
             Password = HashPassword(request.Password),
             Id = userId,
-            UserName = request.UserName
+            UserName = request.UserName,
+            Calendars = new Collection<Calendar>()
         });
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new AddUserResponse(userId, request.Email, request.UserName);
+        return userId;
     }
 
     private static string HashPassword(string password)
@@ -48,7 +50,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == email);
         if (user != null)
         {
-            throw new InvalidInputException("user already exist with this email");
+            throw new ValidationException("user already exist with this email");
         }
     }
 
@@ -57,7 +59,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.UserName == name);
         if (user != null)
         {
-            throw new InvalidInputException("user already exist with this name");
+            throw new ValidationException("user already exist with this name");
         }
     }
 }

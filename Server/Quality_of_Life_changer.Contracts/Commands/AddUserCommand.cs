@@ -6,6 +6,4 @@ public record AddUserCommand(
     string UserName,
     string Email,
     string Password
-) : IRequest<AddUserResponse>;
-
-public record AddUserResponse(string Id, string UserName, string Email);
+) : IRequest<string>;
