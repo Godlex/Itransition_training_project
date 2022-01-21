@@ -86,12 +86,17 @@ namespace Quality_of_Life_changer.Data.Migrations
             modelBuilder.Entity("Quality_of_Life_changer.Data.Calendar", b =>
                 {
                     b.HasOne("Quality_of_Life_changer.Data.User", "Owner")
-                        .WithMany()
+                        .WithMany("Calendars")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Quality_of_Life_changer.Data.User", b =>
+                {
+                    b.Navigation("Calendars");
                 });
 #pragma warning restore 612, 618
         }
