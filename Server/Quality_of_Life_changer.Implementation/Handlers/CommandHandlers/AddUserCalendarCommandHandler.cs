@@ -46,27 +46,26 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
 
         var userName = await GetUserName(request, cancellationToken);
 
-        await ValidateCalendarExist(request, cancellationToken);
+        await CheckCalendarExist(request, cancellationToken);
 
         return userName;
     }
 
-    private Task ValidateCalendarExist(AddUserCalendarCommand request,
+    private async Task CheckCalendarExist(AddUserCalendarCommand request,
         CancellationToken cancellationToken)
     {
-        var calendarCount = _context.Set<Calendar>().Select(x => x.OwnerId == request.OwnerId).Count();
+        var user = await _context.Set<User>()
+            .FirstAsync(x => x.Id == request.OwnerId, cancellationToken);
 
-        if (calendarCount != 0)
+        if (user.Calendars.Count != 0)
         {
             throw new ValidationException("Enter a calendar's name");
         }
-
-        return Task.CompletedTask;
     }
 
-    private Task<string> GetUserName(AddUserCalendarCommand request, CancellationToken cancellationToken)
+    private async Task<string> GetUserName(AddUserCalendarCommand request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(_context.Set<User>()
+        return await Task.FromResult(_context.Set<User>()
             .FirstAsync(x => x.Id == request.OwnerId, cancellationToken).Result.UserName.ToString());
     }
 }

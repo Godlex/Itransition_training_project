@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.UserProfile;
 using ValidationException = Contracts.Exceptions.ValidationException;
 
-[Route("api/")]
+[Route("api/user/{userId}/profile")]
 [ApiController]
 public class UserProfileController : ControllerBase
 {
@@ -20,18 +20,17 @@ public class UserProfileController : ControllerBase
         _calendarModelValidator = calendarModelValidator;
     }
 
-    [Route("user/{userId}/profile/calendars")]
-    [HttpGet]
-    public async Task<IActionResult> GetTodayEvents(string url, string? name, string userId)
+    [HttpPost("calendars")]
+    public async Task<IActionResult> TodayEvents([FromBody] CalendarModel model, string userId)
     {
-        var model = new CalendarModel {Name = name, Url = url};
         var result = await _calendarModelValidator.ValidateAsync(model);
+
         if (!result.IsValid)
         {
             throw new ValidationException("invalid input");
         }
 
-        var response = await _mediator.Send(new AddUserCalendarCommand(url, userId, name));
+        var response = await _mediator.Send(new AddUserCalendarCommand(model.Url, userId, model.Name));
         return Ok(response);
     }
 }
