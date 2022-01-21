@@ -21,20 +21,7 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
     {
         var calendarId = Guid.NewGuid().ToString();
 
-        string calendarName;
-
-        if (request.CalendarName == null)
-        {
-            var userName = await GetUserName(request, cancellationToken);
-
-            await ValidateCalendarExist(request, cancellationToken);
-
-            calendarName = userName;
-        }
-        else
-        {
-            calendarName = request.CalendarName;
-        }
+        var calendarName = await GetCalendarName(request, cancellationToken);
 
         _context.Set<Calendar>().Add(new Calendar
         {
@@ -48,6 +35,20 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
         await _context.SaveChangesAsync(cancellationToken);
 
         return new AddUserCalendarResponse(calendarId, calendarName, request.OwnerId, request.Url);
+    }
+
+    private async Task<string> GetCalendarName(AddUserCalendarCommand request, CancellationToken cancellationToken)
+    {
+        if (request.CalendarName == null)
+        {
+            var userName = await GetUserName(request, cancellationToken);
+
+            await ValidateCalendarExist(request, cancellationToken);
+
+            return userName;
+        }
+
+        return request.CalendarName;
     }
 
     private Task ValidateCalendarExist(AddUserCalendarCommand request,
