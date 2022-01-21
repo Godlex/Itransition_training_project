@@ -1,6 +1,6 @@
 ﻿namespace Quality_of_Life_changer.WebApi;
 
-using Middlewaries;
+using Middleware;
 
 public static class ConfigurationExtensions
 {

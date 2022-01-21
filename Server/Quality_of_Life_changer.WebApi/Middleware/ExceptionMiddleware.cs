@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.WebApi.Middlewaries;
+﻿namespace Quality_of_Life_changer.WebApi.Middleware;
 
 using Model;
 using Serilog;

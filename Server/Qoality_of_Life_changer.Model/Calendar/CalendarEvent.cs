@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Model.CalendarAdapterModel;
+﻿namespace Quality_of_Life_changer.Model.Calendar;
 
 public class CalendarEvent
 {

@@ -2,7 +2,7 @@
 
 using Contracts.Interfaces;
 using Microsoft.IdentityModel.Tokens;
-using Model.AuthModel;
+using Model.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

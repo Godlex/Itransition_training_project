@@ -1,7 +1,7 @@
 ﻿namespace Quality_of_Life_changer.WebApi.Validators;
 
 using FluentValidation;
-using Model.UserProfileModel;
+using Model.UserProfile;
 
 public class CalendarModelValidator : AbstractValidator<CalendarModel>
 {

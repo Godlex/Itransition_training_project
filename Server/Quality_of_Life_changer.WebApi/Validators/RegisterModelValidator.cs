@@ -1,7 +1,7 @@
 ﻿namespace Quality_of_Life_changer.WebApi.Validators;
 
 using FluentValidation;
-using Model.AuthModel;
+using Model.Auth;
 
 public class RegisterModelValidator : AbstractValidator<RegisterModel>
 {

@@ -1,4 +1,4 @@
-﻿namespace Quality_of_Life_changer.Model.AuthModel;
+﻿namespace Quality_of_Life_changer.Model.Auth;
 
 using System.ComponentModel.DataAnnotations;
 

@@ -7,7 +7,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
-using Model.CalendarAdapterModel;
+using Model.Calendar;
 
 public class CalendarAdapter : ICalendarAdapter
 {
