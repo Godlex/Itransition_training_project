@@ -65,23 +65,33 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
     {
         if (!string.IsNullOrEmpty(request.CalendarName))
         {
+            if (await IsFirstCalendar(request, cancellationToken))
+            {
+                return await GetUserName(request, cancellationToken);
+            }
+
             return request.CalendarName;
         }
 
-        await CheckCalendarExist(request, cancellationToken);
+        if (!await IsFirstCalendar(request, cancellationToken))
+        {
+            throw new Exception("Enter a calendar's name");
+        }
 
         return await GetUserName(request, cancellationToken);
     }
 
-    private async Task CheckCalendarExist(AddUserCalendarCommand request,
+    private async Task<bool> IsFirstCalendar(AddUserCalendarCommand request,
         CancellationToken cancellationToken)
     {
         var user = await GetCalendarOwner(request, cancellationToken);
 
         if (user.Calendars != null && user.Calendars.Count > 0)
         {
-            throw new ValidationException("Enter a calendar's name");
+            return false;
         }
+
+        return true;
     }
 
     private async Task<string> GetUserName(AddUserCalendarCommand request, CancellationToken cancellationToken)
