@@ -7,6 +7,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.Auth;
+using System.Text;
 using ValidationException = Contracts.Exceptions.ValidationException;
 
 [Route("api/[controller]")]
@@ -35,7 +36,13 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new ValidationException("invalid input");
+            var stringBuilder = new StringBuilder();
+            foreach (var error in result.Errors)
+            {
+                stringBuilder.Append(error.ErrorMessage);
+            }
+
+            throw new ValidationException(stringBuilder.ToString());
         }
 
         var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
@@ -57,7 +64,13 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new ValidationException("invalid input");
+            var stringBuilder = new StringBuilder();
+            foreach (var error in result.Errors)
+            {
+                stringBuilder.Append(error.ErrorMessage);
+            }
+
+            throw new ValidationException(stringBuilder.ToString());
         }
 
         var userId = await _mediator.Send(new AddUserCommand(model.Username, model.Email, model.Password));

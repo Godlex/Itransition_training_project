@@ -10,6 +10,6 @@ public class CalendarModelValidator : AbstractValidator<CalendarModel>
         RuleFor(calendarModel => calendarModel.Name).Length(2, 80)
             .When(calendarModel => !string.IsNullOrEmpty(calendarModel.Name));
 
-        RuleFor(calendarModel => calendarModel.Url).NotNull().Matches(@"^.*\.ics");
+        RuleFor(calendarModel => calendarModel.Url).NotEmpty().Matches(@"^.*\.ics");
     }
 }

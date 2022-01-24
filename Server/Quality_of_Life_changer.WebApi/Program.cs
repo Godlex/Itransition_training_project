@@ -1,4 +1,4 @@
-using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +11,6 @@ using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
-using Quality_of_Life_changer.Model.Auth;
-using Quality_of_Life_changer.Model.UserProfile;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Validators;
 using Serilog;
@@ -57,10 +55,6 @@ try
 
     builder.WebHost.UseUrls("http://localhost:5145");
 
-    builder.Services.AddScoped<IValidator<LoginModel>, LoginModelValidator>();
-    builder.Services.AddScoped<IValidator<RegisterModel>, RegisterModelValidator>();
-    builder.Services.AddScoped<IValidator<CalendarModel>, CalendarModelValidator>();
-
     builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
 
     builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
@@ -75,7 +69,11 @@ try
 
     builder.AddCors(AllowSpecificOrigins);
 
-    builder.Services.AddControllers()
+    builder.Services.AddControllers().AddFluentValidation(s =>
+        {
+            s.RegisterValidatorsFromAssemblyContaining<RegisterModelValidator>();
+            s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+        })
         .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
