@@ -29,7 +29,8 @@ namespace Quality_of_Life_changer.Data.Migrations
 
                     b.Property<string>("CalendarName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
