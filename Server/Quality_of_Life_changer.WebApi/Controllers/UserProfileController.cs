@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.UserProfile;
+using System.Text;
 using ValidationException = Contracts.Exceptions.ValidationException;
 
 [Route("api/user/{userId}/profile")]
@@ -27,7 +28,13 @@ public class UserProfileController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new ValidationException("invalid input");
+            var stringBuilder = new StringBuilder();
+            foreach (var error in result.Errors)
+            {
+                stringBuilder.Append(error.ErrorMessage);
+            }
+
+            throw new ValidationException(stringBuilder.ToString());
         }
 
         var response = await _mediator.Send(new AddUserCalendarCommand(model.Url, userId, model.Name));
