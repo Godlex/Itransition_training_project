@@ -15,6 +15,7 @@ using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Validators;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 Logger.Initial();
 
@@ -69,12 +70,15 @@ try
 
     builder.AddCors(AllowSpecificOrigins);
 
-    builder.Services.AddControllers().AddFluentValidation(s =>
+    builder.Services.AddControllers()
+        .AddFluentValidation(s =>
         {
             s.RegisterValidatorsFromAssemblyContaining<RegisterModelValidator>();
             s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
         })
-        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true)
+        .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
