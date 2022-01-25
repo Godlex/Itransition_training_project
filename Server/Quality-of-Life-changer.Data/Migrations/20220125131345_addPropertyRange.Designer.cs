@@ -12,7 +12,7 @@ using Quality_of_Life_changer.Data;
 namespace Quality_of_Life_changer.Data.Migrations
 {
     [DbContext(typeof(QolcDbContext))]
-    [Migration("20220124084009_addPropertyRange")]
+    [Migration("20220125131345_addPropertyRange")]
     partial class addPropertyRange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace Quality_of_Life_changer.Data.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -51,9 +51,6 @@ namespace Quality_of_Life_changer.Data.Migrations
                         .IsUnique();
 
                     b.HasIndex("OwnerId");
-
-                    b.HasIndex("Url")
-                        .IsUnique();
 
                     b.ToTable("Calendars");
                 });

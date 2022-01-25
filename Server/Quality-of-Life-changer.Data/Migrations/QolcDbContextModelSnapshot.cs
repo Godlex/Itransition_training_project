@@ -41,7 +41,7 @@ namespace Quality_of_Life_changer.Data.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -49,9 +49,6 @@ namespace Quality_of_Life_changer.Data.Migrations
                         .IsUnique();
 
                     b.HasIndex("OwnerId");
-
-                    b.HasIndex("Url")
-                        .IsUnique();
 
                     b.ToTable("Calendars");
                 });

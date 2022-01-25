@@ -23,9 +23,6 @@ public class QolcDbContext : DbContext
             .IsUnique();
         builder.Entity<Calendar>().Property(c => c.CalendarName).HasMaxLength(80);
         builder.Entity<Calendar>()
-            .HasIndex(u => u.Url)
-            .IsUnique();
-        builder.Entity<Calendar>()
             .HasOne(u => u.Owner)
             .WithMany(u => u.Calendars);
     }
