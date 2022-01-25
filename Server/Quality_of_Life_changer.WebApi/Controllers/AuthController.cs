@@ -4,6 +4,7 @@ using Contracts.Commands;
 using Contracts.Interfaces;
 using Contracts.Queries;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.Auth;
@@ -64,13 +65,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            var stringBuilder = new StringBuilder();
-            foreach (var error in result.Errors)
-            {
-                stringBuilder.Append(error.ErrorMessage);
-            }
-
-            throw new ValidationException(stringBuilder.ToString());
+            return BadRequest(GetErrors(result));
         }
 
         var userId = await _mediator.Send(new AddUserCommand(model.Username, model.Email, model.Password));
@@ -84,5 +79,16 @@ public class AuthController : ControllerBase
     {
         var response = await _mediator.Send(new GetAllUsersQuery());
         return Ok(response);
+    }
+
+    private static string GetErrors(ValidationResult result)
+    {
+        var errors = new StringBuilder();
+        foreach (var error in result.Errors)
+        {
+            errors.Append(error.ErrorMessage);
+        }
+
+        return errors.ToString();
     }
 }
