@@ -38,6 +38,7 @@ public class UserProfileController : ControllerBase
     private static string GetErrors(ValidationResult result)
     {
         var errors = new StringBuilder();
+
         foreach (var error in result.Errors)
         {
             errors.Append(error.ErrorMessage);

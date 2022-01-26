@@ -9,6 +9,7 @@ public class LoginModelValidator : AbstractValidator<LoginModel>
     {
         RuleFor(loginModel => loginModel.Email).NotEmpty().EmailAddress()
             .WithMessage("Email is required and cannot be empty");
+
         RuleFor(loginModel => loginModel.Password).NotEmpty().WithMessage("Password is required and cannot be empty");
     }
 }

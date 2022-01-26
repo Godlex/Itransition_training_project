@@ -37,13 +37,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            var stringBuilder = new StringBuilder();
-            foreach (var error in result.Errors)
-            {
-                stringBuilder.Append(error.ErrorMessage);
-            }
-
-            throw new ValidationException(stringBuilder.ToString());
+            return BadRequest(GetErrors(result));
         }
 
         var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));

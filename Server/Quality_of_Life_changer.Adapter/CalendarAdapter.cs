@@ -30,10 +30,14 @@ public class CalendarAdapter : ICalendarAdapter
 
     public async Task<IEnumerable<CalendarEvent>> GetTodayEvents()
     {
-        var todayEvents = new List<CalendarEvent>();
-
         var calendars = await GetCalendarListAsync();
 
+        return await GetEventsFormCalendarsAsync(calendars);
+    }
+
+    private async Task<IEnumerable<CalendarEvent>> GetEventsFormCalendarsAsync(CalendarList calendars)
+    {
+        var todayEvents = new List<CalendarEvent>();
         foreach (var calendar in calendars.Items)
         {
             var eventsRequest = CreateEventsRequest(calendar);

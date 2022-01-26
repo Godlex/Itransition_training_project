@@ -9,9 +9,12 @@ public class RegisterModelValidator : AbstractValidator<RegisterModel>
     {
         RuleFor(registerModel => registerModel.Email).NotEmpty().EmailAddress()
             .WithMessage("Email is required and cannot be empty");
+
         RuleFor(registerModel => registerModel.Username).NotEmpty().WithMessage("Name is required and cannot be empty");
+
         RuleFor(registerModel => registerModel.Password).NotEmpty()
             .WithMessage("Password is required and cannot be empty");
+
         RuleFor(registerModel => registerModel.ConfirmPassword).NotEmpty().Equal(customer => customer.Password)
             .WithMessage("Passwords must match");
         ;
