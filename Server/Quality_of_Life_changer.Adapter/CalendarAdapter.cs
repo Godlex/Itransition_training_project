@@ -111,7 +111,7 @@ public class CalendarAdapter : ICalendarAdapter
         });
     }
 
-    private IEnumerable<CalendarEvent> MapEventsToCalendarEvents(Events events)
+    private static IEnumerable<CalendarEvent> MapEventsToCalendarEvents(Events events)
     {
         return events.Items
             .Where(x => x.Start.DateTime.HasValue && x.End.DateTime.HasValue)

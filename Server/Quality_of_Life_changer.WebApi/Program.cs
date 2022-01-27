@@ -28,7 +28,7 @@ try
     builder.Services.AddDbContext<QolcDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    var AllowSpecificOrigins = "_allowSpecificOrigins";
+    const string allowSpecificOrigins = "_allowSpecificOrigins";
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -68,7 +68,7 @@ try
             builder.Configuration.GetValue<int>("JWTLifespan"))
     );
 
-    builder.AddCors(AllowSpecificOrigins);
+    builder.AddCors(allowSpecificOrigins);
 
     builder.Services.AddControllers()
         .AddFluentValidation(s =>
@@ -94,7 +94,7 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseCors(AllowSpecificOrigins);
+    app.UseCors(allowSpecificOrigins);
 
     app.ConfigureExceptionMiddleware();
 

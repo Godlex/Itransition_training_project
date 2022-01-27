@@ -30,7 +30,23 @@ public class AuthService : IAuthService
     {
         var expirationTime = DateTime.UtcNow.AddSeconds(_jwtLifespan);
 
-        var tokenDescriptor = new SecurityTokenDescriptor
+        var tokenDescriptor = GetTokenDescriptor(id, name, email, expirationTime);
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+
+        return new AuthData
+        {
+            Token = token,
+            TokenExpirationTime = ((DateTimeOffset) expirationTime).ToUnixTimeSeconds(),
+            Id = id
+        };
+    }
+
+    private SecurityTokenDescriptor GetTokenDescriptor(string id, string name, string email, DateTime expirationTime)
+    {
+        return new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
@@ -43,15 +59,6 @@ public class AuthService : IAuthService
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret)),
                 SecurityAlgorithms.HmacSha256Signature
             )
-        };
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-
-        return new AuthData
-        {
-            Token = token,
-            TokenExpirationTime = ((DateTimeOffset) expirationTime).ToUnixTimeSeconds(),
-            Id = id
         };
     }
 }
