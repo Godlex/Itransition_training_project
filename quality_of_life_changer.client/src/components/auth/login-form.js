@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Navigate } from "react-router";
 import { login } from "../../redux-modules/auth/actions";
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = { email: "", password: "", isAuth: false };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
     // Changing state
-    this.props.login(this.state.email, this.state.password);
+    this.props.login(this.state.email, this.state.password, this.state.isAuth);
   }
 
   handleChange(event) {
@@ -22,6 +23,10 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (this.props.user.isAuth) {
+      return <Navigate to="/" />;
+    }
+
     return (
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -60,4 +65,10 @@ class LoginForm extends Component {
   }
 }
 
-export default connect(null, { login })(LoginForm);
+function update(state) {
+  return {
+    user: { ...state.auth.user },
+  };
+}
+
+export default connect(update, { login })(LoginForm);

@@ -1,7 +1,7 @@
 import { authConstants } from "./constants";
 
-export function login(email, password) {
-  return { type: authConstants.LOGIN_SUCCESS, email, password };
+export function login(email, password, isAuth) {
+  return { type: authConstants.LOGIN_SUCCESS, email, password,isAuth};
 }
 
 export function register(username, email, password, confirmPassword) {
@@ -18,11 +18,12 @@ export function logout() {
   return { type: authConstants.LOGOUT_SUCCESS };
 }
 
-export function setUser(id, name, email) {
+export function setUser(id, name, email,isAuth) {
   return {
     type: authConstants.SET_USER,
     id,
     name,
     email,
+    isAuth
   };
 }

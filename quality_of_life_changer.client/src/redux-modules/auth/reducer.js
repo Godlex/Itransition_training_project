@@ -1,32 +1,25 @@
 import { authConstants } from "./constants";
-import { constants } from "../../constants/constants";
 
 const initialAuthState = {
-  user: { name: null, email: null, id: null},
+  user: { name: null, email: null, id: null, isAuth: false },
 };
 
 export default function authReducer(state = initialAuthState, action) {
-  console.log(action.type)
+  console.log('action', action.type);
   switch (action.type) {
     case authConstants.SET_USER:
-      window.location.href = "/";
       return {
         ...state,
         user: {
           name: action.name,
           email: action.email,
           id: action.id,
+          isAuth: true,
         },
       };
     case authConstants.LOGOUT_SUCCESS:
-      localStorage.removeItem(constants.JWT_TOKEN);
       return {
         ...state,
-        user: {
-          name: null,
-          email: null,
-          id: null,
-        },
       };
     case authConstants.LOGIN_FAILURE:
       return { ...state };

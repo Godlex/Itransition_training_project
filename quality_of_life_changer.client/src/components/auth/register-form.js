@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Navigate } from "react-router";
 import { register } from "../../redux-modules/auth/actions";
 
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", email: "",password: "", confirmPassword: "" };
+    this.state = { username: "", email: "", password: "", confirmPassword: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -27,9 +28,12 @@ class RegisterForm extends Component {
   }
 
   render() {
+    if (this.props.user.isAuth) {
+      return <Navigate to="/" />;
+    }
     return (
       <Form>
-        <Form.Group className="mb-3" >
+        <Form.Group className="mb-3">
           <Form.Label>Name</Form.Label>
           <Form.Control
             name="username"
@@ -40,11 +44,11 @@ class RegisterForm extends Component {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" >
+        <Form.Group className="mb-3">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             name="email"
-           type="email"
+            type="email"
             placeholder="Enter email"
             value={this.state.email}
             onChange={this.handleChange}
@@ -54,7 +58,7 @@ class RegisterForm extends Component {
           </Form.Text>
         </Form.Group>
 
-        <Form.Group className="mb-3" >
+        <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             name="password"
@@ -88,4 +92,10 @@ class RegisterForm extends Component {
   }
 }
 
-export default connect(null, { register })(RegisterForm);
+function update(state) {
+  return {
+    user: { ...state.auth.user },
+  };
+}
+
+export default connect(update, { register })(RegisterForm);

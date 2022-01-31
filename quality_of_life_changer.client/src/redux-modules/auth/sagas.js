@@ -19,15 +19,17 @@ function* fetchLoginStatus({ email, password }) {
 
     localStorage.setItem(constants.JWT_TOKEN, state.token);
 
-    let tokenPlayload = JSON.parse(window.atob(state.token.split(".")[1]));
+    let tokenPayload = JSON.parse(window.atob(state.token.split(".")[1]));
 
     yield put(
       actions.setUser(
-        tokenPlayload.nameid,
-        tokenPlayload.unique_name,
-        tokenPlayload.email
+        tokenPayload.nameid,
+        tokenPayload.unique_name,
+        tokenPayload.email,
+        true,
       )
     );
+    
   } catch (error) {
     console.log(error);
   }
@@ -53,13 +55,13 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
 
     localStorage.setItem(constants.JWT_TOKEN, state.token);
 
-    let tokenPlayload = JSON.parse(window.atob(state.token.split(".")[1]));
+    let tokenPayload = JSON.parse(window.atob(state.token.split(".")[1]));
 
     yield put(
       actions.setUser(
-        tokenPlayload.nameid,
-        tokenPlayload.unique_name,
-        tokenPlayload.email
+        tokenPayload.nameid,
+        tokenPayload.unique_name,
+        tokenPayload.email
       )
     );
   } catch (error) {
@@ -67,9 +69,14 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   }
 }
 
+function* deleteToken() {
+  yield localStorage.removeItem(constants.JWT_TOKEN);
+}
+
 function* authSaga() {
   yield takeEvery(authConstants.LOGIN_SUCCESS, fetchLoginStatus);
   yield takeEvery(authConstants.REGISTER_SUCCESS, fetchRegisterStatus);
+  yield takeEvery(authConstants.LOGOUT_SUCCESS,deleteToken)
 }
 
 export default authSaga;
