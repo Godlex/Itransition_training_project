@@ -10,7 +10,6 @@ class LogoutForm extends Component {
   }
 
   handleYesClick() {
-    // Changing state
     this.props.logout();
   }
 

@@ -1,26 +1,28 @@
 import React, { Component } from "react";
 import EventsCardsGrid from "./events-cards-grid/events-cards-grid";
-import moment from "moment";
+import { connect } from "react-redux";
+import { getTodayEvents } from "../../redux-modules/events/actions";
+import "./today-events-page.css";
 
-export default class TodayEventsPage extends Component {
+class TodayEventsPage extends Component {
+  constructor(props) {
+    super(props);
+    this.props.getTodayEvents();
+  }
+
   render() {
-    return (
-      <EventsCardsGrid
-        events={[
-          {
-            name: "EventName1",
-            owner: "Owner1",
-            startTime: moment("2022-01-03T10:30:00+03:00"),
-            endTime: moment("2022-01-03T11:00:00+03:00"),
-          },
-          {
-            name: "EventName2",
-            owner: "Owner2",
-            startTime: moment("2022-02-04T10:30:00+03:00"),
-            endTime: moment("2022-02-04T11:00:00+03:00"),
-          },
-        ]}
-      />
-    );
+    if (this.props.events == null) {
+      return <h1 className="today-events-error-page">No events today</h1>;
+    }
+    return <EventsCardsGrid events={this.props.events} />;
   }
 }
+
+function update(state) {
+  console.log(state);
+  return {
+    events: state.events.events,
+  };
+}
+
+export default connect(update, { getTodayEvents })(TodayEventsPage);

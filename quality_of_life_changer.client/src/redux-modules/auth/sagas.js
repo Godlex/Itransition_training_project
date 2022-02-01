@@ -26,10 +26,9 @@ function* fetchLoginStatus({ email, password }) {
         tokenPayload.nameid,
         tokenPayload.unique_name,
         tokenPayload.email,
-        true,
+        true
       )
     );
-    
   } catch (error) {
     console.log(error);
   }
@@ -38,7 +37,8 @@ function* fetchLoginStatus({ email, password }) {
 function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
     let state = [];
-    yield fetcher.post("/api/Auth/register", {
+    yield fetcher
+      .post("/api/Auth/register", {
         username: username,
         email: email,
         password: password,
@@ -71,7 +71,7 @@ function* deleteToken() {
 function* authSaga() {
   yield takeEvery(authConstants.LOGIN_ATTEMPT, fetchLoginStatus);
   yield takeEvery(authConstants.REGISTER_ATTEMPT, fetchRegisterStatus);
-  yield takeEvery(authConstants.LOGOUT_SUCCESS,deleteToken)
+  yield takeEvery(authConstants.LOGOUT_SUCCESS, deleteToken);
 }
 
 export default authSaga;

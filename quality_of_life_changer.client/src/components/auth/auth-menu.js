@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 class AuthMenu extends Component {
   render() {
-    console.log(this.props);
     if (this.props.user.name != null) {
       return (
         <Navbar bg="primary" variant="dark">
