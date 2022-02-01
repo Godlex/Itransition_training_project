@@ -7,18 +7,16 @@ import { login } from "../../redux-modules/auth/actions";
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "", isAuth: false };
+    this.state = { email: "", password: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    // Changing state
     this.props.login(this.state.email, this.state.password, this.state.isAuth);
   }
 
   handleChange(event) {
-    // Changing state
     this.setState({ [event.target.name]: event.target.value });
   }
 

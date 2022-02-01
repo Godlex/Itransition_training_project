@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import LoginForm from "./components/auth/login-form";
 import RegisterForm from "./components/auth/register-form";
-import LogoutForm from "./components/auth/logout-page";
+import LogoutPage from "./components/auth/logout-page";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import AuthMenu from "./components/auth/auth-menu";
-import TodayEventsForm from "./components/events/today-events-form";
-import ProfileForm from "./components/profile/profile-page";
+import TodayEventsPage from "./components/events/today-events-page";
+import ProfilePage from "./components/profile/profile-page";
 
 class App extends Component {
   render() {
@@ -17,9 +17,9 @@ class App extends Component {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/logout" element={<LogoutForm />} />
-          <Route path="/events-today" element={<TodayEventsForm />} />
-          <Route path="/profile" element={<ProfileForm />} />
+          <Route path="/logout" element={<LogoutPage />} />
+          <Route path="/events-today" element={<TodayEventsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </div>
     );

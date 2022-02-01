@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import EventsCardsGrid from "./events-cards-grid/events-cards-grid";
 import moment from "moment";
 
-export default class TodayEventFrom extends Component {
+export default class TodayEventsPage extends Component {
   render() {
     return (
       <EventsCardsGrid
