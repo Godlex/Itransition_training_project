@@ -1,12 +1,12 @@
 import { authConstants } from "./constants";
 
 export function login(email, password, isAuth) {
-  return { type: authConstants.LOGIN_SUCCESS, email, password,isAuth};
+  return { type: authConstants.LOGIN_ATTEMPT, email, password,isAuth};
 }
 
 export function register(username, email, password, confirmPassword) {
   return {
-    type: authConstants.REGISTER_SUCCESS,
+    type: authConstants.REGISTER_ATTEMPT,
     username,
     email,
     password,

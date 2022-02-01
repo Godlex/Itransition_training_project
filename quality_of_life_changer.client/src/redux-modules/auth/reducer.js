@@ -5,7 +5,6 @@ const initialAuthState = {
 };
 
 export default function authReducer(state = initialAuthState, action) {
-  console.log('action', action.type);
   switch (action.type) {
     case authConstants.SET_USER:
       return {
@@ -24,6 +23,10 @@ export default function authReducer(state = initialAuthState, action) {
     case authConstants.LOGIN_FAILURE:
       return { ...state };
     case authConstants.REGISTER_FAILURE:
+      return { ...state };
+    case authConstants.LOGIN_ATTEMPT:
+      return { ...state };
+    case authConstants.REGISTER_ATTEMPT:
       return { ...state };
     default:
       return state;

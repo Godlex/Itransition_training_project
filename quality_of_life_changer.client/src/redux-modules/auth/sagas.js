@@ -38,11 +38,6 @@ function* fetchLoginStatus({ email, password }) {
 function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
     let state = [];
-
-    console.log({ username, email, password, confirmPassword });
-
-    
-
     yield fetcher.post("/api/Auth/register", {
         username: username,
         email: email,
@@ -74,8 +69,8 @@ function* deleteToken() {
 }
 
 function* authSaga() {
-  yield takeEvery(authConstants.LOGIN_SUCCESS, fetchLoginStatus);
-  yield takeEvery(authConstants.REGISTER_SUCCESS, fetchRegisterStatus);
+  yield takeEvery(authConstants.LOGIN_ATTEMPT, fetchLoginStatus);
+  yield takeEvery(authConstants.REGISTER_ATTEMPT, fetchRegisterStatus);
   yield takeEvery(authConstants.LOGOUT_SUCCESS,deleteToken)
 }
 
