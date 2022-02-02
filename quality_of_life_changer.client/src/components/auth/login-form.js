@@ -1,64 +1,53 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
 import { login } from "../../redux-modules/auth/actions";
+import * as Yup from "yup";
+
+const loginSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(4, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  email: Yup.string().email("Invalid email").required("Required"),
+});
 
 class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { email: "", password: "" };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.props.login(this.state.email, this.state.password, this.state.isAuth);
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  handleSubmit = (values) => {
+    this.props.login(values.email, values.password);
+  };
 
   render() {
     if (this.props.user.isAuth) {
       return <Navigate to="/" />;
     }
-
     return (
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            name="email"
-            placeholder="Enter email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-
-        <Button variant="primary" type="button" onClick={this.handleClick}>
-          Submit
-        </Button>
-      </Form>
+      <>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={loginSchema}
+          onSubmit={this.handleSubmit}
+        >
+          {() => {
+            return (
+              <Form>
+                <label>
+                  Email
+                  <Field type="email" name="email" />
+                  <ErrorMessage name="email" component="div" />
+                </label>
+                <label>
+                  Password
+                  <Field type="password" name="password" />
+                  <ErrorMessage name="password" component="div" />
+                </label>
+                <button type="submit">Submit</button>
+              </Form>
+            );
+          }}
+        </Formik>
+      </>
     );
   }
 }

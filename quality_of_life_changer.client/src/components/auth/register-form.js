@@ -1,93 +1,74 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
 import { register } from "../../redux-modules/auth/actions";
+import * as Yup from "yup";
+
+const registerSchema = Yup.object().shape({
+  userName: Yup.string().required("Required"),
+  password: Yup.string().required("Required"),
+  confirmPassword: Yup.string()
+    .required("Required")
+    .oneOf([Yup.ref("password"), null], "Confirm Password does not match"),
+  email: Yup.string().email("Invalid email").required("Required"),
+});
 
 class RegisterForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: "", email: "", password: "", confirmPassword: "" };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    // Changing state
+  handleSubmit = (values) => {
     this.props.register(
-      this.state.username,
-      this.state.email,
-      this.state.password,
-      this.state.confirmPassword
+      values.userName,
+      values.email,
+      values.password,
+      values.confirmPassword
     );
-  }
-
-  handleChange(event) {
-    // Changing state
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  };
 
   render() {
     if (this.props.user.isAuth) {
       return <Navigate to="/" />;
     }
     return (
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            name="username"
-            type="string"
-            placeholder="Enter name"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            name="email"
-            type="email"
-            placeholder="Enter email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Confirm password</Form.Label>
-          <Form.Control
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm password"
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-
-        <Button variant="primary" type="button" onClick={this.handleClick}>
-          Submit
-        </Button>
-      </Form>
+      <>
+        <Formik
+          initialValues={{
+            userName: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          }}
+          validationSchema={registerSchema}
+          onSubmit={this.handleSubmit}
+        >
+          {() => {
+            return (
+              <Form>
+                <label>
+                  Name
+                  <Field type="string" name="userName" />
+                  <ErrorMessage name="userName" component="div" />
+                </label>
+                <label>
+                  Email
+                  <Field type="email" name="email" />
+                  <ErrorMessage name="email" component="div" />
+                </label>
+                <label>
+                  Password
+                  <Field type="password" name="password" />
+                  <ErrorMessage name="password" component="div" />
+                </label>
+                <label>
+                  Confirm Password
+                  <Field type="password" name="confirmPassword" />
+                  <ErrorMessage name="confirmPassword" component="div" />
+                </label>
+                <button type="submit">Submit</button>
+              </Form>
+            );
+          }}
+        </Formik>
+      </>
     );
   }
 }
