@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import EventsCardsGrid from "./events-cards-grid/events-cards-grid";
 import { connect } from "react-redux";
 import { getTodayEvents } from "../../redux-modules/events/actions";
-import "./today-events-page.css";
+import "./today-events-page.scss";
 
 class TodayEventsPage extends Component {
   constructor(props) {

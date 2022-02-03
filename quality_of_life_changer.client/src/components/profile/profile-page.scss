@@ -1,0 +1,14 @@
+$user-card-color: rgb(131, 222, 252) !important;
+$user-card-width-max: 40%;
+$user-card-margin-horizontal: 30%;
+$user-card-margin-vertical: 1%;
+
+.custom-user-card {
+  background-color: $user-card-color;
+  max-width: $user-card-width-max;
+  margin-top: $user-card-margin-vertical;
+  margin-bottom: $user-card-margin-vertical;
+  margin-left: $user-card-margin-horizontal;
+  margin-right: $user-card-margin-horizontal;
+  text-align: center;
+}

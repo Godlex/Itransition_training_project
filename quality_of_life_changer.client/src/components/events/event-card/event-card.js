@@ -2,7 +2,7 @@ import moment from "moment";
 import { Component } from "react";
 import { Card } from "react-bootstrap";
 import { eventConstants } from "../events-constants";
-import "./event-card.css";
+import "./event-card.scss";
 
 class EventCard extends Component {
   render() {

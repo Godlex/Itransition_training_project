@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Row } from "react-bootstrap";
 import EventCard from "../event-card/event-card";
-import "./events-cards-grid.css";
+import "./events-cards-grid.scss";
 
 class EventsCardsGrid extends Component {
   render() {

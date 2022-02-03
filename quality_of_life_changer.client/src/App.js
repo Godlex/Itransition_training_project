@@ -3,7 +3,7 @@ import LoginForm from "./components/auth/login-form";
 import RegisterForm from "./components/auth/register-form";
 import LogoutPage from "./components/auth/logout-page";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Home";
+import Home from "./components/home/home-page";
 import AuthMenu from "./components/auth/auth-menu";
 import TodayEventsPage from "./components/events/today-events-page";
 import ProfilePage from "./components/profile/profile-page";

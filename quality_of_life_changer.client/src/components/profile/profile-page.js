@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
-import "./profile-page.css";
+import "./profile-page.scss";
 
 class ProfileForm extends Component {
   render() {
