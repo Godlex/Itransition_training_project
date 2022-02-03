@@ -5,8 +5,6 @@ import "./events-cards-grid.scss";
 
 class EventsCardsGrid extends Component {
   render() {
-    console.log("props in grid - ", this.props.events);
-    console.log(this.props.events);
     return (
       <div className="custom-grid">
         <Row md="auto" sm="auto">

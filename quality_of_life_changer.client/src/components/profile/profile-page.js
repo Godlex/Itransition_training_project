@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Navigate } from "react-router";
 import "./profile-page.scss";
 
-class ProfileForm extends Component {
+class ProfilePage extends Component {
   render() {
     if (!this.props.user.isAuth) {
       return <Navigate to="/login" />;
@@ -26,4 +26,4 @@ function update(state) {
   };
 }
 
-export default connect(update)(ProfileForm);
+export default connect(update)(ProfilePage);

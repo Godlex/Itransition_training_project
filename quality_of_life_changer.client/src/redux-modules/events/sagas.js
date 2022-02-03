@@ -9,7 +9,7 @@ function* fetchTodayEvents() {
     yield fetcher.get("/api/Calendar/events/today", {}).then((response) => {
       state = response.data;
     });
-    
+
     yield put(actions.setEvents(state.events));
   } catch (error) {
     console.log(error);

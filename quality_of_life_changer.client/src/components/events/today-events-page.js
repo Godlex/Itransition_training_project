@@ -19,7 +19,6 @@ class TodayEventsPage extends Component {
 }
 
 function update(state) {
-  console.log(state);
   return {
     events: state.events.events,
   };

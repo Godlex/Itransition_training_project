@@ -3,7 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { logout } from "../../redux-modules/auth/actions";
 
-class LogoutForm extends Component {
+class LogoutPage extends Component {
   constructor(props) {
     super(props);
     this.handleYesClick = this.handleYesClick.bind(this);
@@ -45,4 +45,4 @@ class LogoutForm extends Component {
   }
 }
 
-export default connect(null, { logout })(LogoutForm);
+export default connect(null, { logout })(LogoutPage);

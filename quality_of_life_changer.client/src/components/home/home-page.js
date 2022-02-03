@@ -1,19 +1,9 @@
 import { Component } from "react";
+import "./home-page.scss";
 
-class Home extends Component {
+class HomePage extends Component {
   render() {
-    return (
-      <h1
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        Home Page
-      </h1>
-    );
+    return <h1 className="home-page">Home Page</h1>;
   }
 }
-export default Home
+export default HomePage;
