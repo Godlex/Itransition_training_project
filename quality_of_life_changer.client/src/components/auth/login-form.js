@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Navigate } from "react-router";
 import { login } from "../../redux-modules/auth/actions";
 import * as Yup from "yup";
+import "./auth.scss";
 
 const loginSchema = Yup.object().shape({
   password: Yup.string()
@@ -23,31 +24,31 @@ class LoginForm extends Component {
       return <Navigate to="/" />;
     }
     return (
-      <>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={loginSchema}
-          onSubmit={this.handleSubmit}
-        >
-          {() => {
-            return (
-              <Form>
-                <label>
-                  Email
-                  <Field type="email" name="email" />
-                  <ErrorMessage name="email" component="div" />
-                </label>
-                <label>
-                  Password
-                  <Field type="password" name="password" />
-                  <ErrorMessage name="password" component="div" />
-                </label>
-                <button type="submit">Submit</button>
-              </Form>
-            );
-          }}
-        </Formik>
-      </>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validationSchema={loginSchema}
+        onSubmit={this.handleSubmit}
+      >
+        {() => {
+          return (
+            <Form className="auth-form">
+              <label>Email</label>
+              <Field type="email" name="email" />
+
+              <ErrorMessage className="error" name="email" component="div" />
+
+              <label>Password</label>
+              <Field type="password" name="password" />
+
+              <ErrorMessage className="error" name="password" component="div" />
+
+              <button className="submit" type="submit">
+                Submit
+              </button>
+            </Form>
+          );
+        }}
+      </Formik>
     );
   }
 }

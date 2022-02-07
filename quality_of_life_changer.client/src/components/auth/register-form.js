@@ -42,28 +42,38 @@ class RegisterForm extends Component {
         >
           {() => {
             return (
-              <Form>
-                <label>
-                  Name
-                  <Field type="string" name="userName" />
-                  <ErrorMessage name="userName" component="div" />
-                </label>
-                <label>
-                  Email
-                  <Field type="email" name="email" />
-                  <ErrorMessage name="email" component="div" />
-                </label>
-                <label>
-                  Password
-                  <Field type="password" name="password" />
-                  <ErrorMessage name="password" component="div" />
-                </label>
-                <label>
-                  Confirm Password
-                  <Field type="password" name="confirmPassword" />
-                  <ErrorMessage name="confirmPassword" component="div" />
-                </label>
-                <button type="submit">Submit</button>
+              <Form className="auth-form">
+                <label>Name</label>
+                <Field type="string" name="userName" />
+                <ErrorMessage
+                  className="error"
+                  name="userName"
+                  component="div"
+                />
+
+                <label>Email</label>
+                <Field type="email" name="email" />
+                <ErrorMessage className="error" name="email" component="div" />
+
+                <label>Password</label>
+                <Field type="password" name="password" />
+                <ErrorMessage
+                  className="error"
+                  name="password"
+                  component="div"
+                />
+
+                <label>Confirm Password</label>
+                <Field type="password" name="confirmPassword" />
+                <ErrorMessage
+                  className="error"
+                  name="confirmPassword"
+                  component="div"
+                />
+
+                <button className="submit" type="submit">
+                  Submit
+                </button>
               </Form>
             );
           }}

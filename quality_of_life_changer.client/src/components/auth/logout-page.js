@@ -15,31 +15,21 @@ class LogoutPage extends Component {
 
   render() {
     return (
-      <Container
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Container>
-          <h1>you want to exit?</h1>
-        </Container>
-        <Container>
-          <Button
-            variant="primary"
-            type="button"
-            onClick={this.handleYesClick}
-            href="/"
-          >
-            Yes
-          </Button>
+      <Container className="logout">
+        <h1>you want to exit? </h1>
 
-          <Button variant="primary" type="button" href="/">
-            No
-          </Button>
-        </Container>
+        <Button
+          variant="primary"
+          type="button"
+          onClick={this.handleYesClick}
+          href="/"
+        >
+          Yes
+        </Button>
+
+        <Button variant="primary" type="button" href="/">
+          No
+        </Button>
       </Container>
     );
   }

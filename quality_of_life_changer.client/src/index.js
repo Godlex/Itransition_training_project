@@ -13,7 +13,7 @@ if (token) {
   let tokenPayload = JSON.parse(window.atob(token.split(".")[1]));
   store.dispatch({
     type: authConstants.SET_USER,
-    nameid: tokenPayload.nameid,
+    id: tokenPayload.nameid,
     name: tokenPayload.unique_name,
     email: tokenPayload.email,
     isAuth: true,
