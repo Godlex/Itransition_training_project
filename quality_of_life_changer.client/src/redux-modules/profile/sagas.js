@@ -2,19 +2,20 @@ import { put, takeEvery } from "redux-saga/effects";
 import { profileConstants } from "./constants";
 import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
+import { toastr } from "react-redux-toastr";
 
 function* fetchUserCalendars({ id }) {
   try {
-    let state = [];
-    yield fetcher
-      .get("api/user/", { id }, "/profile/calendars", {})
-      .then((response) => {
-        state = response.data;
-      });
-
-    yield put(actions.setCalendars(state.calendars));
+    const { data } = yield fetcher.get(
+      "api/user/",
+      { id },
+      "/profile/calendars"
+    );
+    toastr.success("Your calendars loaded");
+    yield put(actions.setCalendars(data.calendars));
   } catch (error) {
     console.log(error);
+    toastr.error("Error", error.message);
   }
 }
 

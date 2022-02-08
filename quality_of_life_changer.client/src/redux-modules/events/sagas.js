@@ -2,17 +2,16 @@ import { put, takeEvery } from "redux-saga/effects";
 import { eventsConstants } from "./constants";
 import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
+import { toastr } from "react-redux-toastr";
 
 function* fetchTodayEvents() {
   try {
-    let state = [];
-    yield fetcher.get("/api/Calendar/events/today", {}).then((response) => {
-      state = response.data;
-    });
-
-    yield put(actions.setEvents(state.events));
+    const { data } = yield fetcher.get("/api/Calendar/events/today");
+    toastr.success("Today events loaded");
+    yield put(actions.setEvents(data.events));
   } catch (error) {
     console.log(error);
+    toastr.error("Error", error.response.data.Message);
   }
 }
 

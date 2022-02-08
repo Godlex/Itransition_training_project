@@ -3,23 +3,20 @@ import { put, takeEvery } from "redux-saga/effects";
 import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
 import { constants } from "../../constants/constants";
+import { toastr } from "react-redux-toastr";
 
 function* fetchLoginStatus({ email, password }) {
   try {
-    let state = [];
+    const { data } = yield fetcher.post("/api/Auth/login", {
+      email: email,
+      password: password,
+    });
 
-    yield fetcher
-      .post("/api/Auth/login", {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        state = response.data;
-      });
+    localStorage.setItem(constants.JWT_TOKEN, data.token);
 
-    localStorage.setItem(constants.JWT_TOKEN, state.token);
+    toastr.success("Login success");
 
-    let tokenPayload = JSON.parse(window.atob(state.token.split(".")[1]));
+    let tokenPayload = JSON.parse(window.atob(data.token.split(".")[1]));
 
     yield put(
       actions.setUser(
@@ -31,26 +28,22 @@ function* fetchLoginStatus({ email, password }) {
     );
   } catch (error) {
     console.log(error);
+    toastr.error("Login failed", error.response.data.Message);
   }
 }
 
 function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
-    let state = [];
-    yield fetcher
-      .post("/api/Auth/register", {
-        username: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-      })
-      .then((response) => {
-        state = response.data;
-      });
+    const { data } = yield fetcher.post("/api/Auth/register", {
+      username: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
 
-    localStorage.setItem(constants.JWT_TOKEN, state.token);
-
-    let tokenPayload = JSON.parse(window.atob(state.token.split(".")[1]));
+    toastr.success("Register success");
+    localStorage.setItem(constants.JWT_TOKEN, data.token);
+    let tokenPayload = JSON.parse(window.atob(data.token.split(".")[1]));
 
     yield put(
       actions.setUser(
@@ -60,7 +53,8 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
       )
     );
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data.Message);
+    toastr.error("Register failed", error.response.data.Message);
   }
 }
 

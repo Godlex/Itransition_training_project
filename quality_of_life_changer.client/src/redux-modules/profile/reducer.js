@@ -2,10 +2,7 @@ import { profileConstants } from "./constants";
 
 const initialProfileState = { userId: null, calendars: {} };
 
-export default function calendarsReducer(
-  state = initialProfileState,
-  action
-) {
+export default function calendarsReducer(state = initialProfileState, action) {
   console.log(action.calendars);
   switch (action.type) {
     case profileConstants.GET_USER_CALENDARS:
@@ -15,6 +12,7 @@ export default function calendarsReducer(
       };
     case profileConstants.SET_CALENDARS:
       return {
+        ...state,
         calendars: action.calendars,
       };
     default:

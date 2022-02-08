@@ -10,6 +10,7 @@ export default function eventsReducer(state = initialEventsState, action) {
       };
     case eventsConstants.SET_EVENTS:
       return {
+        ...state,
         ...action.events,
       };
     default:
