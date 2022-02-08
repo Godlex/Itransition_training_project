@@ -8,7 +8,7 @@ class CalendarCard extends Component {
         <Card.Header>{this.props.name}</Card.Header>
         <Card.Body>
           <Card.Link href={this.props.url}>
-            Download calendar to my PC
+            Download
           </Card.Link>
         </Card.Body>
       </Card>

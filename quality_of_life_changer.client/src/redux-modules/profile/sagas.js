@@ -1,5 +1,5 @@
 import { put, takeEvery } from "redux-saga/effects";
-import { calendarsConstants } from "./constants";
+import { profileConstants } from "./constants";
 import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
 
@@ -18,8 +18,8 @@ function* fetchUserCalendars({ id }) {
   }
 }
 
-function* calendarsSaga() {
-  yield takeEvery(calendarsConstants.GET_USER_CALENDARS, fetchUserCalendars);
+function* profileSaga() {
+  yield takeEvery(profileConstants.GET_USER_CALENDARS, fetchUserCalendars);
 }
 
-export default calendarsSaga;
+export default profileSaga;
