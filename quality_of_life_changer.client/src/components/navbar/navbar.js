@@ -13,6 +13,7 @@ class CustomNavbar extends Component {
             <Navbar.Collapse>
               <Nav className="me-auto my-lg-0">
                 <Nav.Link href="/events-today">Today events</Nav.Link>
+                <Nav.Link href="/add-calendar">Add new calendar</Nav.Link>
               </Nav>
               <Nav>
                 <Nav.Link href="/profile">

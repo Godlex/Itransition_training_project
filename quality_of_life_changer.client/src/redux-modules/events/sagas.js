@@ -11,7 +11,7 @@ function* fetchTodayEvents() {
     yield put(actions.setEvents(data.events));
   } catch (error) {
     console.log(error);
-    toastr.error("Error", error.response.data.Message);
+    toastr.error("Error", error.response);
   }
 }
 

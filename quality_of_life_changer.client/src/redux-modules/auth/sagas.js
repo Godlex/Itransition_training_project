@@ -49,7 +49,8 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
       actions.setUser(
         tokenPayload.nameid,
         tokenPayload.unique_name,
-        tokenPayload.email
+        tokenPayload.email,
+        true
       )
     );
   } catch (error) {
