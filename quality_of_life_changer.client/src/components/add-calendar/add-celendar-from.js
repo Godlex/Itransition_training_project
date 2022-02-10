@@ -7,7 +7,7 @@ import * as Yup from "yup";
 const addCalendarShema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(80, "Too Long!"),
   url: Yup.string()
-    .matches(/^.*\.ics/, "Url must is end with .ics")
+    .matches(/^.*\.ics$/, "Url must is end with .ics")
     .required("Required"),
 }); 
 

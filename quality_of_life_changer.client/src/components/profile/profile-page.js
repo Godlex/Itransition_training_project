@@ -2,7 +2,7 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
 import CalendarsCardsGrid from "./calendars-card-grid/calendars-card-grid";
-import { getUserCalendars } from "../../redux-modules/profile/actions";
+import { getUserCalendars } from "../../redux-modules/user-profile/actions";
 import "./profile-page.scss";
 
 class ProfilePage extends Component {
@@ -50,7 +50,7 @@ class ProfilePage extends Component {
 function update(state) {
   return {
     user: { ...state.auth.user },
-    calendars: state.profile.calendars,
+    calendars: state.userProfile.calendars,
   };
 }
 

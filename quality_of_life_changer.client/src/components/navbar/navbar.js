@@ -16,7 +16,7 @@ class CustomNavbar extends Component {
                 <Nav.Link href="/add-calendar">Add new calendar</Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link href="/profile">
+                <Nav.Link href="/user-profile">
                   Hello! {this.props.user.name}
                 </Nav.Link>
                 <Nav.Link href="/logout">Logout</Nav.Link>

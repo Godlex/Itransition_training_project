@@ -13,14 +13,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar/>
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/logout" element={<LogoutPage />} />
           <Route path="/events-today" element={<TodayEventsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/user-profile" element={<ProfilePage />} />
           <Route path="/add-calendar" element={<AddCalendarForm />} />
         </Routes>
       </div>

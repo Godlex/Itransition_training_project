@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import EventsCardsGrid from "./events-cards-grid/events-cards-grid";
 import { connect } from "react-redux";
-import { getTodayEvents } from "../../redux-modules/events/actions";
+import { getTodayEvents } from "../../redux-modules/calendars/actions";
 import "./today-events-page.scss";
 
 class TodayEventsPage extends Component {
@@ -11,16 +11,17 @@ class TodayEventsPage extends Component {
   }
 
   render() {
-    if (this.props.events == null) {
+    console.log(this.props.todayEvents);
+    if (this.props.todayEvents == null) {
       return <h1 className="today-events-error-page">No events today</h1>;
     }
-    return <EventsCardsGrid events={this.props.events} />;
+    return <EventsCardsGrid events={this.props.todayEvents} />;
   }
 }
 
 function update(state) {
   return {
-    events: state.events.events,
+    todayEvents: state.calendars.todayEvents,
   };
 }
 
