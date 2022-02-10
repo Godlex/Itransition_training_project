@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
+import { addCalendar } from "../../redux-modules/user-profile/actions";
 import * as Yup from "yup";
 
 const addCalendarShema = Yup.object().shape({
@@ -9,12 +10,13 @@ const addCalendarShema = Yup.object().shape({
   url: Yup.string()
     .matches(/^.*\.ics$/, "Url must is end with .ics")
     .required("Required"),
-}); 
+});
 
 class AddCalendarForm extends Component {
   handleSubmit = (values) => {
-    this.props.addCalendar(values.email, values.password);
+    this.props.addCalendar(values.name, values.url);
   };
+
   render() {
     if (!this.props.user.isAuth) {
       return <Navigate to="/" />;
@@ -56,4 +58,4 @@ function update(state) {
   };
 }
 
-export default connect(update,{})(AddCalendarForm);
+export default connect(update, { addCalendar })(AddCalendarForm);

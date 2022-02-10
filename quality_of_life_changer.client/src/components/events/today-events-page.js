@@ -11,7 +11,6 @@ class TodayEventsPage extends Component {
   }
 
   render() {
-    console.log(this.props.todayEvents);
     if (this.props.todayEvents == null) {
       return <h1 className="today-events-error-page">No events today</h1>;
     }

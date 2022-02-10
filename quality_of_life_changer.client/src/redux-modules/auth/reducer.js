@@ -17,9 +17,7 @@ export default function authReducer(state = initialAuthState, action) {
         },
       };
     case authConstants.LOGOUT_SUCCESS:
-      return {
-        ...state,
-      };
+      return { ...state };
     case authConstants.LOGIN_FAILURE:
       return { ...state };
     case authConstants.REGISTER_FAILURE:
