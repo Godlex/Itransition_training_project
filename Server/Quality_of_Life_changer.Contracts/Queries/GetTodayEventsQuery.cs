@@ -5,4 +5,4 @@ using Model.Calendar;
 
 public record GetTodayEventsQuery : IRequest<GetTodayEventsResponse>;
 
-public record GetTodayEventsResponse(IReadOnlyCollection<CalendarEvent> Events);
+public record GetTodayEventsResponse(IReadOnlyCollection<CalendarEvent> TodayEvents);

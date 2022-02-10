@@ -21,7 +21,7 @@ public class UserProfileController : ControllerBase
         _calendarModelValidator = calendarModelValidator;
     }
 
-    [HttpPost("calendars")]
+    [HttpPost("add-calendar")]
     public async Task<IActionResult> AddCalendar([FromBody] CalendarModel model, string userId)
     {
         var result = await _calendarModelValidator.ValidateAsync(model);

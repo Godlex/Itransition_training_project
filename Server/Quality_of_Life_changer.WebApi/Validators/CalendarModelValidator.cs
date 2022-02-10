@@ -12,6 +12,6 @@ public class CalendarModelValidator : AbstractValidator<CalendarModel>
             .WithMessage("Name must be between 2 and 80 symbols");
 
         RuleFor(calendarModel => calendarModel.Url).NotEmpty()
-            .Matches(@"^.*\.ics").WithMessage("Url is cannot be empty and end with .ics ");
+            .Matches(@"^.*\.ics$").WithMessage("Url is cannot be empty and end with .ics ");
     }
 }
