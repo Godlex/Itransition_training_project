@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            return BadRequest(GetErrors(result));
+            throw new ValidationException(GetErrors(result));
         }
 
         var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
@@ -59,7 +59,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            return BadRequest(GetErrors(result));
+            throw new ValidationException(GetErrors(result));
         }
 
         var userId = await _mediator.Send(new AddUserCommand(model.Username, model.Email, model.Password));

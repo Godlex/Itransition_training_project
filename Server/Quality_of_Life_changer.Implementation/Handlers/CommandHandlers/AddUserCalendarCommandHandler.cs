@@ -21,12 +21,17 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
     {
         if (!await IsFirstUserCalendarWithUrl(request.Url, request.OwnerId, cancellationToken))
         {
-            throw new ValidationException("You already have a calendar with this url already exist");
+            throw new BadRequestException("You already have a calendar with this url already exist");
         }
 
         var calendarId = Guid.NewGuid().ToString();
 
         var calendarName = await GetCalendarName(request, cancellationToken);
+
+        if (await IsCalendarNameExist(calendarName, request, cancellationToken))
+        {
+            throw new BadRequestException("You already have a calendar with this name already exist");
+        }
 
         _context.Set<Calendar>().Add(new Calendar
         {
@@ -42,6 +47,14 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
         return Unit.Value;
     }
 
+    private async Task<bool> IsCalendarNameExist(string calendarName, AddUserCalendarCommand request,
+        CancellationToken cancellationToken)
+    {
+        return await _context.Set<Calendar>().Include(u => u.Owner)
+            .FirstOrDefaultAsync(x => x.OwnerId == request.OwnerId && x.CalendarName == calendarName,
+                cancellationToken) != null;
+    }
+
     private async Task<bool> IsFirstUserCalendarWithUrl(string url, string ownerId, CancellationToken cancellationToken)
     {
         return await _context.Set<Calendar>()
@@ -55,7 +68,7 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
 
         if (user == null)
         {
-            throw new ValidationException("No user with this id");
+            throw new BadRequestException("No user with this id");
         }
 
         return user;
@@ -64,23 +77,14 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
     private async Task<string> GetCalendarName(AddUserCalendarCommand request, CancellationToken cancellationToken)
     {
         var userName = await GetUserName(request, cancellationToken);
+        var isFirstCalendar = await IsFirstCalendar(request, cancellationToken);
 
-        if (!string.IsNullOrEmpty(request.CalendarName))
+        if (!string.IsNullOrEmpty(request.CalendarName) && !isFirstCalendar)
         {
-            if (await IsFirstCalendar(request, cancellationToken))
-            {
-                return userName;
-            }
-
-            return request.CalendarName;
+            throw new BadRequestException("Enter a calendar's name");
         }
 
-        if (!await IsFirstCalendar(request, cancellationToken))
-        {
-            throw new Exception("Enter a calendar's name");
-        }
-
-        return userName;
+        return isFirstCalendar ? userName : request.CalendarName;
     }
 
     private async Task<bool> IsFirstCalendar(AddUserCalendarCommand request,

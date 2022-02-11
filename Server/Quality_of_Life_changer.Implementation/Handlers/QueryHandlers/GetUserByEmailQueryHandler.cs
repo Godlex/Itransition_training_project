@@ -23,7 +23,7 @@ public class GetUserByEmailQueryHandler : BaseQueryHandler,
 
         if (user == null)
         {
-            throw new ValidationException("no user with this email");
+            throw new BadRequestException("no user with this email");
         }
 
         return new GetUserByEmailResponse(user.Id, user.UserName, user.Email, user.Password);

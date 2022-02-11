@@ -50,7 +50,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == email);
         if (user != null)
         {
-            throw new ValidationException("user already exist with this email");
+            throw new BadRequestException("user already exist with this email");
         }
     }
 
@@ -59,7 +59,7 @@ public class AddUserCommandHandler : BaseCommandHandler, IRequestHandler<AddUser
         var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.UserName == name);
         if (user != null)
         {
-            throw new ValidationException("user already exist with this name");
+            throw new BadRequestException("user already exist with this name");
         }
     }
 }

@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.UserProfile;
 using System.Text;
+using ValidationException = Contracts.Exceptions.ValidationException;
 
 [Route("api/user/{userId}/profile")]
 [ApiController]
@@ -21,14 +22,14 @@ public class UserProfileController : ControllerBase
         _calendarModelValidator = calendarModelValidator;
     }
 
-    [HttpPost("add-calendar")]
+    [HttpPost("calendars")]
     public async Task<IActionResult> AddCalendar([FromBody] CalendarModel model, string userId)
     {
         var result = await _calendarModelValidator.ValidateAsync(model);
 
         if (!result.IsValid)
         {
-            return BadRequest(GetErrors(result));
+            throw new ValidationException(GetErrors(result));
         }
 
         var response = await _mediator.Send(new AddUserCalendarCommand(model.Url, userId, model.Name));
