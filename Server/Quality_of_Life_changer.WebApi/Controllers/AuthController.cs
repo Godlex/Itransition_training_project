@@ -4,9 +4,12 @@ using Contracts.Commands;
 using Contracts.Interfaces;
 using Contracts.Queries;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.Auth;
+using System.Text;
+using ValidationException = Contracts.Exceptions.ValidationException;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -34,7 +37,7 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new Exception("invalid input");
+            throw new ValidationException(GetErrors(result));
         }
 
         var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
@@ -43,7 +46,7 @@ public class AuthController : ControllerBase
 
         if (!passwordValid)
         {
-            throw new Exception("invalid password");
+            throw new ValidationException("invalid password");
         }
 
         return _authService.GetAuthData(user.Id, user.Username, user.Email);
@@ -56,13 +59,12 @@ public class AuthController : ControllerBase
 
         if (!result.IsValid)
         {
-            throw new Exception("invalid input");
+            throw new ValidationException(GetErrors(result));
         }
 
-        var command = new AddUserCommand(model.Username, model.Email, model.Password);
-        var user = await _mediator.Send(command);
+        var userId = await _mediator.Send(new AddUserCommand(model.Username, model.Email, model.Password));
 
-        return _authService.GetAuthData(user.Id, user.UserName, user.Email);
+        return _authService.GetAuthData(userId, model.Username, model.Email);
     }
 
     [HttpGet("users/all")]
@@ -71,5 +73,16 @@ public class AuthController : ControllerBase
     {
         var response = await _mediator.Send(new GetAllUsersQuery());
         return Ok(response);
+    }
+
+    private static string GetErrors(ValidationResult result)
+    {
+        var errors = new StringBuilder();
+        foreach (var error in result.Errors)
+        {
+            errors.Append(error.ErrorMessage);
+        }
+
+        return errors.ToString();
     }
 }

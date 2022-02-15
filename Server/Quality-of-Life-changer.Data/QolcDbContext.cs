@@ -6,15 +6,24 @@ public class QolcDbContext : DbContext
 {
     public QolcDbContext(DbContextOptions<QolcDbContext> options) : base(options) { }
 
-    public DbSet<QolcUser> Users { get; set; }
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<Calendar> Calendars { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<QolcUser>()
+        builder.Entity<User>()
             .HasIndex(u => u.Email)
             .IsUnique();
-        builder.Entity<QolcUser>()
+        builder.Entity<User>()
             .HasIndex(u => u.UserName)
             .IsUnique();
+        builder.Entity<Calendar>()
+            .HasIndex(u => u.CalendarName)
+            .IsUnique();
+        builder.Entity<Calendar>().Property(c => c.CalendarName).HasMaxLength(80);
+        builder.Entity<Calendar>()
+            .HasOne(u => u.Owner)
+            .WithMany(u => u.Calendars);
     }
 }

@@ -7,7 +7,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
-using Model.Entities;
+using Model.Calendar;
 
 public class CalendarAdapter : ICalendarAdapter
 {
@@ -30,10 +30,14 @@ public class CalendarAdapter : ICalendarAdapter
 
     public async Task<IEnumerable<CalendarEvent>> GetTodayEvents()
     {
-        var todayEvents = new List<CalendarEvent>();
-
         var calendars = await GetCalendarListAsync();
 
+        return await GetEventsFormCalendarsAsync(calendars);
+    }
+
+    private async Task<IEnumerable<CalendarEvent>> GetEventsFormCalendarsAsync(CalendarList calendars)
+    {
+        var todayEvents = new List<CalendarEvent>();
         foreach (var calendar in calendars.Items)
         {
             var eventsRequest = CreateEventsRequest(calendar);
@@ -107,7 +111,7 @@ public class CalendarAdapter : ICalendarAdapter
         });
     }
 
-    private IEnumerable<CalendarEvent> MapEventsToCalendarEvents(Events events)
+    private static IEnumerable<CalendarEvent> MapEventsToCalendarEvents(Events events)
     {
         return events.Items
             .Where(x => x.Start.DateTime.HasValue && x.End.DateTime.HasValue)

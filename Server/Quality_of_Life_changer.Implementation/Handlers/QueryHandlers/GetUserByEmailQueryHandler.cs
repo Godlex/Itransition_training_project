@@ -1,5 +1,6 @@
 ﻿namespace Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
 
+using Contracts.Exceptions;
 using Contracts.Queries;
 using Data;
 using MediatR;
@@ -18,11 +19,11 @@ public class GetUserByEmailQueryHandler : BaseQueryHandler,
     public async Task<GetUserByEmailResponse> Handle(GetUserByEmailQuery request,
         CancellationToken cancellationToken)
     {
-        var user = await _context.Set<QolcUser>().FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
+        var user = await _context.Set<User>().FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
 
         if (user == null)
         {
-            throw new Exception("no user with this email");
+            throw new BadRequestException("no user with this email");
         }
 
         return new GetUserByEmailResponse(user.Id, user.UserName, user.Email, user.Password);

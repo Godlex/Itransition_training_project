@@ -2,21 +2,32 @@
 
 using MediatR;
 using Serilog;
+using System.Diagnostics;
+using System.Text.Json;
 
 public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
 {
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
         RequestHandlerDelegate<TResponse> next)
     {
-        try
-        {
-            Log.Information($"Before execution for {typeof(TRequest).Name}");
+        var requestName = request.GetType().Name;
+        var requestGuid = Guid.NewGuid().ToString();
 
-            return await next();
-        }
-        finally
-        {
-            Log.Information($"After execution for {typeof(TRequest).Name}");
-        }
+        var requestNameWithGuid = $"{requestName} [{requestGuid}]";
+
+        Log.Information($"[START] {requestNameWithGuid}");
+
+        var stopwatch = Stopwatch.StartNew();
+
+        Log.Information($"[PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(request)}");
+
+        var response = await next();
+
+        stopwatch.Stop();
+
+        Log.Information(
+            $"[END] {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+
+        return response;
     }
 }

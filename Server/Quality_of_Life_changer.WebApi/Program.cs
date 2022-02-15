@@ -1,4 +1,4 @@
-using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +11,11 @@ using Quality_of_Life_changer.Contracts.Interfaces;
 using Quality_of_Life_changer.Contracts.Queries;
 using Quality_of_Life_changer.Data;
 using Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
-using Quality_of_Life_changer.Model.Auth;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Validators;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 Logger.Initial();
 
@@ -28,7 +28,7 @@ try
     builder.Services.AddDbContext<QolcDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    var AllowSpecificOrigins = "_allowSpecificOrigins";
+    const string allowSpecificOrigins = "_allowSpecificOrigins";
 
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
@@ -56,9 +56,6 @@ try
 
     builder.WebHost.UseUrls("http://localhost:5145");
 
-    builder.Services.AddScoped<IValidator<LoginModel>, LoginModelValidator>();
-    builder.Services.AddScoped<IValidator<RegisterModel>, RegisterModelValidator>();
-
     builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
 
     builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
@@ -71,10 +68,17 @@ try
             builder.Configuration.GetValue<int>("JWTLifespan"))
     );
 
-    builder.AddCors(AllowSpecificOrigins);
+    builder.AddCors(allowSpecificOrigins);
 
     builder.Services.AddControllers()
-        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+        .AddFluentValidation(s =>
+        {
+            s.RegisterValidatorsFromAssemblyContaining<RegisterModelValidator>();
+            s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+        })
+        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true)
+        .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -90,7 +94,8 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseCors(AllowSpecificOrigins);
+    app.UseCors(allowSpecificOrigins);
+
     app.ConfigureExceptionMiddleware();
 
     app.UseHttpsRedirection();
@@ -104,6 +109,13 @@ try
 }
 catch (Exception ex)
 {
+    var type = ex.GetType().Name;
+    if (type.Equals("StopTheHostException", StringComparison.Ordinal))
+    {
+        Log.Information(ex, "-program cs");
+        throw;
+    }
+
     Log.Fatal(ex, "Unhandled exception");
 }
 finally
