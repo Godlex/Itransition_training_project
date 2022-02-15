@@ -13,19 +13,9 @@ export default function authReducer(state = initialAuthState, action) {
           name: action.name,
           email: action.email,
           id: action.id,
-          isAuth: true,
+          isAuth: action.isAuth,
         },
       };
-    case authConstants.LOGOUT_SUCCESS:
-      return { ...state };
-    case authConstants.LOGIN_FAILURE:
-      return { ...state };
-    case authConstants.REGISTER_FAILURE:
-      return { ...state };
-    case authConstants.LOGIN_ATTEMPT:
-      return { ...state };
-    case authConstants.REGISTER_ATTEMPT:
-      return { ...state };
     default:
       return state;
   }
