@@ -15,6 +15,7 @@ const loginSchema = Yup.object().shape({
 });
 
 class LoginForm extends Component {
+  
   handleSubmit = (values) => {
     this.props.login(values.email, values.password);
   };
@@ -42,7 +43,7 @@ class LoginForm extends Component {
 
               <ErrorMessage className="error" name="password" component="div" />
 
-              <button className="submit" type="submit">
+              <button className="login" type="submit">
                 Submit
               </button>
             </Form>
@@ -53,10 +54,10 @@ class LoginForm extends Component {
   }
 }
 
-function update(state) {
+function mapStateToProps(state) {
   return {
     user: { ...state.auth.user },
   };
 }
 
-export default connect(update, { login })(LoginForm);
+export default connect(mapStateToProps, { login })(LoginForm);

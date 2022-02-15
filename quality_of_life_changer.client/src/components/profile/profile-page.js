@@ -8,7 +8,6 @@ import "./profile-page.scss";
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    console.log("id-", this.props.user.id);
     if (this.props.user.id != null) {
       this.props.getUserCalendars(this.props.user.id);
     }
@@ -47,11 +46,11 @@ class ProfilePage extends Component {
   }
 }
 
-function update(state) {
+function mapStateToProps(state) {
   return {
     user: { ...state.auth.user },
     calendars: state.userProfile.calendars,
   };
 }
 
-export default connect(update, { getUserCalendars })(ProfilePage);
+export default connect(mapStateToProps, { getUserCalendars })(ProfilePage);

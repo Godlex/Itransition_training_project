@@ -83,10 +83,10 @@ class RegisterForm extends Component {
   }
 }
 
-function update(state) {
+function mapStateToProps(state) {
   return {
     user: { ...state.auth.user },
   };
 }
 
-export default connect(update, { register })(RegisterForm);
+export default connect(mapStateToProps, { register })(RegisterForm);

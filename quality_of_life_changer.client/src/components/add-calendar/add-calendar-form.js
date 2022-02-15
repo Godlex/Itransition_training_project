@@ -52,10 +52,10 @@ class AddCalendarForm extends Component {
   }
 }
 
-function update(state) {
+function mapStateToProps(state) {
   return {
     user: { ...state.auth.user },
   };
 }
 
-export default connect(update, { addCalendar })(AddCalendarForm);
+export default connect(mapStateToProps, { addCalendar })(AddCalendarForm);

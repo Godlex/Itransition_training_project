@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class CalendarCard extends Component {
   render() {
@@ -7,7 +8,7 @@ class CalendarCard extends Component {
       <Card className="custom-card">
         <Card.Header>{this.props.name}</Card.Header>
         <Card.Body>
-          <Card.Link href={this.props.url}>
+          <Card.Link as={Link} to={this.props.url}>
             Download
           </Card.Link>
         </Card.Body>

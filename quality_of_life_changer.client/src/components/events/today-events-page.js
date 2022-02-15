@@ -18,10 +18,10 @@ class TodayEventsPage extends Component {
   }
 }
 
-function update(state) {
+function mapStateToProps(state) {
   return {
     todayEvents: state.calendars.todayEvents,
   };
 }
 
-export default connect(update, { getTodayEvents })(TodayEventsPage);
+export default connect(mapStateToProps, { getTodayEvents })(TodayEventsPage);
