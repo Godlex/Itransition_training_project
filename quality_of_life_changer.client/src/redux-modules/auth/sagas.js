@@ -4,9 +4,11 @@ import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
 import { constants } from "../../constants/constants";
 import { toastr } from "react-redux-toastr";
+import store from "../../store";
 
 function* fetchLoginStatus({ email, password }) {
   try {
+    toastr.info("Wait server response");
     const { data } = yield fetcher.post("/api/Auth/login", {
       email: email,
       password: password,
@@ -27,13 +29,18 @@ function* fetchLoginStatus({ email, password }) {
       )
     );
   } catch (error) {
-    console.log(error);
-    toastr.error("Login failed", error.response.data.Message);
+    console.log("error", error.response);
+    if (error.response === undefined) {
+      toastr.error("server is not available");
+    } else {
+      toastr.error("Login failed", error.response.data.Message);
+    }
   }
 }
 
 function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
+    toastr.info("Wait server response");
     const { data } = yield fetcher.post("/api/Auth/register", {
       username: username,
       email: email,
@@ -59,14 +66,21 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   }
 }
 
-function* deleteToken() {
-  yield localStorage.removeItem(constants.JWT_TOKEN);
+function* logout() {
+  yield toastr.confirm("Exit", {
+    onOk: () => deleteToken(),
+  });
+}
+
+function deleteToken() {
+  localStorage.removeItem(constants.JWT_TOKEN);
+  store.dispatch(actions.setUser(null, null, null, false));
 }
 
 function* authSaga() {
   yield takeEvery(authConstants.LOGIN_ATTEMPT, fetchLoginStatus);
   yield takeEvery(authConstants.REGISTER_ATTEMPT, fetchRegisterStatus);
-  yield takeEvery(authConstants.LOGOUT_SUCCESS, deleteToken);
+  yield takeEvery(authConstants.LOGOUT_SUCCESS, logout);
 }
 
 export default authSaga;
