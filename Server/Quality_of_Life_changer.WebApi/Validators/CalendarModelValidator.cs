@@ -3,7 +3,7 @@
 using FluentValidation;
 using Model.UserProfile;
 
-public class CalendarModelValidator : AbstractValidator<CalendarModel>
+public class CalendarModelValidator : AbstractValidator<UserCalendar>
 {
     public CalendarModelValidator()
     {

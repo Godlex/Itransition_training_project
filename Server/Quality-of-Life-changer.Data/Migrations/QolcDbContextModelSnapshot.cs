@@ -45,9 +45,6 @@ namespace Quality_of_Life_changer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CalendarName")
-                        .IsUnique();
-
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Calendars");
