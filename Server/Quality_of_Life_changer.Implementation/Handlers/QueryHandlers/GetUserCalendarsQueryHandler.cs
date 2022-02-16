@@ -20,7 +20,7 @@ public class GetUserCalendarsQueryHandler : BaseQueryHandler,
         CancellationToken cancellationToken)
     {
         var userCalendars =
-            await _context.Set<Calendar>().Include(x => x.Owner).Where(x => x.OwnerId == request.Id)
+            await _context.Set<Calendar>().Include(x => x.Owner).Where(x => x.OwnerId == request.UserId)
                 .ToListAsync(cancellationToken);
         return new GetUserCalendarsResponse(MapCalendarToUserCalendar(userCalendars));
     }

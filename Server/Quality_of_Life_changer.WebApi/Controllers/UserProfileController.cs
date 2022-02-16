@@ -23,6 +23,7 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpPost("calendars")]
+    //[Authorize]
     public async Task<IActionResult> AddCalendar([FromBody] UserCalendar model, string userId)
     {
         var result = await _calendarModelValidator.ValidateAsync(model);
@@ -37,6 +38,7 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpGet("calendars")]
+    //[Authorize]
     public async Task<IActionResult> GetCalendars(string userId)
     {
         var response = await _mediator.Send(new GetUserCalendarsQuery(userId));
