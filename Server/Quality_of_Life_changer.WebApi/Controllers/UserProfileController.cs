@@ -5,8 +5,10 @@ using Contracts.Queries;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.UserProfile;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 [Route("api/user/{userId}/profile")]
@@ -23,9 +25,14 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpPost("calendars")]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> AddCalendar([FromBody] UserCalendar model, string userId)
     {
+        if (!IsValidId(userId, HttpContext))
+        {
+            throw new ValidationException("User id from url not equals id from token");
+        }
+
         var result = await _calendarModelValidator.ValidateAsync(model);
 
         if (!result.IsValid)
@@ -38,11 +45,24 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpGet("calendars")]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> GetCalendars(string userId)
     {
+        if (!IsValidId(userId, HttpContext))
+        {
+            throw new ValidationException("User id from url not equals id from token");
+        }
+
         var response = await _mediator.Send(new GetUserCalendarsQuery(userId));
         return Ok(response);
+    }
+
+    private static bool IsValidId(string idFromUrl, HttpContext httpContext)
+    {
+        var token = httpContext.Request.Headers.Authorization.ToString()[7..];
+        var handler = new JwtSecurityTokenHandler();
+        var idFromToken = handler.ReadJwtToken(token).Payload["nameid"];
+        return idFromToken == idFromUrl;
     }
 
     private static string GetErrors(ValidationResult result)
