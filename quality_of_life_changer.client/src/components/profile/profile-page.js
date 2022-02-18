@@ -4,6 +4,7 @@ import { Navigate } from "react-router";
 import CalendarsCardsGrid from "./calendars-card-grid/calendars-card-grid";
 import { getUserCalendars } from "../../redux-modules/user-profile/actions";
 import "./profile-page.scss";
+import { Accordion } from "react-bootstrap";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class ProfilePage extends Component {
     if (!this.props.user.isAuth) {
       return <Navigate to="/login" />;
     }
-    console.log("calendars-", this.props.calendars);
     if (this.props.calendars[0] == null) {
       return (
         <div>
@@ -26,7 +26,14 @@ class ProfilePage extends Component {
               <div className="user-email">Email - {this.props.user.email}</div>
             </div>
           </div>
-          <h1 className="user-calendars">You don't have calendars </h1>
+          <Accordion flush className="user-calendars">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                <h3>Your calendars</h3>
+              </Accordion.Header>
+              <Accordion.Body>You don't have calendars </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
       );
     } else {
@@ -38,8 +45,16 @@ class ProfilePage extends Component {
               <div className="user-email">Email - {this.props.user.email}</div>
             </div>
           </div>
-          <h1 className="user-calendars">Your calendars</h1>
-          <CalendarsCardsGrid calendars={this.props.calendars} />;
+          <Accordion flush className="user-calendars">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                <h3>Your calendars</h3>
+              </Accordion.Header>
+              <Accordion.Body>
+                <CalendarsCardsGrid calendars={this.props.calendars} />;
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </div>
       );
     }

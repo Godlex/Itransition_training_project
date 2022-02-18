@@ -8,7 +8,7 @@ class CalendarsCardsGrid extends Component {
       <div className="custom-grid">
         <Row md="auto" sm="auto">
           {this.props.calendars.map((x) => (
-            <CalendarCard name={x.name} url={x.url} />
+            <CalendarCard key={x.name} name={x.name} url={x.url} />
           ))}
         </Row>
       </div>

@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 import { logout } from "../../redux-modules/auth/actions";
 
 class CustomNavbar extends Component {
-
-  handleYesClick= () => {
+  handleYesClick = () => {
     this.props.logout();
-  }
+  };
 
   render() {
     if (this.props.user.name != null) {
@@ -69,7 +68,6 @@ class CustomNavbar extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("update");
   return {
     user: { ...state.auth.user },
   };
