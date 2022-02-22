@@ -56,7 +56,7 @@ public class UserProfileController : ControllerBase
     {
         if (!IsValidId(userId, HttpContext, _jwtSecurityTokenHandler))
         {
-            throw new ValidationException("User id from url not equals id from token");
+            throw new ForbiddenException("User id from url not equals id from token");
         }
 
         var response = await _mediator.Send(new GetUserCalendarsQuery(userId));
