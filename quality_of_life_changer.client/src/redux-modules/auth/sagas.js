@@ -9,7 +9,7 @@ import store from "../../store";
 function* fetchLoginStatus({ email, password }) {
   try {
     toastr.info("Wait server response");
-    const { data } = yield fetcher.post("/api/Auth/login", {
+    const { data } = yield fetcher.post("/api/auth/login", {
       email: email,
       password: password,
     });
@@ -29,8 +29,7 @@ function* fetchLoginStatus({ email, password }) {
       )
     );
   } catch (error) {
-    console.log("error", error.response);
-    if (error.response === undefined) {
+    if (!error.response) {
       toastr.error("server is not available");
     } else {
       toastr.error("Login failed", error.response.data.Message);
@@ -41,7 +40,7 @@ function* fetchLoginStatus({ email, password }) {
 function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
     toastr.info("Wait server response");
-    const { data } = yield fetcher.post("/api/Auth/register", {
+    const { data } = yield fetcher.post("/api/auth/register", {
       username: username,
       email: email,
       password: password,
@@ -61,7 +60,6 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
       )
     );
   } catch (error) {
-    console.log(error.response.data.Message);
     toastr.error("Register failed", error.response.data.Message);
   }
 }

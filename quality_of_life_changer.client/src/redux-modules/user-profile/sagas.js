@@ -6,14 +6,9 @@ import { toastr } from "react-redux-toastr";
 
 function* fetchUserCalendars({ id }) {
   try {
-    toastr.info("Wait server response");
-    const { data } = yield fetcher.get(
-      `"api/user/",${id},"/profile/calendars"`
-    );
-    toastr.success("Your calendars loaded");
+    const { data } = yield fetcher.get(`"api/user/${id}/profile/calendars"`);
     yield put(actions.setCalendars(data.calendars));
   } catch (error) {
-    console.log(error);
     toastr.error("Error", error.response.data.Message);
   }
 }

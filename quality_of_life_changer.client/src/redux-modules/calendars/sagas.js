@@ -6,12 +6,9 @@ import { toastr } from "react-redux-toastr";
 
 function* fetchTodayEvents() {
   try {
-    toastr.info("Wait server response");
-    const { data } = yield fetcher.get("/api/Calendar/events/today");
-    toastr.success("Today events loaded");
+    const { data } = yield fetcher.get("/api/calendar/events/today");
     yield put(actions.setEvents(data.todayEvents));
   } catch (error) {
-    console.log(error);
     toastr.error("Error", error.response.data.Message);
   }
 }
