@@ -6,7 +6,6 @@ import HomePage from "./components/home/home-page";
 import Navbar from "./components/navbar/navbar";
 import TodayEventsPage from "./components/events/today-events-page";
 import ProfilePage from "./components/profile/profile-page";
-import AddCalendarForm from "./components/add-calendar/add-calendar-form";
 
 class App extends Component {
   render() {
@@ -19,7 +18,6 @@ class App extends Component {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/events/today" element={<TodayEventsPage />} />
           <Route path="/user-profile" element={<ProfilePage />} />
-          <Route path="/add-calendar" element={<AddCalendarForm />} />
         </Routes>
       </div>
     );

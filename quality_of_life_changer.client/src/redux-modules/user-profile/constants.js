@@ -1,6 +1,4 @@
 export const userProfileConstants = {
   GET_USER_CALENDARS: "GET_USER_CALENDARS",
   SET_USER_CALENDARS: "SET_USER_CALENDARS",
-
-  ADD_CALENDAR: "ADD_CALENDAR",
 };
