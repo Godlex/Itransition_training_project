@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import LoginForm from "./components/auth/login-form";
 import RegisterForm from "./components/auth/register-form";
-import LogoutPage from "./components/auth/logout-page";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./components/home/home-page";
 import Navbar from "./components/navbar/navbar";
@@ -18,7 +17,6 @@ class App extends Component {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/logout" element={<LogoutPage />} />
           <Route path="/events/today" element={<TodayEventsPage />} />
           <Route path="/user-profile" element={<ProfilePage />} />
           <Route path="/add-calendar" element={<AddCalendarForm />} />
