@@ -15,13 +15,14 @@ const registerSchema = Yup.object().shape({
 });
 
 class RegisterForm extends Component {
-  handleSubmit = (values) => {
+  handleSubmit = (values, { resetForm }) => {
     this.props.register(
       values.userName,
       values.email,
       values.password,
       values.confirmPassword
     );
+    resetForm({ values: "" });
   };
 
   render() {

@@ -15,9 +15,9 @@ const loginSchema = Yup.object().shape({
 });
 
 class LoginForm extends Component {
-  
-  handleSubmit = (values) => {
+  handleSubmit = (values, { resetForm }) => {
     this.props.login(values.email, values.password);
+    resetForm({ values: "" });
   };
 
   render() {

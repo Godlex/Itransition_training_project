@@ -13,8 +13,9 @@ const addCalendarShema = Yup.object().shape({
 });
 
 class AddCalendarForm extends Component {
-  handleSubmit = (values) => {
+  handleSubmit = (values, { resetForm }) => {
     this.props.addCalendar(values.name, values.url);
+    resetForm({ values: "" });
   };
 
   render() {
