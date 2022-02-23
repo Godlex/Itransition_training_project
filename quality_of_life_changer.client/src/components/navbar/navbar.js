@@ -23,9 +23,6 @@ class CustomNavbar extends Component {
                 <Nav.Link as={Link} to="/events/today">
                   Today events
                 </Nav.Link>
-                <Nav.Link as={Link} to="/add-calendar">
-                  Add new calendar
-                </Nav.Link>
               </Nav>
               <Nav>
                 <Nav.Link as={Link} to="/user-profile">

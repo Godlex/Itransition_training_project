@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Row } from "react-bootstrap";
-import CalendarCard from "../calendars-card/calendars-card";
+import CalendarCard from "../calendar-card/calendar-card";
 
 class CalendarsCardsGrid extends Component {
   render() {
