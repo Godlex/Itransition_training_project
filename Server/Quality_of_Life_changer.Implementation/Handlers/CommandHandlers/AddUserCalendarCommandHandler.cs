@@ -58,7 +58,7 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
     private async Task<bool> IsFirstUserCalendarWithUrl(string url, string ownerId, CancellationToken cancellationToken)
     {
         return await _context.Set<Calendar>()
-            .FirstOrDefaultAsync(c => c.Url == url && c.OwnerId == ownerId, cancellationToken) == null;
+            .FirstOrDefaultAsync(x => x.Url == url && x.OwnerId == ownerId, cancellationToken) == null;
     }
 
     private async Task<User?> GetCalendarOwner(AddUserCalendarCommand request, CancellationToken cancellationToken)
@@ -79,7 +79,7 @@ public class AddUserCalendarCommandHandler : BaseCommandHandler,
         var userName = await GetUserName(request, cancellationToken);
         var isFirstCalendar = await IsFirstCalendar(request, cancellationToken);
 
-        if (!string.IsNullOrEmpty(request.CalendarName) && !isFirstCalendar)
+        if (string.IsNullOrEmpty(request.CalendarName) && !isFirstCalendar)
         {
             throw new BadRequestException("Enter a calendar's name");
         }

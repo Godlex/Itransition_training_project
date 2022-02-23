@@ -18,7 +18,7 @@ public class GetAllUsersQueryHandler : BaseQueryHandler,
     public async Task<GetAllUsersResponse> Handle(GetAllUsersQuery request,
         CancellationToken cancellationToken)
     {
-        var users = _context.Set<User>().Include(u => u.Calendars);
+        var users = _context.Set<User>().Include(x => x.Calendars);
         return new GetAllUsersResponse(await users.ToListAsync(cancellationToken));
     }
 }

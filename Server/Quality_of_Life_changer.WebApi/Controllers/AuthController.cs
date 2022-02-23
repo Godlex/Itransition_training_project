@@ -6,6 +6,7 @@ using Contracts.Queries;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.Auth;
 using System.Text;
@@ -49,7 +50,7 @@ public class AuthController : ControllerBase
             throw new ValidationException("invalid password");
         }
 
-        return _authService.GetAuthData(user.Id, user.Username, user.Email);
+        return _authService.GetAuthData(user.UserId, user.Username, user.Email);
     }
 
     [HttpPost("register")]
@@ -68,7 +69,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("users/all")]
-    // [Authorize]
+    [Authorize]
     public async Task<IActionResult> GetAllUsers()
     {
         var response = await _mediator.Send(new GetAllUsersQuery());

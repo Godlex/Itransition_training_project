@@ -30,6 +30,11 @@ public class ExceptionMiddleware
             Log.Error($"Something went wrong: {ex}");
             await HandleValidationExceptionAsync(httpContext, ex);
         }
+        catch (ForbiddenException ex)
+        {
+            Log.Error($"Something went wrong: {ex}");
+            await HandleForbiddenExceptionAsync(httpContext, ex);
+        }
         catch (Exception ex)
         {
             Log.Error($"Something went wrong: {ex}");
@@ -65,6 +70,19 @@ public class ExceptionMiddleware
     {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+
+        await context.Response.WriteAsync(new ErrorDetails
+        {
+            StatusCode = context.Response.StatusCode,
+            Message = exception.Message
+        }.ToString());
+    }
+
+
+    private static async Task HandleForbiddenExceptionAsync(HttpContext context, ForbiddenException exception)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int) HttpStatusCode.Forbidden;
 
         await context.Response.WriteAsync(new ErrorDetails
         {

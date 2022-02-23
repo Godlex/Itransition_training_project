@@ -14,6 +14,7 @@ using Quality_of_Life_changer.Implementation.Handlers.QueryHandlers;
 using Quality_of_Life_changer.WebApi;
 using Quality_of_Life_changer.WebApi.Validators;
 using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -59,6 +60,8 @@ try
     builder.Services.AddScoped<ICalendarAdapter, CalendarAdapter>();
 
     builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+    builder.Services.AddSingleton(new JwtSecurityTokenHandler());
 
     builder.Services.AddMediatR(typeof(GetUserByEmailQuery).Assembly, typeof(AddUserCommand).Assembly,
         typeof(GetAllUsersQueryHandler).Assembly);
