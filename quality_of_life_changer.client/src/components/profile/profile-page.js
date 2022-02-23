@@ -1,10 +1,10 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
-import CalendarsCardsGrid from "./calendars-card-grid/calendars-card-grid";
 import { getUserCalendars } from "../../redux-modules/user-profile/actions";
 import "./profile-page.scss";
-import { Accordion } from "react-bootstrap";
+import UserInfo from "./user-info/user-info";
+import ListOfUserCalendars from "./list-of-user-calendars/list-of-user-calendars";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -17,47 +17,13 @@ class ProfilePage extends Component {
     if (!this.props.user.isAuth) {
       return <Navigate to="/login" />;
     }
-    if (this.props.calendars[0] == null) {
-      return (
-        <div>
-          <div className="user-info">
-            <div>
-              <h1 className="user-name">{this.props.user.name}</h1>
-              <div className="user-email">Email - {this.props.user.email}</div>
-            </div>
-          </div>
-          <Accordion flush className="user-calendars">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>
-                <h3>Your calendars</h3>
-              </Accordion.Header>
-              <Accordion.Body>You don't have calendars </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="user-info">
-            <div>
-              <h1 className="user-name">{this.props.user.name}</h1>
-              <div className="user-email">Email - {this.props.user.email}</div>
-            </div>
-          </div>
-          <Accordion flush className="user-calendars">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>
-                <h3>Your calendars</h3>
-              </Accordion.Header>
-              <Accordion.Body>
-                <CalendarsCardsGrid calendars={this.props.calendars} />;
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-        </div>
-      );
-    }
+
+    return (
+      <div>
+        <UserInfo name={this.props.user.name} email={this.props.user.email} />
+        <ListOfUserCalendars calendars={this.props.calendars} />
+      </div>
+    );
   }
 }
 
