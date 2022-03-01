@@ -12,7 +12,7 @@ using Model.Auth;
 using System.Text;
 using ValidationException = Contracts.Exceptions.ValidationException;
 
-[Route("api/[controller]")]
+[Route("api/auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {

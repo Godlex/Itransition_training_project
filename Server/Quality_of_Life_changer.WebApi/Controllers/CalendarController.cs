@@ -4,7 +4,7 @@ using Contracts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-[Route("api/[controller]")]
+[Route("api/calendar")]
 [ApiController]
 public class CalendarController : ControllerBase
 {
