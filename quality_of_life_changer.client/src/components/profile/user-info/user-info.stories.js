@@ -11,5 +11,5 @@ export default {
 
 const Template = (args) => <UserInfo {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = { name: "Name", email: "Email" };
+export const Default = Template.bind({});
+Default.args = { name: "Name", email: "Email" };

@@ -17,14 +17,41 @@ Default.args = { calendars: [{ name: "name-1", url: "url-1" }] };
 export const MultipleCalendars = Template.bind({});
 MultipleCalendars.args = {
   calendars: [
-    { name: "name-1", url: "url-1" },
-    { name: "name-2", url: "url-2" },
-    { name: "name-3", url: "url-3" },
-    { name: "name-4", url: "url-4" },
-    { name: "name-5", url: "url-5" },
-    { name: "name-6", url: "url-6" },
-    { name: "name-7", url: "url-7" },
-    { name: "name-8", url: "url-8" },
-    { name: "name-9", url: "url-9" },
+    {
+      name: "name-1",
+      url: "https://outlook.office365.com/owa/calendar/example-1.ics",
+    },
+    {
+      name: "name-2",
+      url: "https://outlook.office365.com/owa/calendar/example-2.ics",
+    },
+    {
+      name: "name-3",
+      url: "https://outlook.office365.com/owa/calendar/example-3.ics",
+    },
+    {
+      name: "name-4",
+      url: "https://outlook.office365.com/owa/calendar/example-4.ics",
+    },
+    {
+      name: "name-5",
+      url: "https://outlook.office365.com/owa/calendar/example-5.ics",
+    },
+    {
+      name: "name-6",
+      url: "https://outlook.office365.com/owa/calendar/example-6.ics",
+    },
+    {
+      name: "name-7",
+      url: "https://outlook.office365.com/owa/calendar/example-7.ics",
+    },
+    {
+      name: "name-8",
+      url: "https://outlook.office365.com/owa/calendar/example-8.ics",
+    },
+    {
+      name: "name-9",
+      url: "https://outlook.office365.com/owa/calendar/example-9.ics",
+    },
   ],
 };

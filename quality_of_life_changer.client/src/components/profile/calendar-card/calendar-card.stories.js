@@ -14,11 +14,11 @@ const Template = (args) => <CalendarCard {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   name: "Calendar name",
-  url: "url-1",
+  url: "https://outlook.office365.com/owa/calendar/example.ics",
 };
 
 export const MaxNameLenght = Template.bind({});
 MaxNameLenght.args = {
   name: "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
-  url: "url-1",
+  url: "https://outlook.office365.com/owa/calendar/example.ics",
 };
