@@ -67,8 +67,7 @@ public class UserProfileController : ControllerBase
     private static bool IsValidId(string idFromUrl, HttpContext httpContext, JwtSecurityTokenHandler handler)
     {
         var token = GetTokenFromAuthorizationHeader(httpContext);
-        var idFromToken = handler.ReadJwtToken(token).Payload["nameid"];
-
+        var idFromToken = handler.ReadJwtToken(token).Payload["nameid"].ToString();
         return idFromToken == idFromUrl;
     }
 
