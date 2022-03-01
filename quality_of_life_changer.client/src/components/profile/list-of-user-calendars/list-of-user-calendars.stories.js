@@ -12,7 +12,14 @@ export default {
 const Template = (args) => <ListOfUserCalendars {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { calendars: [{ name: "name-1", url: "url-1" }] };
+Default.args = {
+  calendars: [
+    {
+      name: "name-1",
+      url: "https://outlook.office365.com/owa/calendar/example-1.ics",
+    },
+  ],
+};
 
 export const Empty = Template.bind({});
 Empty.args = { calendars: [null] };

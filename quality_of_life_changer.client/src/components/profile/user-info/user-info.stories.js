@@ -12,4 +12,4 @@ export default {
 const Template = (args) => <UserInfo {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { name: "Name", email: "Email" };
+Default.args = { name: "Name", email: "example@gmail.com" };

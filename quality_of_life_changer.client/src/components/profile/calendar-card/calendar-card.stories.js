@@ -19,6 +19,6 @@ Default.args = {
 
 export const MaxNameLenght = Template.bind({});
 MaxNameLenght.args = {
-  name: "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
+  name: "Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
   url: "https://outlook.office365.com/owa/calendar/example.ics",
 };

@@ -12,7 +12,14 @@ export default {
 const Template = (args) => <CalendarsCardsGrid {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { calendars: [{ name: "name-1", url: "url-1" }] };
+Default.args = {
+  calendars: [
+    {
+      name: "name-1",
+      url: "https://outlook.office365.com/owa/calendar/example-1.ics",
+    },
+  ],
+};
 
 export const MultipleCalendars = Template.bind({});
 MultipleCalendars.args = {
