@@ -1,22 +1,36 @@
 import { Component } from "react";
-import { Button, Card } from "react-bootstrap";
+import "./calendar-card.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy, faX } from "@fortawesome/free-solid-svg-icons";
 
 class CalendarCard extends Component {
   copy = async () => {
+    console.log("copy");
     await navigator.clipboard.writeText(this.props.url);
+  };
+
+  delete = async () => {
+    console.log("delete");
   };
 
   render() {
     return (
-      <Card className="custom-card">
-        <Card.Header>{this.props.name}</Card.Header>
-        <Card.Body>
-          <Card.Title>
-            <Button onClick={this.copy}>Copy Calendar Link</Button>
-          </Card.Title>
-          <Card.Link href={this.props.url}>Download</Card.Link>
-        </Card.Body>
-      </Card>
+      <div className="user-calendar-card">
+        <div>{this.props.name}</div>
+        <div className="button-bar">
+          <FontAwesomeIcon
+            className="button-copy"
+            onClick={this.copy}
+            icon={faCopy}
+          />
+
+          <FontAwesomeIcon
+            className="button-delete"
+            onClick={this.delete}
+            icon={faX}
+          />
+        </div>
+      </div>
     );
   }
 }
