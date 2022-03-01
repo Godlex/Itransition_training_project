@@ -11,8 +11,14 @@ export default {
 
 const Template = (args) => <CalendarCard {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  name: "Calendar name - 1",
+export const Default = Template.bind({});
+Default.args = {
+  name: "Calendar name",
+  url: "url-1",
+};
+
+export const MaxNameLenght = Template.bind({});
+MaxNameLenght.args = {
+  name: "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
   url: "url-1",
 };

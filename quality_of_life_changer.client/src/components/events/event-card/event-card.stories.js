@@ -14,18 +14,10 @@ export default {
 
 const Template = (args) => <EventCard {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Default = Template.bind({});
+Default.args = {
   name: "EventName1",
   owner: "Owner1",
-  startTime: moment("2022-01-03T10:30:00+03:00"),
-  endTime: moment("2022-01-03T11:00:00+03:00"),
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  name: "SecondaryName",
-  owner: "SecondaryOwner",
-  startTime: moment("2022-01-03T10:30:00+03:00"),
-  endTime: moment("2022-01-03T11:00:00+03:00"),
+  startTime: "2022-01-03T10:30:00+03:00",
+  endTime: "2022-01-03T11:00:00+03:00",
 };
