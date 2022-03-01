@@ -1,0 +1,8 @@
+$grid-margin-vertical: 1%;
+$grid-margin-horizontal: 5%;
+
+.custom-grid {
+  margin-top: $grid-margin-vertical;
+  margin-left: $grid-margin-horizontal;
+  margin-right: $grid-margin-horizontal;
+}

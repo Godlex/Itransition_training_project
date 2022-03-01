@@ -3,73 +3,82 @@ import { put, takeEvery } from "redux-saga/effects";
 import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
 import { constants } from "../../constants/constants";
+import { toastr } from "react-redux-toastr";
+import store from "../../store";
 
 function* fetchLoginStatus({ email, password }) {
   try {
-    let state = [];
+    toastr.info("Wait server response");
+    const { data } = yield fetcher.post("/api/auth/login", {
+      email: email,
+      password: password,
+    });
 
-    yield fetcher
-      .post("/api/Auth/login", {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        state = response.data;
-      });
+    localStorage.setItem(constants.JWT_TOKEN, data.token);
 
-    localStorage.setItem(constants.JWT_TOKEN, state.token);
+    toastr.success("Login success");
 
-    let tokenPlayload = JSON.parse(window.atob(state.token.split(".")[1]));
+    let tokenPayload = JSON.parse(window.atob(data.token.split(".")[1]));
 
     yield put(
       actions.setUser(
-        tokenPlayload.nameid,
-        tokenPlayload.unique_name,
-        tokenPlayload.email
+        tokenPayload.nameid,
+        tokenPayload.unique_name,
+        tokenPayload.email,
+        true
       )
     );
   } catch (error) {
-    console.log(error);
+    if (!error.response) {
+      toastr.error("server is not available");
+    } else {
+      toastr.error("Login failed", error.response.data.Message);
+    }
   }
 }
 
 function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
   try {
-    let state = [];
+    toastr.info("Wait server response");
+    const { data } = yield fetcher.post("/api/auth/register", {
+      username: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
 
-    console.log({ username, email, password, confirmPassword });
-
-    
-
-    yield fetcher.post("/api/Auth/register", {
-        username: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-      })
-      .then((response) => {
-        state = response.data;
-      });
-
-    localStorage.setItem(constants.JWT_TOKEN, state.token);
-
-    let tokenPlayload = JSON.parse(window.atob(state.token.split(".")[1]));
+    toastr.success("Register success");
+    localStorage.setItem(constants.JWT_TOKEN, data.token);
+    let tokenPayload = JSON.parse(window.atob(data.token.split(".")[1]));
 
     yield put(
       actions.setUser(
-        tokenPlayload.nameid,
-        tokenPlayload.unique_name,
-        tokenPlayload.email
+        tokenPayload.nameid,
+        tokenPayload.unique_name,
+        tokenPayload.email,
+        true
       )
     );
   } catch (error) {
-    console.log(error);
+    toastr.error("Register failed", error.response.data.Message);
   }
 }
 
+function* logout() {
+  yield toastr.confirm("Exit", {
+    onOk: () => deleteToken(),
+  });
+}
+
+function deleteToken() {
+  localStorage.removeItem(constants.JWT_TOKEN);
+  store.dispatch(actions.setUser(null, null, null, false));
+}
+
 function* authSaga() {
-  yield takeEvery(authConstants.LOGIN_SUCCESS, fetchLoginStatus);
-  yield takeEvery(authConstants.REGISTER_SUCCESS, fetchRegisterStatus);
+  yield takeEvery(authConstants.LOGIN_ATTEMPT, fetchLoginStatus);
+  yield takeEvery(authConstants.REGISTER_ATTEMPT, fetchRegisterStatus);
+  yield takeEvery(authConstants.LOGOUT_SUCCESS, logout);
 }
 
 export default authSaga;

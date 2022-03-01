@@ -1,11 +1,11 @@
+import moment from "moment";
 import { Component } from "react";
 import { Card } from "react-bootstrap";
 import { eventConstants } from "../events-constants";
-import "./event-card.css";
+import "./event-card.scss";
 
 class EventCard extends Component {
   render() {
-     console.log(this.props);
     return (
       <Card className="custom-card">
         <Card.Header>{this.props.name}</Card.Header>
@@ -13,10 +13,11 @@ class EventCard extends Component {
         <Card.Body>
           <Card.Title>
             Start Time -{" "}
-            {this.props.startTime.format(eventConstants.DATE_FORMAT)}
+            {moment(this.props.startTime).format(eventConstants.DATE_FORMAT)}
           </Card.Title>
           <Card.Title>
-            End Time - {this.props.endTime.format(eventConstants.DATE_FORMAT)}
+            End Time -{" "}
+            {moment(this.props.endTime).format(eventConstants.DATE_FORMAT)}
           </Card.Title>
         </Card.Body>
       </Card>

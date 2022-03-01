@@ -1,0 +1,32 @@
+$background-color: #0d6efd;
+$text-color: #ffffff;
+$button-color: #ffffff;
+$width-max: 30%;
+$auth-form-margin-top: 5%;
+$error-color: red;
+$logout-message-height: 100vh;
+
+.auth-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  background: $background-color;
+  color: $text-color;
+  max-width: $width-max;
+  margin: auto;
+  margin-top: $auth-form-margin-top;
+}
+.error {
+  color: $error-color;
+}
+.login {
+  background: $background-color;
+  color: $button-color;
+}
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: $logout-message-height;
+}

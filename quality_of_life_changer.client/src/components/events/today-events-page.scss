@@ -1,0 +1,7 @@
+$events-error-text-height: 100hv;
+
+.today-events-error-page {
+  display: flex;
+  justify-content: center;
+  height: $events-error-text-height;
+}

@@ -1,0 +1,15 @@
+$card-color: rgb(140, 212, 235) !important;
+$card-margin: 1%;
+$card-size-min: 270px;
+$card-size-max: 20%;
+
+.custom-card {
+  background-color: $card-color;
+  min-width: $card-size-min;
+  max-width: $card-size-max;
+  margin-top: $card-margin;
+  margin-bottom: $card-margin;
+  margin-left: $card-margin;
+  margin-right: $card-margin;
+  text-align: center;
+}

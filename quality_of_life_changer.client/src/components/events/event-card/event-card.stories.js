@@ -1,6 +1,5 @@
 import moment from "moment";
 import React from "react";
-import "./event-card.css";
 
 import EventCard from "./event-card";
 

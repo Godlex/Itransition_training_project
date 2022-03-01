@@ -1,27 +1,24 @@
 import React, { Component } from "react";
-import AuthForm from "./components/auth/auth-form";
+import LoginForm from "./components/auth/login-form";
 import RegisterForm from "./components/auth/register-form";
-import LogoutForm from "./components/auth/logout-form";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Home";
-import AuthMenu from "./components/auth/auth-menu";
-import TodayEventsForm from "./components/events/today-events-form";
-import "./App.css";
+import HomePage from "./components/home/home-page";
+import Navbar from "./components/navbar/navbar";
+import TodayEventsPage from "./components/events/today-events-page";
+import ProfilePage from "./components/profile/profile-page";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <AuthMenu />
-        <div>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<AuthForm />} />
-            <Route path="/register" element={<RegisterForm />} />
-            <Route path="/logout" element={<LogoutForm />} />
-            <Route path="/events-today" element={<TodayEventsForm />} />
-          </Routes>
-        </div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/events/today" element={<TodayEventsPage />} />
+          <Route path="/user-profile" element={<ProfilePage />} />
+        </Routes>
       </div>
     );
   }
