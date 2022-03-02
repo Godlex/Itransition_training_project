@@ -1,7 +1,7 @@
 import { Component } from "react";
 import "./calendar-card.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faX } from "@fortawesome/free-solid-svg-icons";
+import { ReactComponent as Copy } from "./copy.svg";
+import { ReactComponent as Delete } from "./delete.svg";
 
 class CalendarCard extends Component {
   copy = async () => {
@@ -18,17 +18,9 @@ class CalendarCard extends Component {
       <div className="user-calendar-card">
         <div>{this.props.name}</div>
         <div className="button-bar">
-          <FontAwesomeIcon
-            className="button-copy"
-            onClick={this.copy}
-            icon={faCopy}
-          />
+          <Copy className="button-copy" onClick={this.copy} />
 
-          <FontAwesomeIcon
-            className="button-delete"
-            onClick={this.delete}
-            icon={faX}
-          />
+          <Delete className="button-delete" onClick={this.delete} />
         </div>
       </div>
     );

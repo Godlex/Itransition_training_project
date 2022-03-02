@@ -1,4 +1,10 @@
+$user-calendar-content-width: 50%;
+
 .user-calendars {
+  display: flex;
   justify-content: center;
   text-align: center;
+}
+.user-calendars-content {
+  width: $user-calendar-content-width;
 }

@@ -11,12 +11,12 @@ class ListOfUserCalendars extends Component {
 
     return (
       <Accordion flush className="user-calendars">
-        <Accordion.Item eventKey="0">
+        <Accordion.Item className="user-calendars-content" eventKey="0">
           <Accordion.Header>
             <h3>Your calendars</h3>
           </Accordion.Header>
           <Accordion.Body>
-            <CalendarsCardsGrid calendars={this.props.calendars} />{" "}
+            <CalendarsCardsGrid calendars={this.props.calendars} />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
