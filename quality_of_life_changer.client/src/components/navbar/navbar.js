@@ -1,12 +1,17 @@
 import { Component } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { connect } from "react-redux";
+import { toastr } from "react-redux-toastr";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux-modules/auth/actions";
 
 class CustomNavbar extends Component {
   handleYesClick = () => {
-    this.props.logout();
+    toastr.confirm(`Exit ?`, {
+      onOk: () => this.props.logout(),
+      okText: "Yes",
+      cancelText: "No",
+    });
   };
 
   render() {

@@ -9,12 +9,31 @@ function* fetchUserCalendars({ id }) {
     const { data } = yield fetcher.get(`api/user/${id}/profile/calendars`);
     yield put(actions.setCalendars(data.calendars));
   } catch (error) {
-    toastr.error("Error", error.response.data.Message);
+    if (!error.response) {
+      yield toastr.error("server is not available");
+    } else {
+      yield toastr.error("Error", error.response.data.Message);
+    }
+  }
+}
+
+function* fetchDeleteCalendar({ userId, calendarId }) {
+  try {
+    yield fetcher.delete(`api/user/${userId}/profile/calendars/${calendarId}`);
+    yield toastr.info("Deleted");
+    yield put(actions.getUserCalendars(userId));
+  } catch (error) {
+    if (!error.response) {
+      yield toastr.error("server is not available");
+    } else {
+      yield toastr.error("Error", error.response.data.Message);
+    }
   }
 }
 
 function* userProfileSaga() {
   yield takeEvery(userProfileConstants.GET_USER_CALENDARS, fetchUserCalendars);
+  yield takeEvery(userProfileConstants.DELETE_CALENDAR, fetchDeleteCalendar);
 }
 
 export default userProfileSaga;

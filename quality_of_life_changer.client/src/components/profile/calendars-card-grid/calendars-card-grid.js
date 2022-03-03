@@ -7,8 +7,8 @@ class CalendarsCardsGrid extends Component {
     return (
       <ListGroup>
         {this.props.calendars.map((x) => (
-          <ListGroup.Item key={x.name}>
-            <CalendarCard name={x.name} url={x.url} />
+          <ListGroup.Item key={x.id}>
+            <CalendarCard id={x.id} name={x.name} url={x.url} />
           </ListGroup.Item>
         ))}
       </ListGroup>
