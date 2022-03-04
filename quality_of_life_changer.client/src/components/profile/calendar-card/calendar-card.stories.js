@@ -1,4 +1,4 @@
-import CalendarCard from "./calendar-card";
+import { CalendarCard } from "./calendar-card";
 
 export default {
   /* 👇 The title prop is optional.
