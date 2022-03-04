@@ -13,11 +13,23 @@ class CalendarCard extends Component {
   };
 
   delete = () => {
-    toastr.confirm(`Delete Calendar "${this.props.name}"?`, {
+    const toastrMessage = (
+      <div>
+        Do you really want to remove the calendar{" "}
+        <b>
+          <i>{this.props.name}</i>
+        </b>{" "}
+        from your list?
+      </div>
+    );
+
+    const toastrSetting = {
       onOk: () => this.props.deleteCalendar(this.props.user.id, this.props.id),
       okText: "Yes",
       cancelText: "No",
-    });
+    };
+
+    toastr.confirm(toastrMessage, toastrSetting);
   };
 
   render() {
