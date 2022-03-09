@@ -8,10 +8,10 @@ function CustomModal(props) {
         <Modal.Title>{props.message}</Modal.Title>
       </Modal.Header>
       <Modal.Footer>
-        <Button variant="success" onClick={props.handleSubmit}>
+        <Button variant={props.submitVariant} onClick={props.handleSubmit}>
           {props.submitButtonText}
         </Button>
-        <Button variant="danger" onClick={props.handleCancel}>
+        <Button variant={props.cancelVariant} onClick={props.handleCancel}>
           {props.cancelButtonText}
         </Button>
       </Modal.Footer>
