@@ -5,10 +5,10 @@ export default function UnAuthorizedNav() {
   return (
     <Nav>
       <Nav.Link as={Link} to="/login">
-        login
+        Login
       </Nav.Link>
       <Nav.Link as={Link} to="/register">
-        register
+        Register
       </Nav.Link>
     </Nav>
   );
