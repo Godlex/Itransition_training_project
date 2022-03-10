@@ -73,7 +73,7 @@ public class UserProfileController : ControllerBase
             throw new ForbiddenException("User id from url not equals id from token");
         }
 
-        var response = await _mediator.Send(new DeleteUserCalendarCommand(calendarId));
+        var response = await _mediator.Send(new DeleteUserCalendarCommand(userId, calendarId));
 
         return Ok(response);
     }

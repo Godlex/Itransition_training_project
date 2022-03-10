@@ -3,5 +3,6 @@
 using MediatR;
 
 public record DeleteUserCalendarCommand(
+    string UserId,
     string CalendarId
 ) : IRequest;

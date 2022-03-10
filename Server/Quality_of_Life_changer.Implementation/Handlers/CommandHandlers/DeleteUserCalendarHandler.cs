@@ -25,6 +25,11 @@ public class DeleteUserCalendarHandler : BaseCommandHandler,
             throw new BadRequestException("This calendar didn't exist");
         }
 
+        if (calendar.OwnerId != request.UserId)
+        {
+            throw new ForbiddenException("You are trying to delete not your calendar");
+        }
+
         _context.Remove(calendar);
 
         await _context.SaveChangesAsync(cancellationToken);
