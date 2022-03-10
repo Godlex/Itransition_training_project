@@ -5,8 +5,9 @@ function CustomModal(props) {
   return (
     <Modal show={props.show}>
       <Modal.Header>
-        <Modal.Title>{props.children}</Modal.Title>
+        <Modal.Title>{props.message}</Modal.Title>
       </Modal.Header>
+      <Modal.Body>{props.children}</Modal.Body>
       <Modal.Footer>
         <Button variant={props.submitVariant} onClick={props.handleSubmit}>
           {props.submitButtonText}
