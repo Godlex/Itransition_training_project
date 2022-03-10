@@ -13,22 +13,14 @@ class CalendarsCardsGrid extends Component {
     super(props);
     this.state = {
       show: false,
-      message: null,
+      calendarName: null,
       calendarId: null,
     };
   }
 
   onDelete = (name, id) => {
     this.setState({
-      message: (
-        <div>
-          Do you really want to remove the calendar{" "}
-          <strong>
-            <em>{name}</em>
-          </strong>{" "}
-          from your list?
-        </div>
-      ),
+      calendarName: name,
       show: true,
       calendarId: id,
     });
@@ -64,12 +56,19 @@ class CalendarsCardsGrid extends Component {
           show={this.state.show}
           handleCancel={this.handleCancel}
           handleSubmit={this.handleSubmit}
-          message={this.state.message}
           submitButtonText="Yes"
           cancelButtonText="No"
           cancelVariant="danger"
           submitVariant="success"
-        />
+        >
+          <div>
+            Do you really want to remove the calendar
+            <strong>
+              <em> {this.state.calendarName} </em>
+            </strong>
+            from your list?
+          </div>
+        </CustomModal>
       </>
     );
   }
