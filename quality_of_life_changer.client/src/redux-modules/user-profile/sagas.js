@@ -31,9 +31,15 @@ function* fetchDeleteCalendar({ userId, calendarId }) {
   }
 }
 
+function* copyUrl({ url }) {
+  yield navigator.clipboard.writeText(url);
+  yield toastr.info("Copied", url);
+}
+
 function* userProfileSaga() {
   yield takeEvery(userProfileConstants.GET_USER_CALENDARS, fetchUserCalendars);
   yield takeEvery(userProfileConstants.DELETE_CALENDAR, fetchDeleteCalendar);
+  yield takeEvery(userProfileConstants.COPY_URL, copyUrl);
 }
 
 export default userProfileSaga;

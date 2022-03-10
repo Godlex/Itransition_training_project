@@ -3,4 +3,6 @@ export const userProfileConstants = {
   SET_USER_CALENDARS: "SET_USER_CALENDARS",
 
   DELETE_CALENDAR: "DELETE_CALENDAR",
+
+  COPY_URL: "COPY_URL",
 };

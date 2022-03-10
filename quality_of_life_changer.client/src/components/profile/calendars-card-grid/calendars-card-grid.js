@@ -3,7 +3,10 @@ import { ListGroup } from "react-bootstrap";
 import { connect } from "react-redux";
 import CustomModal from "../../custom-modal/custom-modal";
 import CalendarCard from "../calendar-card/calendar-card";
-import { deleteCalendar } from "../../../redux-modules/user-profile/actions";
+import {
+  deleteCalendar,
+  copyUrl,
+} from "../../../redux-modules/user-profile/actions";
 
 class CalendarsCardsGrid extends Component {
   constructor(props) {
@@ -51,6 +54,7 @@ class CalendarsCardsGrid extends Component {
                 name={x.name}
                 url={x.url}
                 onDelete={this.onDelete}
+                copyUrl={this.props.copyUrl}
               />
             </ListGroup.Item>
           ))}
@@ -77,4 +81,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { deleteCalendar })(CalendarsCardsGrid);
+export default connect(mapStateToProps, { deleteCalendar, copyUrl })(
+  CalendarsCardsGrid
+);

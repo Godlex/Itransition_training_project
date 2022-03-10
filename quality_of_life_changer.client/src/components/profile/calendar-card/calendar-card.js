@@ -2,12 +2,10 @@ import { Component } from "react";
 import "./calendar-card.scss";
 import { ReactComponent as Copy } from "./copy.svg";
 import { ReactComponent as Delete } from "./delete.svg";
-import { toastr } from "react-redux-toastr";
 
 export class CalendarCard extends Component {
-  onCopy = async () => {
-    toastr.info("Copied", this.props.url);
-    await navigator.clipboard.writeText(this.props.url);
+  onCopy = () => {
+    this.props.copyUrl(this.props.url);
   };
 
   onDelete = () => {

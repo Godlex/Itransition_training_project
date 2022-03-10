@@ -17,3 +17,10 @@ export function deleteCalendar(userId, calendarId) {
     calendarId: calendarId,
   };
 }
+
+export function copyUrl(url) {
+  return {
+    type: userProfileConstants.COPY_URL,
+    url: url
+  };
+}
