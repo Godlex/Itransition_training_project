@@ -20,9 +20,9 @@ class CalendarsCardsGrid extends Component {
       message: (
         <div>
           Do you really want to remove the calendar{" "}
-          <b>
-            <i>{name}</i>
-          </b>{" "}
+          <strong>
+            <em>{name}</em>
+          </strong>{" "}
           from your list?
         </div>
       ),
