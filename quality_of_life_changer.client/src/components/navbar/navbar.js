@@ -56,11 +56,11 @@ class CustomNavbar extends Component {
           show={this.state.show}
           handleCancel={this.handleCancel}
           handleSubmit={this.handleSubmit}
-          message={"Do you want to go out?"}
-          submitButtonText={"Yes"}
-          cancelButtonText={"No"}
-          cancelVariant={"danger"}
-          submitVariant={"success"}
+          message="Do you want to go out?"
+          submitButtonText="Yes"
+          cancelButtonText="No"
+          cancelVariant="danger"
+          submitVariant="success"
         />
       </Navbar>
     );

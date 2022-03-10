@@ -61,10 +61,10 @@ class CalendarsCardsGrid extends Component {
           handleCancel={this.handleCancel}
           handleSubmit={this.handleSubmit}
           message={this.state.message}
-          submitButtonText={"Yes"}
-          cancelButtonText={"No"}
-          cancelVariant={"danger"}
-          submitVariant={"success"}
+          submitButtonText="Yes"
+          cancelButtonText="No"
+          cancelVariant="danger"
+          submitVariant="success"
         />
       </>
     );
