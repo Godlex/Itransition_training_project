@@ -64,6 +64,20 @@ public class UserProfileController : ControllerBase
         return Ok(response);
     }
 
+    [HttpDelete("calendars/{calendarId}")]
+    [Authorize]
+    public async Task<IActionResult> DeleteCalendars(string userId, string calendarId)
+    {
+        if (!IsValidId(userId, HttpContext, _jwtSecurityTokenHandler))
+        {
+            throw new ForbiddenException("User id from url not equals id from token");
+        }
+
+        var response = await _mediator.Send(new DeleteUserCalendarCommand(calendarId));
+
+        return Ok(response);
+    }
+
     private static bool IsValidId(string idFromUrl, HttpContext httpContext, JwtSecurityTokenHandler handler)
     {
         var token = GetTokenFromAuthorizationHeader(httpContext);
