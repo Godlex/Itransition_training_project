@@ -56,7 +56,7 @@ class CalendarsCardsGrid extends Component {
           show={this.state.show}
           handleCancel={this.handleCancel}
           handleSubmit={this.handleSubmit}
-          message="Calendar delete"
+          title="Calendar delete"
           submitButtonText="Yes"
           cancelButtonText="No"
           cancelVariant="danger"

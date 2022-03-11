@@ -20,7 +20,7 @@ export function deleteCalendar(userId, calendarId) {
 
 export function copyUrl(url) {
   return {
-    type: userProfileConstants.COPY_URL,
-    url: url
+    type: userProfileConstants.COPY_CALENDAR_URL,
+    url: url,
   };
 }

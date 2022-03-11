@@ -56,7 +56,7 @@ class CustomNavbar extends Component {
           show={this.state.show}
           handleCancel={this.handleCancel}
           handleSubmit={this.handleSubmit}
-          message="Logout"
+          title="Logout"
           submitButtonText="Yes"
           cancelButtonText="No"
           cancelVariant="danger"
