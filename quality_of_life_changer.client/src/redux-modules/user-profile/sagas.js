@@ -39,7 +39,7 @@ function* copyUrl({ url }) {
 function* userProfileSaga() {
   yield takeEvery(userProfileConstants.GET_USER_CALENDARS, fetchUserCalendars);
   yield takeEvery(userProfileConstants.DELETE_CALENDAR, fetchDeleteCalendar);
-  yield takeEvery(userProfileConstants.COPY_URL, copyUrl);
+  yield takeEvery(userProfileConstants.COPY_CALENDAR_URL, copyUrl);
 }
 
 export default userProfileSaga;
