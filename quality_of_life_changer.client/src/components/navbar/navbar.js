@@ -3,64 +3,69 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux-modules/auth/actions";
+import CustomModal from "../custom-modal/custom-modal";
+import AuthorizedNav from "./nav/authorized-nav";
+import UnAuthorizedNav from "./nav/un-authorized-nav";
 
 class CustomNavbar extends Component {
-  handleYesClick = () => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
+  }
+
+  handleClick = () => {
+    this.setState({ show: true });
+  };
+
+  handleSubmit = () => {
     this.props.logout();
+    this.setState({ show: false });
+  };
+
+  handleCancel = () => {
+    this.setState({ show: false });
   };
 
   render() {
-    if (this.props.user.name != null) {
-      return (
-        <Navbar bg="primary" variant="dark">
-          <Container>
-            <Navbar.Brand as={Link} to="/">
-              Home
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse>
-              <Nav className="me-auto my-lg-0">
-                <Nav.Link as={Link} to="/events/today">
-                  Today events
-                </Nav.Link>
-              </Nav>
-              <Nav>
-                <Nav.Link as={Link} to="/user-profile">
-                  Hello! {this.props.user.name}
-                </Nav.Link>
-                <Nav.Link onClick={this.handleYesClick}>Logout</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      );
-    } else {
-      return (
-        <Navbar bg="primary" variant="dark">
-          <Container>
-            <Navbar.Brand as={Link} to="/">
-              Home
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse>
-              <Nav className="me-auto my-lg-0">
-                <Nav.Link as={Link} to="/events/today">
-                  Today events
-                </Nav.Link>
-              </Nav>
-              <Nav>
-                <Nav.Link as={Link} to="/login">
-                  login
-                </Nav.Link>
-                <Nav.Link as={Link} to="/register">
-                  register
-                </Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      );
-    }
+    return (
+      <Navbar bg="primary" variant="dark">
+        <Container>
+          <Navbar.Brand as={Link} to="/">
+            Home
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse>
+            <Nav className="me-auto my-lg-0">
+              <Nav.Link as={Link} to="/events/today">
+                Today events
+              </Nav.Link>
+            </Nav>
+            {this.props.user.name != null ? (
+              <AuthorizedNav
+                handleClick={this.handleClick}
+                name={this.props.user.name}
+              />
+            ) : (
+              <UnAuthorizedNav />
+            )}
+          </Navbar.Collapse>
+        </Container>
+        <CustomModal
+          show={this.state.show}
+          handleCancel={this.handleCancel}
+          handleSubmit={this.handleSubmit}
+          title="Logout"
+          submitButtonText="Yes"
+          cancelButtonText="No"
+          cancelVariant="danger"
+          submitVariant="success"
+        >
+          <div>Do you want to go out?</div>
+        </CustomModal>
+      </Navbar>
+    );
   }
 }
 

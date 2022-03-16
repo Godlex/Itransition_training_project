@@ -9,7 +9,11 @@ function* fetchTodayEvents() {
     const { data } = yield fetcher.get("/api/calendar/events/today");
     yield put(actions.setEvents(data.todayEvents));
   } catch (error) {
-    toastr.error("Error", error.response.data.Message);
+    if (!error.response) {
+      yield toastr.error("server is not available");
+    } else {
+      yield toastr.error("Error", error.response.data.Message);
+    }
   }
 }
 

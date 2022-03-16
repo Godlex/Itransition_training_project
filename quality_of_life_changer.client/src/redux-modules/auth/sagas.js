@@ -4,7 +4,6 @@ import * as actions from "./actions";
 import fetcher from "../../utils/fetcher";
 import { constants } from "../../constants/constants";
 import { toastr } from "react-redux-toastr";
-import store from "../../store";
 
 function* fetchLoginStatus({ email, password }) {
   try {
@@ -16,7 +15,7 @@ function* fetchLoginStatus({ email, password }) {
 
     localStorage.setItem(constants.JWT_TOKEN, data.token);
 
-    toastr.success("Login success");
+    yield toastr.success("Login success");
 
     let tokenPayload = JSON.parse(window.atob(data.token.split(".")[1]));
 
@@ -30,9 +29,9 @@ function* fetchLoginStatus({ email, password }) {
     );
   } catch (error) {
     if (!error.response) {
-      toastr.error("server is not available");
+      yield toastr.error("server is not available");
     } else {
-      toastr.error("Login failed", error.response.data.Message);
+      yield toastr.error("Login failed", error.response.data.Message);
     }
   }
 }
@@ -47,8 +46,10 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
       confirmPassword: confirmPassword,
     });
 
-    toastr.success("Register success");
     localStorage.setItem(constants.JWT_TOKEN, data.token);
+
+    yield toastr.success("Register success");
+
     let tokenPayload = JSON.parse(window.atob(data.token.split(".")[1]));
 
     yield put(
@@ -60,19 +61,18 @@ function* fetchRegisterStatus({ username, email, password, confirmPassword }) {
       )
     );
   } catch (error) {
-    toastr.error("Register failed", error.response.data.Message);
+    if (!error.response) {
+      yield toastr.error("server is not available");
+    } else {
+      yield toastr.error("Register failed", error.response.data.Message);
+    }
   }
 }
 
 function* logout() {
-  yield toastr.confirm("Exit", {
-    onOk: () => deleteToken(),
-  });
-}
-
-function deleteToken() {
-  localStorage.removeItem(constants.JWT_TOKEN);
-  store.dispatch(actions.setUser(null, null, null, false));
+  yield localStorage.removeItem(constants.JWT_TOKEN);
+  yield put(actions.setUser());
+  yield toastr.info("Logout");
 }
 
 function* authSaga() {

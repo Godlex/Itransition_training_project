@@ -1,8 +1,9 @@
 $user-info-background: linear-gradient(to top, #ffffff, #0d6efd);
 $user-info-text-color: #ffffff;
+$user-info-height: 20vh;
 
 .user-info {
-  min-height: 20vh;
+  min-height: $user-info-height;
   background: $user-info-background;
   color: $user-info-text-color;
   display: flex;

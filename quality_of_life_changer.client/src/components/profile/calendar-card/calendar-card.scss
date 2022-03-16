@@ -1,0 +1,47 @@
+$button-transition: all 500ms ease-out;
+$user-calendar-card-margin-vertical: 10px;
+$button-copy-margin-right: 20px;
+$button-copy-size: 20px;
+$button-copy-color: rgb(93, 154, 247);
+$button-copy-url-color-hover: #b2f7fc;
+$button-delete-size: 20px;
+$button-delete-color: rgb(0, 0, 0);
+$button-delete-calendar-color-hover: #fcb2b5;
+
+.user-calendar-card {
+  display: flex;
+  flex-direction: row;
+  margin-top: $user-calendar-card-margin-vertical;
+  margin-bottom: $user-calendar-card-margin-vertical;
+}
+.user-calendar-name {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.button-bar {
+  margin-left: auto;
+}
+.button-copy-url {
+  margin-right: $button-copy-margin-right;
+  width: $button-copy-size;
+  height: $button-copy-size;
+  fill: $button-copy-color;
+
+  transition: $button-transition;
+  &:hover {
+    background-color: $button-copy-url-color-hover;
+    box-shadow: 0px 0px 5px 5px $button-copy-url-color-hover;
+  }
+}
+.button-delete-calendar {
+  width: $button-delete-size;
+  height: $button-delete-size;
+  fill: $button-delete-color;
+
+  transition: $button-transition;
+  &:hover {
+    background-color: $button-delete-calendar-color-hover;
+    box-shadow: 0px 0px 3px 3px $button-delete-calendar-color-hover;
+  }
+}

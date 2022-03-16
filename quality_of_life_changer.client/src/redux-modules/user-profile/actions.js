@@ -9,3 +9,18 @@ export function setCalendars(calendars) {
     calendars: calendars,
   };
 }
+
+export function deleteCalendar(userId, calendarId) {
+  return {
+    type: userProfileConstants.DELETE_CALENDAR,
+    userId: userId,
+    calendarId: calendarId,
+  };
+}
+
+export function copyUrl(url) {
+  return {
+    type: userProfileConstants.COPY_CALENDAR_URL,
+    url: url,
+  };
+}
