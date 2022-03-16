@@ -8,3 +8,13 @@ $user-calendar-content-width: 50%;
 .user-calendars-content {
   width: $user-calendar-content-width;
 }
+
+.add-calendar-item {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.add-calendar-box {
+  width: $user-calendar-content-width;
+}
