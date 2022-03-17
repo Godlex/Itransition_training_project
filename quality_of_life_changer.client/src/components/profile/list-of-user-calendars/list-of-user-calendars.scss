@@ -1,20 +1,12 @@
-$user-calendar-content-width: 50%;
+$user-calendar-content-width: 30%;
 
-.user-calendars {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
 .user-calendars-content {
+  margin-left: 35%;
   width: $user-calendar-content-width;
 }
 
-.add-calendar-item {
+.user-no-calendars-content {
   display: flex;
   justify-content: center;
   text-align: center;
-}
-
-.add-calendar-box {
-  width: $user-calendar-content-width;
 }
