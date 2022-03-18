@@ -1,16 +1,9 @@
-import { ReactComponent as Plus } from "./plus.svg";
 import React from "react";
-import {
-  Accordion,
-  Button,
-  Card,
-  Form,
-  useAccordionButton,
-} from "react-bootstrap";
+import { Accordion, Button, Card, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import "./add-user-calendar.scss";
-import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons";
+import CustomToggle from "./custom-toggle/custom-toggle";
 
 function AddUserCalendar(props) {
   const addCalendarSchema = Yup.object().shape({
@@ -32,24 +25,6 @@ function AddUserCalendar(props) {
     props.addUserCalendar(props.userId, values.name, values.url);
     resetForm({ values: "" });
     setSubmitting(false);
-  }
-
-  function CustomToggle({ children, eventKey }) {
-    const decoratedOnClick = useAccordionButton(eventKey, () =>
-      console.log("Custom button")
-    );
-
-    return (
-      <Button
-        type="button"
-        onClick={decoratedOnClick}
-        variant="success"
-        className="show-calendar-form-button"
-      >
-        <Plus className="icon-plus" />
-        <b className="text">Add calendar</b>
-      </Button>
-    );
   }
 
   return (

@@ -1,0 +1,21 @@
+$custom-togle-button-margin: 20px;
+$custom-togle-button-icon-size: 30px;
+$custom-togle-button-icon-color: white;
+$custom-togle-button-text-size: 20px;
+
+.custom-toggle-button {
+  margin-top: $custom-togle-button-margin;
+  margin-bottom: $custom-togle-button-margin;
+
+  .icon {
+    float: left;
+    width: $custom-togle-button-icon-size;
+    height: $custom-togle-button-icon-size;
+    fill: $custom-togle-button-icon-color;
+  }
+
+  .text {
+    float: left;
+    font-size: $custom-togle-button-text-size;
+  }
+}
