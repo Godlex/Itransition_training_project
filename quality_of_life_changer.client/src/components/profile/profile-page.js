@@ -7,7 +7,7 @@ import {
 } from "../../redux-modules/user-profile/actions";
 import UserInfo from "./user-info/user-info";
 import ListOfUserCalendars from "./list-of-user-calendars/list-of-user-calendars";
-import AddUserCalendar from "./add-user-calendar/add-user-calendar";
+import AddUserCalendar from "./add-user-calendar/add-user-calendar-form";
 
 class ProfilePage extends Component {
   constructor(props) {

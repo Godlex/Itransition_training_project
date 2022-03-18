@@ -2,7 +2,7 @@ import React from "react";
 import { Accordion, Button, Card, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import "./add-user-calendar.scss";
+import "./add-user-calendar-form.scss";
 import CustomToggle from "./custom-toggle/custom-toggle";
 
 function AddUserCalendar(props) {
@@ -28,7 +28,7 @@ function AddUserCalendar(props) {
   }
 
   return (
-    <Accordion flush className="add-calendar">
+    <Accordion flush className="add-calendar-form">
       <CustomToggle eventKey="0" />
 
       <Accordion.Collapse eventKey="0">
@@ -47,7 +47,10 @@ function AddUserCalendar(props) {
               touched,
               isSubmitting,
             }) => (
-              <Form onSubmit={handleSubmit} className="add-calendar-form">
+              <Form
+                onSubmit={handleSubmit}
+                className="add-calendar-form-content"
+              >
                 {props.isFirstCalendar === true ? (
                   <></>
                 ) : (
