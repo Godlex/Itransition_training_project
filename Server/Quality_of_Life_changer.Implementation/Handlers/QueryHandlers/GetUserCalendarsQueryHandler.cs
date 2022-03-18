@@ -27,7 +27,8 @@ public class GetUserCalendarsQueryHandler : BaseQueryHandler,
 
     private static IList<UserCalendar> MapCalendarToUserCalendar(IEnumerable<Calendar> calendars)
     {
-        return calendars.Select(calendar => new UserCalendar {Name = calendar.CalendarName, Url = calendar.Url})
+        return calendars.Select(calendar => new UserCalendar
+                {Id = calendar.Id, Name = calendar.CalendarName, Url = calendar.Url})
             .ToList();
     }
 }
