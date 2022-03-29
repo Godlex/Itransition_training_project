@@ -19,7 +19,7 @@ function* fetchUserCalendars({ id }) {
 
 function* fetchDeleteCalendar({ userId, calendarId }) {
   try {
-    yield fetcher.remove(`api/user/${userId}/profile/calendars/${calendarId}`);
+    yield fetcher.delete(`api/user/${userId}/profile/calendars/${calendarId}`);
     yield toastr.info("Deleted");
     yield put(actions.getUserCalendars(userId));
   } catch (error) {
