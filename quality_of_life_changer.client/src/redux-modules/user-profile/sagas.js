@@ -36,10 +36,31 @@ function* copyUrl({ url }) {
   yield toastr.info("Copied", url);
 }
 
+function* fetchAddUserCalendar({ userId, calendarName, calendarUrl }) {
+  try {
+    yield fetcher.post(`api/user/${userId}/profile/calendars`, {
+      name: calendarName,
+      url: calendarUrl,
+    });
+    yield toastr.info("Added");
+    yield put(actions.getUserCalendars(userId));
+  } catch (error) {
+    if (!error.response) {
+      yield toastr.error("server is not available");
+    } else {
+      yield toastr.error("Error", error.response.data.Message);
+    }
+  }
+}
+
 function* userProfileSaga() {
   yield takeEvery(userProfileConstants.GET_USER_CALENDARS, fetchUserCalendars);
   yield takeEvery(userProfileConstants.DELETE_CALENDAR, fetchDeleteCalendar);
   yield takeEvery(userProfileConstants.COPY_CALENDAR_URL, copyUrl);
+  yield takeEvery(
+    userProfileConstants.ADD_USER_CALENDARS,
+    fetchAddUserCalendar
+  );
 }
 
 export default userProfileSaga;

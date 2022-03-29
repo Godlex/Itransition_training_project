@@ -1,18 +1,33 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
-import { getUserCalendars } from "../../redux-modules/user-profile/actions";
-import "./profile-page.scss";
+import {
+  getUserCalendars,
+  addUserCalendar,
+} from "../../redux-modules/user-profile/actions";
 import UserInfo from "./user-info/user-info";
 import ListOfUserCalendars from "./list-of-user-calendars/list-of-user-calendars";
+import AddUserCalendar from "./add-user-calendar/add-user-calendar-form";
+import AddUserCalendarToggle from "./add-user-calendar-toggle/add-user-calendar-toggle";
+import "./profile-page.scss";
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isFormAvailable: false,
+    };
     if (this.props.user.id != null) {
       this.props.getUserCalendars(this.props.user.id);
     }
   }
+
+  setStateForm = () => {
+    this.setState({
+      isFormAvailable: this.state.isFormAvailable ? false : true,
+    });
+  };
+
   render() {
     if (!this.props.user.isAuth) {
       return <Navigate to="/login" />;
@@ -22,6 +37,18 @@ class ProfilePage extends Component {
       <div>
         <UserInfo name={this.props.user.name} email={this.props.user.email} />
         <ListOfUserCalendars calendars={this.props.calendars} />
+
+        <div className="add-user-calendar-toogle">
+          <AddUserCalendarToggle onClick={this.setStateForm} />
+        </div>
+
+        {this.state.isFormAvailable && (
+          <AddUserCalendar
+            isFirstCalendar={this.props.isFirstCalendar}
+            addUserCalendar={this.props.addUserCalendar}
+            userId={this.props.user.id}
+          />
+        )}
       </div>
     );
   }
@@ -31,7 +58,10 @@ function mapStateToProps(state) {
   return {
     user: { ...state.auth.user },
     calendars: state.userProfile.calendars,
+    isFirstCalendar: state.userProfile.calendars[0] ? false : true,
   };
 }
 
-export default connect(mapStateToProps, { getUserCalendars })(ProfilePage);
+export default connect(mapStateToProps, { getUserCalendars, addUserCalendar })(
+  ProfilePage
+);

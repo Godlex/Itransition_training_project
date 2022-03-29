@@ -1,14 +1,5 @@
-$user-name-font-weight: 600;
-$user-name-font-size: 1.3;
-$user-name-margin: 1rem 0;
-$user-email-font-weight: 600;
-
-.user-name {
-  font-weight: $user-name-font-weight;
-  font-size: $user-name-font-size;
-  margin: $user-name-margin;
-}
-.user-email {
-  font-weight: $user-email-font-weight;
-  display: inline-block;
+.add-user-calendar-toogle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -36,7 +36,7 @@ class ApiService {
   post = (...params) => this.session.post(...params);
   put = (...params) => this.session.put(...params);
   patch = (...params) => this.session.patch(...params);
-  remove = (...params) => this.session.delete(...params);
+  delete = (...params) => this.session.delete(...params);
 }
 
 export default ApiService.instance;

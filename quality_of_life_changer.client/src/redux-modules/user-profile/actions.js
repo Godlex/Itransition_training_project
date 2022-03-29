@@ -24,3 +24,12 @@ export function copyUrl(url) {
     url: url,
   };
 }
+
+export function addUserCalendar(userId, calendarName, calendarUrl) {
+  return {
+    type: userProfileConstants.ADD_USER_CALENDARS,
+    userId: userId,
+    calendarName: calendarName,
+    calendarUrl: calendarUrl,
+  };
+}
